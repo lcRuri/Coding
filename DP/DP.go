@@ -137,3 +137,70 @@ func MaxProfit(prices []int) int {
 
 	return ma
 }
+
+//NthUglyNumber 264. 丑数 II https://leetcode.cn/problems/ugly-number-ii/ 9/28
+//思路：动态规划 https://leetcode.cn/problems/ugly-number-ii/solution/chou-shu-ii-by-leetcode-solution-uoqd/
+//表示下一个丑数是当前指针指向的丑数乘以对应的质因数。初始时，三个指针的值都是 11。
+func NthUglyNumber(n int) int {
+	dp := make([]int, n+1)
+	dp[1] = 1
+	p2, p3, p5 := 1, 1, 1
+	for i := 2; i <= n; i++ {
+		x2, x3, x5 := dp[p2]*2, dp[p3]*3, dp[p5]*5
+		dp[i] = min3(x2, x3, x5)
+		if dp[i] == x2 {
+			p2++
+		}
+		if dp[i] == x3 {
+			p3++
+		}
+		if dp[i] == x5 {
+			p5++
+		}
+	}
+
+	return dp[n]
+
+}
+
+//GetKthMagicNumber 面试题 17.09. 第 k 个数 https://leetcode.cn/problems/get-kth-magic-number-lcci/  9/28
+func GetKthMagicNumber(k int) int {
+	dp := make([]int, k+1)
+	dp[1] = 1
+	p3, p5, p7 := 1, 1, 1
+	for i := 2; i <= k; i++ {
+		x3, x5, x7 := dp[p3]*3, dp[p5]*5, dp[p7]*7
+		dp[i] = min3(x3, x5, x7)
+		if dp[i] == x3 {
+			p3++
+		}
+		if dp[i] == x5 {
+			p5++
+		}
+		if dp[i] == x7 {
+			p7++
+		}
+	}
+
+	return dp[k]
+}
+func min3(x, y, z int) int {
+	var mi = 0
+	if x <= y {
+		mi = x
+	} else {
+		mi = y
+	}
+
+	if z < mi {
+		mi = z
+	}
+
+	return mi
+
+}
+
+//GenerateParenthesis 22. 括号生成 9/30
+func GenerateParenthesis(n int) []string {
+	return nil
+}

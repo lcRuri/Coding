@@ -1,7 +1,6 @@
 package main
 
 import (
-	"coding/DP"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -93,7 +92,69 @@ func main() {
 
 	//fmt.Println(strings.Replace("()", "()", "", -1))
 
-	fmt.Println(DP.MaxProfit([]int{7, 1, 5, 3, 6, 4}))
+	//mt.Println(DP.MaxProfit([]int{7, 1, 5, 3, 6, 4}))
+	//fmt.Println(DP.NthUglyNumber(10))
+	//fmt.Println(DP.GetKthMagicNumber(1))
+
+	//fmt.Println(StringCoding.IsFlipedString("aba", "bab"))
+	//fmt.Println(StringCoding.IsFlipedString("abcd", "acdb"))
+	//setZeroes([][]int{{1, 1, 1}, {1, 0, 1}, {1, 1, 1}})
+
+}
+
+//setZeroes 面试题 01.08. 零矩阵 https://leetcode.cn/problems/zero-matrix-lcci/ 9/30
+func setZeroes(matrix [][]int) {
+	m := len(matrix)
+	n := len(matrix[0])
+	//
+	//matrix1 := make([][]int, m)
+	//for  v := range matrix1 {
+	//	matrix1[v]=make([]int,n)
+	//}
+	//
+	//for i := 0; i < m; i++ {
+	//	for j := 0; j < n; j++ {
+	//		matrix1[i][j]=1
+	//	}
+	//}
+
+	h := make(map[int]bool, 0)
+	l := make(map[int]bool, 0)
+	for i := 0; i < len(matrix); i++ {
+		for j := 0; j < len(matrix[i]); j++ {
+			if matrix[i][j] == 0 {
+				h[i] = true
+				l[j] = true
+			}
+		}
+	}
+
+	for i := 0; i < m; i++ {
+		if h[i] == true {
+			seth0(matrix[i])
+		}
+	}
+
+	for i := 0; i < n; i++ {
+		if l[i] == true {
+			setl0(matrix, i)
+		}
+	}
+
+}
+func seth0(m []int) {
+	for i := 0; i < len(m); i++ {
+		m[i] = 0
+	}
+}
+func setl0(mat [][]int, x int) {
+	for i := 0; i < len(mat); i++ {
+		for j := 0; j < len(mat[i]); j++ {
+			if j == x {
+				mat[i][j] = 0
+			}
+		}
+	}
 }
 
 //面试题 01.02. 判定是否互为字符重排 9/27

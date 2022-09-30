@@ -1,5 +1,7 @@
 package StringCoding
 
+import "strings"
+
 //LongestPalindrome 5. 最长回文子串 https://leetcode.cn/problems/longest-palindromic-substring/
 //思路：中心扩散
 func LongestPalindrome(s string) string {
@@ -105,4 +107,17 @@ func IsValid(s string) bool {
 		return false
 	}
 	return true
+}
+
+//IsFlipedString https://leetcode.cn/problems/string-rotation-lcci/ 9/29
+//https://leetcode.cn/problems/string-rotation-lcci/solution/zi-fu-chuan-lun-zhuan-by-leetcode-soluti-kc8z/
+func IsFlipedString(s1 string, s2 string) bool {
+	if len(s1) != len(s2) {
+		return false
+	}
+	if len(s1) == 0 && len(s2) == 0 {
+		return true
+	}
+	return strings.Contains(s1+s1, s2)
+
 }
