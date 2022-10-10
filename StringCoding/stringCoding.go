@@ -121,3 +121,64 @@ func IsFlipedString(s1 string, s2 string) bool {
 	return strings.Contains(s1+s1, s2)
 
 }
+
+//romanToInt 13. 罗马数字转整数 https://leetcode.cn/problems/roman-to-integer/
+func RomanToInt(s string) int {
+
+	dir := map[string]int{
+		"I": 1,
+		"V": 5,
+		"X": 10,
+		"L": 50,
+		"C": 100,
+		"D": 500,
+		"M": 1000,
+	}
+
+	arr := make([]string, 0)
+	for i := 0; i < len(s); i++ {
+		arr = append(arr, string(s[i]))
+	}
+
+	sum := 0
+	cur, next := 0, 0
+	for i := 0; i < len(arr); i++ {
+		cur = dir[arr[i]]
+		if i+1 < len(arr) {
+			next = dir[arr[i+1]]
+		}
+
+		if next > cur {
+			sum += next - cur
+			i++
+		} else {
+			sum += cur
+		}
+		next = 0
+
+	}
+
+	return sum
+}
+
+//minAddToMakeValid 921. 使括号有效的最少添加 https://leetcode.cn/problems/minimum-add-to-make-parentheses-valid/
+func MinAddToMakeValid(s string) (ans int) {
+	stack := make([]int32, 0)
+	cnt := 0
+	for _, v := range s {
+		if v == '(' {
+			stack = append(stack, v)
+			continue
+		}
+		if v == ')' {
+			if len(stack) > 0 {
+				stack = append(stack[:len(stack)-1], stack[len(stack):]...)
+			} else {
+				cnt++
+			}
+		}
+	}
+
+	return cnt + len(stack)
+
+}

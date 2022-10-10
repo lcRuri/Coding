@@ -16,6 +16,80 @@ func max(x, y int) int {
 	return y
 }
 
+//minSwap 801. 使序列递增的最小交换次数 https://leetcode.cn/problems/minimum-swaps-to-make-sequences-increasing/
+//https://leetcode.cn/problems/minimum-swaps-to-make-sequences-increasing/solution/shi-xu-lie-di-zeng-de-zui-xiao-jiao-huan-ux2y/
+func minSwap(nums1, nums2 []int) int {
+	n := len(nums1)
+	a, b := 0, 1
+	for i := 1; i < n; i++ {
+		at, bt := a, b
+		a, b = n, n
+		if nums1[i] > nums1[i-1] && nums2[i] > nums2[i-1] {
+			a = min(a, at)
+			b = min(b, bt+1)
+		}
+		if nums1[i] > nums2[i-1] && nums2[i] > nums1[i-1] {
+			a = min(a, bt)
+			b = min(b, at+1)
+		}
+	}
+	return min(a, b)
+}
+
+func Rob(nums []int) int {
+	//dp[i]=max(dp[i-1],dp[i-2]+nums[i])
+	dp := make([]int, len(nums))
+	dp[0] = nums[0]
+	if len(nums) > 1 {
+		dp[1] = max(nums[0], nums[1])
+	}
+
+	for i := 2; i < len(nums); i++ {
+		dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+	}
+
+	res := dp[0]
+	for _, v := range dp {
+		res = max(res, v)
+	}
+
+	return res
+}
+
+//MaxSubArray 53. 最大子数组和 https://leetcode.cn/problems/maximum-subarray/
+//https://leetcode.cn/problems/maximum-subarray/solution/dong-tai-gui-hua-fen-zhi-fa-python-dai-ma-java-dai/
+func MaxSubArray(nums []int) int {
+	dp := make([]int, len(nums))
+
+	//for i := 0; i < len(nums); i++ {
+	//	tmp := 0
+	//	dp[i] = nums[i]
+	//	for j := i; j < len(nums); j++ {
+	//		tmp += nums[j]
+	//		if tmp > dp[i] {
+	//			dp[i] = tmp
+	//		}
+	//
+	//	}
+	//}
+
+	dp[0] = nums[0]
+	for i := 1; i < len(nums); i++ {
+		if dp[i-1] > 0 {
+			dp[i] = dp[i-1] + nums[i]
+		} else {
+			dp[i] = nums[i]
+		}
+	}
+	res := dp[0]
+	for _, v := range dp {
+		if v > res {
+			res = v
+		}
+	}
+	return res
+}
+
 // MinimumTotal 120. 三角形最小路径和 https://leetcode.cn/problems/triangle/
 func MinimumTotal(triangle [][]int) int {
 

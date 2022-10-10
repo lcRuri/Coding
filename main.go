@@ -100,6 +100,498 @@ func main() {
 	//fmt.Println(StringCoding.IsFlipedString("abcd", "acdb"))
 	//setZeroes([][]int{{1, 1, 1}, {1, 0, 1}, {1, 1, 1}})
 
+	//fmt.Println(reformatNumber("123 4-567"))
+	//fmt.Println(canTransform("RXXLRXRXL", "XRLXXRRLX"))
+	//fmt.Println(canTransform("LXXLXRLXXL", "XLLXRXLXLX"))
+	//fmt.Println(canTransform("XL", "LX"))
+	//fmt.Println(canTransform("LXXXX", "XXXLX"))
+
+	//fmt.Println(commonFactors(8, 30))
+	//fmt.Println(maxSum([][]int{{6, 2, 1, 3}, {4, 2, 1, 5}, {9, 2, 8, 7}, {4, 1, 2, 9}}))
+	//fmt.Println(maxSum([][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}))
+
+	//fmt.Println(minimizeXor(1))
+	//fmt.Println(sizen(2))
+	//fmt.Println(checkOnesSegment("11111111"))
+	//str := "XVL"
+	//fmt.Println(string(str[0]))
+	//fmt.Println(StringCoding.RomanToInt("MDCXCV"))
+
+	//fmt.Println(StringCoding.MinAddToMakeValid("()()"))
+
+	//split := strings.Split("9001 discuss.leetcode.com", " ")
+	//fmt.Println(split[0])
+	//atoi, _ := strconv.Atoi(split[0])
+	//fmt.Println(atoi)
+	//fmt.Println(reflect.TypeOf(atoi))
+	//domain := strings.Split(split[1], ".")
+	//for _, v := range domain {
+	//	fmt.Println(v)
+	//}
+
+	//fmt.Println(subdomainVisits([]string{"900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"}))
+
+	//fmt.Println(maxAscendingSum([]int{10, 20, 30, 40, 50}))
+	//fmt.Println(maxAscendingSum([]int{12, 17, 15, 13, 10, 11, 12}))
+	//fmt.Println(maxAscendingSum([]int{100, 10, 1}))
+
+	//fmt.Println(DP.MaxSubArray([]int{-2, 1, -3, 4, -1, 2, 1, -5, 4}))
+	//fmt.Println(DP.MaxSubArray([]int{1}))
+	//fmt.Println(DP.MaxSubArray([]int{5, 4, -1, 7, 8}))
+
+	//fmt.Println(DP.Rob([]int{1, 2}))
+
+	//fmt.Println(advantageCount([]int{15448, 14234, 13574, 19893, 6475}, []int{14234, 6475, 19893, 15448, 13574}))
+	//fmt.Println(advantageCount([]int{12, 24, 8, 32}, []int{13, 25, 32, 11}))
+	//fmt.Println(advantageCount([]int{718967141, 189971378, 341560426, 23521218, 339517772}, []int{967482459, 978798455, 744530040, 3454610, 940238504}))
+
+	//fmt.Println(hardestWorker(10, [][]int{{0, 3}, {2, 5}, {0, 9}, {1, 15}}))
+	//fmt.Println(hardestWorker(26, [][]int{{1, 1}, {3, 7}, {2, 12}, {7, 17}}))
+	//fmt.Println(hardestWorker(145, [][]int{{114, 5}, {115, 7}, {50, 9}, {105, 11}, {18, 13}, {47, 16}, {48, 18}, {39, 19}}))
+	//fmt.Println(hardestWorker(70, [][]int{{36, 3}, {1, 5}, {12, 8}, {25, 9}, {53, 11}, {29, 12}, {52, 14}}))
+
+	//fmt.Println(findArray([]int{5, 2, 0, 3, 1}))
+	//fmt.Println(findArray([]int{13}))
+	//fmt.Println(5 ^ 7)
+	//fmt.Println(5 ^ 2)
+
+	//fmt.Println(scoreOfParentheses("()"))
+	//fmt.Println(scoreOfParentheses("(())"))
+	//fmt.Println(scoreOfParentheses("(()(()))"))
+	//fmt.Println(scoreOfParentheses("()(())"))
+	//fmt.Println(scoreOfParentheses("()()"))
+	//fmt.Println(scoreOfParentheses("((()()))"))
+
+}
+
+//scoreOfParentheses 856. 括号的分数 https://leetcode.cn/problems/score-of-parentheses/
+//func scoreOfParentheses(s string) int {
+//	out := 0
+//	inner := 0
+//	res := 0
+//
+//	stack := make([]int32, 0)
+//
+//	for _, v := range s {
+//		if v == '(' && len(stack) == 0 {
+//			stack = append(stack, v)
+//			out++
+//			continue
+//		}
+//		if v == '(' && len(stack) != 0 {
+//			stack = append(stack, v)
+//			inner++
+//			continue
+//		}
+//		if v == ')' {
+//			stack = stack[:len(stack)-1]
+//			if len(stack) == 0 && inner == 0 {
+//				res += out
+//				out = 0
+//				inner = 0
+//			}
+//			if len(stack) == 0 && inner != 0 {
+//				res += inner * 2
+//				out = 0
+//				inner = 0
+//			}
+//		}
+//
+//	}
+//
+//	//if out > 1 {
+//	//	return out + inner*2
+//	//}
+//	//if out == 1 && inner != 0 {
+//	//	return inner * 2
+//	//}
+//	//if out == 1 && inner == 0 {
+//	//	return out
+//	//}
+//
+//	return res
+//}
+//scoreOfParentheses 856. 括号的分数 https://leetcode.cn/problems/score-of-parentheses/solution/gua-hao-de-fen-shu-by-leetcode-solution-we6b/
+func scoreOfParentheses(s string) int {
+	st := []int{0}
+	for _, c := range s {
+		if c == '(' {
+			st = append(st, 0)
+		} else {
+			v := st[len(st)-1]
+			st = st[:len(st)-1]
+			st[len(st)-1] += max(2*v, 1)
+		}
+	}
+	return st[0]
+}
+
+func max(a, b int) int {
+	if b > a {
+		return b
+	}
+	return a
+}
+
+//findArray 6201. 找出前缀异或的原始数组 https://leetcode.cn/contest/weekly-contest-314/problems/find-the-original-array-of-prefix-xor/
+//思路：异或的交换律
+//a^b = c 则 a^c=b, b^c=a
+func findArray(pref []int) []int {
+	arr := make([]int, len(pref))
+	arr[0] = pref[0]
+	for i := 1; i < len(pref); i++ {
+		arr[i] = pref[i-1] ^ pref[i]
+
+	}
+	return arr
+}
+
+//hardestWorker 6200. 处理用时最长的那个任务的员工 https://leetcode.cn/contest/weekly-contest-314/problems/the-employee-that-worked-on-the-longest-task/
+func hardestWorker(n int, logs [][]int) int {
+	time := logs[0][1]
+	flag := logs[0][0]
+	for i := 1; i < len(logs); i++ {
+		if logs[i][1]-logs[i-1][1] > time {
+			time = logs[i][1] - logs[i-1][1]
+			flag = logs[i][0]
+		}
+		if logs[i][1]-logs[i-1][1] == time {
+			if logs[i][0] < flag {
+				flag = logs[i][0]
+			}
+		}
+
+	}
+	return flag
+}
+
+func advantageCount(nums1 []int, nums2 []int) []int {
+	l := len(nums1)
+	if l == 1 {
+		return nums1
+	}
+
+	sort.Ints(nums1)
+	res := make([]int, 0)
+
+	idx1 := 0
+	idx2 := 0
+	for {
+		if len(res) == l {
+			break
+		}
+		if nums1[len(nums1)-1] <= nums2[idx2] {
+			res = append(res, nums1[0])
+			nums1 = append(nums1[:0], nums1[1:]...)
+			idx2++
+			continue
+		}
+		if len(res) == l {
+			break
+		}
+
+		if nums1[idx1] > nums2[idx2] {
+			res = append(res, nums1[idx1])
+			nums1 = append(nums1[:idx1], nums1[idx1+1:]...)
+			idx1 = 0
+			idx2++
+		} else {
+			idx1++
+		}
+	}
+
+	return res
+}
+
+//maxAscendingSum 1800. 最大升序子数组和 https://leetcode.cn/problems/maximum-ascending-subarray-sum/
+func maxAscendingSum(nums []int) int {
+	//tmp := nums[0]
+	//res := nums[0]
+	//
+	//for i := 1; i < len(nums); i++ {
+	//	if nums[i] > nums[i-1] {
+	//		tmp += nums[i]
+	//	} else {
+	//		tmp = nums[i]
+	//	}
+	//	if tmp > res {
+	//		res = tmp
+	//	}
+	//
+	//}
+	//
+	//return res
+
+	dp := make([]int, len(nums))
+	dp[0] = nums[0]
+
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > nums[i-1] {
+			dp[i] = dp[i-1] + nums[i]
+		} else {
+			dp[i] = nums[i]
+		}
+	}
+
+	max := dp[0]
+	for i := 0; i < len(dp); i++ {
+		if dp[i] > max {
+			max = dp[i]
+		}
+	}
+	return max
+}
+
+//subdomainVisits 811. 子域名访问计数 https://leetcode.cn/problems/subdomain-visit-count/
+func subdomainVisits(cpdomains []string) []string {
+	dic := make(map[string]int, 0)
+
+	for _, v := range cpdomains {
+		//以空格先分割字符串
+		split := strings.Split(v, " ")
+		cnt, _ := strconv.Atoi(split[0])
+		s := split[1]
+		dic[s] += cnt
+
+		for i := 0; i < len(s); i++ {
+			if s[i] == '.' {
+				dic[s[i+1:]] += cnt
+			}
+		}
+	}
+
+	res := make([]string, 0)
+	for k, v := range dic {
+		s := strconv.Itoa(v) + " " + k
+		res = append(res, s)
+	}
+
+	return res
+}
+
+//1784. 检查二进制字符串字段 https://leetcode.cn/problems/check-if-binary-string-has-at-most-one-segment-of-ones/ 10/3
+//https://leetcode.cn/problems/check-if-binary-string-has-at-most-one-segment-of-ones/solution/jian-cha-er-jin-zhi-zi-fu-chuan-zi-duan-b1phi/
+func checkOnesSegment(s string) bool {
+	//res := true
+	//flag := 0
+	//
+	//for i := 0; i < len(s); i++ {
+	//	if s[i] == 49 {
+	//		if i+1 < len(s) && s[i+1] == 49 {
+	//
+	//			continue
+	//		}
+	//		flag++
+	//	}
+	//
+	//}
+	//if flag > 1 {
+	//	res = false
+	//	return res
+	//}
+	//
+	//return res
+	return !strings.Contains(s, "01")
+}
+
+//minimizeXor 6194. 最小 XOR https://leetcode.cn/contest/weekly-contest-313/problems/minimize-xor/
+//先求出num2的二进制中1的个数
+//将1个数从小到大排列满足和num1异或最小
+func minimizeXor(num1 int, num2 int) int {
+
+	size2, _ := sizen(num2)
+	_, res := sizen(num1)
+
+	count := 0
+	for i := 1; i <= num2; i++ {
+		n, com := sizen(i)
+		if n != size2 {
+			i++
+			continue
+		}
+
+		//com=rev(com)
+		//res=rev(res)
+		mlen := len(com)
+		f := 0
+		if len(res) > mlen {
+			mlen = len(res)
+			f = 1
+		}
+
+		if f == 0 {
+			for k := 0; k < mlen-len(res); k++ {
+				res = append(res, 0)
+			}
+		}
+
+		if f == 1 {
+			for k := 0; k < mlen-len(com); k++ {
+				com = append(com, 0)
+			}
+		}
+
+		for j := 0; j < mlen; j++ {
+			tmp := 0
+			if com[j] != res[j] {
+				tmp += 1 * 2 &^ (i - 1)
+			} else {
+				tmp += 0 * 2 &^ (i - 1)
+			}
+			if tmp > count {
+				count = tmp
+			}
+		}
+
+	}
+
+	return count
+}
+
+func rev(slice []int) []int {
+	fmt.Println(slice)
+	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
+		slice[i], slice[j] = slice[j], slice[i]
+	}
+	return slice
+}
+
+func sizen(num2 int) (size1 int, res []int) {
+	size1 = 0
+	res = make([]int, 0)
+	//先求出num2的二进制中1的个数
+	tmp := num2
+	for tmp/2 != 0 {
+		x := tmp % 2
+		if x == 1 {
+			size1++
+			res = append(res, 1)
+		} else {
+			res = append(res, 0)
+		}
+		tmp = tmp / 2
+	}
+	if tmp%2 == 1 {
+		size1++
+		res = append(res, 1)
+	}
+
+	return size1, res
+}
+
+//maxSum 6193. 沙漏的最大总和 https://leetcode.cn/contest/weekly-contest-313/problems/maximum-sum-of-an-hourglass/
+func maxSum(grid [][]int) int {
+	maxRes := 0
+
+	m := len(grid)
+	n := len(grid[0])
+
+	for i := 0; i < m && i+2 < m; i++ {
+		for j := 0; j < n && j+2 < n; j++ {
+			tmp := grid[i][j] + grid[i][j+1] + grid[i][j+2] + grid[i+1][j+1] + grid[i+2][j] + grid[i+2][j+1] + grid[i+2][j+2]
+			if tmp > maxRes {
+				maxRes = tmp
+			}
+		}
+	}
+
+	return maxRes
+
+}
+
+//commonFactors 6192. 公因子的数目 https://leetcode.cn/contest/weekly-contest-313/problems/number-of-common-factors/
+func commonFactors(a int, b int) int {
+	l := b
+	flag := 1
+
+	if a < b {
+		l = a
+	}
+
+	for i := 2; i <= l; i++ {
+		if a%i == 0 && b%i == 0 {
+			flag++
+		}
+	}
+
+	return flag
+}
+
+//canTransform  777. 在LR字符串中交换相邻字符 https://leetcode.cn/problems/swap-adjacent-in-lr-string/ 10/2
+func canTransform(start string, end string) bool {
+	l := len(start)
+	if l == 1 {
+		if start[0] != end[0] {
+			return false
+		}
+	}
+	if l == 2 && (!strings.Contains(start, "X") || !strings.Contains(end, "X")) {
+		return false
+	}
+	flag := true
+
+	for i := 0; i < l; i++ {
+		if start[i] != end[i] {
+			if i == l-1 {
+				return false
+			}
+			if start[i+1] != end[i] || start[i] != end[i+1] {
+				flag = false
+			}
+			if start[i] == 88 && start[i+1] == 76 {
+				i++
+			} else if start[i] == 82 && start[i+1] == 88 {
+				i++
+			} else {
+				return false
+			}
+		}
+	}
+
+	return flag
+}
+
+//reformatNumber https://leetcode.cn/problems/reformat-phone-number/ 10/1
+func reformatNumber(number string) string {
+
+	number1 := strings.ReplaceAll(number, "-", "")
+	number2 := strings.ReplaceAll(number1, " ", "")
+
+	if len(number2) == 2 {
+		return number2
+	}
+
+	if len(number2) == 3 {
+		return number2
+	}
+
+	if len(number2) == 4 {
+		return number2[:2] + "-" + number2[2:]
+	}
+
+	res := make([]string, 0)
+	flag := 0
+
+	for i := 0; i < len(number2)-4; i = i + 3 {
+		res = append(res, number2[i:i+3])
+		flag = i + 3
+	}
+
+	if len(number2)-flag == 2 || len(number2)-flag == 3 {
+		res = append(res, number2[flag:])
+	}
+
+	if len(number2)-flag == 4 {
+		res = append(res, number2[flag:flag+2], number2[flag+2:])
+
+	}
+	s := res[0]
+
+	for i := 1; i < len(res); i++ {
+		s += "-" + res[i]
+	}
+
+	return s
 }
 
 //setZeroes 面试题 01.08. 零矩阵 https://leetcode.cn/problems/zero-matrix-lcci/ 9/30
