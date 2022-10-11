@@ -1,6 +1,7 @@
 package main
 
 import (
+	"coding/Arr"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -162,6 +163,59 @@ func main() {
 	//fmt.Println(scoreOfParentheses("()()"))
 	//fmt.Println(scoreOfParentheses("((()()))"))
 
+	//fmt.Println(areAlmostEqual("bank", "kanb"))
+	//fmt.Println(areAlmostEqual("attack", "defend"))
+	//fmt.Println(areAlmostEqual("kelb", "kelb"))
+	//fmt.Println(areAlmostEqual("abcd", "dcba"))
+	//fmt.Println(areAlmostEqual("acb", "aab"))
+
+	fmt.Println(Arr.RemoveDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+}
+
+//areAlmostEqual 1790. 仅执行一次字符串交换能否使两个字符串相等 https://leetcode.cn/problems/check-if-one-string-swap-can-make-strings-equal/
+//思路：仅仅交换一次就可以相同意味着两个字符串只有两个位置不同，i，j记录s2两个位置的不同，当i，j都有值的时候，意味着已经有两个位置不同，再来的话就是false，最后判断是否这两个位置互换是一样的
+func areAlmostEqual(s1 string, s2 string) bool {
+	//if s1 == s2 {
+	//	return true
+	//}
+	//num := 0
+	//tmp := -1
+	//for i := 0; i < len(s1); i++ {
+	//	if s1[i] != s2[i] {
+	//		if tmp != -1 {
+	//			ex := s2[i]
+	//			if ex != s1[tmp] || s1[i] != s2[tmp] {
+	//				return false
+	//			}
+	//			tmp = -1
+	//			num++
+	//			continue
+	//
+	//		}
+	//		tmp = i
+	//	}
+	//}
+	//
+	//if tmp != -1 || num > 1 {
+	//	return false
+	//}
+	//return true
+
+	i, j := -1, -1
+
+	for idx := range s2 {
+		if s1[idx] != s2[idx] {
+			if i < 0 {
+				i = idx
+			} else if j < 0 {
+				j = idx
+			} else {
+				return false
+			}
+		}
+	}
+
+	return i < 0 || j > 0 && s1[i] == s2[j] && s1[j] == s2[i]
 }
 
 //scoreOfParentheses 856. 括号的分数 https://leetcode.cn/problems/score-of-parentheses/
