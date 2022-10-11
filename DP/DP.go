@@ -16,6 +16,29 @@ func max(x, y int) int {
 	return y
 }
 
+//MaxProfitII 122. 买卖股票的最佳时机 II https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/
+func MaxProfitII(prices []int) int {
+	//dp[i][j] i表示第i天是否持有的 j=0表示不持有股票 j=1表示持有股票
+	//dp[0][0]=0 dp[0][1]=-7
+	//dp[1][0]=0/-6 第1天持有不持有可以是前一天没有买或者前一天买了然后卖出 dp[1][1]=-7/-1 第1天持有股票 可以是第1天没有没有买入持续前面的状态，也可以是前面一天就没有然后第1天买入
+	//dp[2][0]=0/4 dp[2][1]=-1/-5d
+
+	dp := make([][]int, len(prices))
+	for i, _ := range dp {
+		dp[i] = make([]int, 2)
+	}
+
+	dp[0][0] = 0
+	dp[0][1] = -prices[0]
+
+	for i := 1; i < len(prices); i++ {
+		dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
+		dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i])
+	}
+
+	return dp[len(prices)-1][0]
+}
+
 //minSwap 801. 使序列递增的最小交换次数 https://leetcode.cn/problems/minimum-swaps-to-make-sequences-increasing/
 //https://leetcode.cn/problems/minimum-swaps-to-make-sequences-increasing/solution/shi-xu-lie-di-zeng-de-zui-xiao-jiao-huan-ux2y/
 func minSwap(nums1, nums2 []int) int {

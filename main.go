@@ -1,7 +1,7 @@
 package main
 
 import (
-	"coding/Arr"
+	"coding/DP"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -169,7 +169,8 @@ func main() {
 	//fmt.Println(areAlmostEqual("abcd", "dcba"))
 	//fmt.Println(areAlmostEqual("acb", "aab"))
 
-	fmt.Println(Arr.RemoveDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+	//fmt.Println(Arr.RemoveDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+	fmt.Println(DP.MaxProfitII([]int{7, 1, 5, 3, 6, 4}))
 }
 
 //areAlmostEqual 1790. 仅执行一次字符串交换能否使两个字符串相等 https://leetcode.cn/problems/check-if-one-string-swap-can-make-strings-equal/
