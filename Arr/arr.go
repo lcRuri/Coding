@@ -61,6 +61,7 @@ func ContainsDuplicate(nums []int) bool {
 	return true
 }
 
+//SingleNumber 只出现一次的数字 https://leetcode.cn/leetbook/read/top-interview-questions-easy/x21ib6/
 func SingleNumber(nums []int) int {
 	//使用map
 	//dic := make(map[int]int, 0)
@@ -96,4 +97,53 @@ func SingleNumber(nums []int) int {
 	}
 
 	return single
+}
+
+//Intersect 两个数组的交集 II https://leetcode.cn/problems/intersection-of-two-arrays-ii/
+func Intersect(nums1 []int, nums2 []int) []int {
+	res := make([]int, 0)
+
+	for i := 0; i < len(nums1); i++ {
+		for j := 0; j < len(nums2); j++ {
+			if nums2[j] == nums1[i] {
+				res = append(res, nums2[j])
+				nums2 = append(nums2[:j], nums2[j+1:]...)
+				break
+			}
+		}
+	}
+
+	return res
+}
+
+//PlusOne 66. 加一 https://leetcode.cn/problems/plus-one/
+//思路：https://leetcode.cn/problems/plus-one/solution/java-shu-xue-jie-ti-by-yhhzw/
+func PlusOne(digits []int) []int {
+	//res := make([]int, 0)
+	//var num int64
+	//for i := 0; i < len(digits); i++ {
+	//	num += int64(digits[i]) * int64(math.Pow(float64(10), float64(len(digits)-i-1)))
+	//}
+	//num++
+	//
+	//s := strconv.FormatInt(int64(num), 10)
+	//for i := 0; i < len(s); i++ {
+	//	tmp, _ := strconv.Atoi(s[i : i+1])
+	//	res = append(res, tmp)
+	//
+	//}
+	//
+	//return res
+
+	for i := len(digits) - 1; i >= 0; i-- {
+		digits[i]++
+		digits[i] = digits[i] % 10
+		if digits[i] != 0 {
+			return digits
+		}
+	}
+
+	res := make([]int, len(digits)+1)
+	res[0] = 1
+	return res
 }

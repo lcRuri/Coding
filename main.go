@@ -182,8 +182,13 @@ func main() {
 
 	//fmt.Println(Arr.ContainsDuplicate([]int{3, 3}))
 
-	fmt.Println(Arr.SingleNumber([]int{2, 2, 1}))
-	fmt.Println(Arr.SingleNumber([]int{4, 1, 2, 1, 2}))
+	//fmt.Println(Arr.SingleNumber([]int{2, 2, 1}))
+	//fmt.Println(Arr.SingleNumber([]int{4, 1, 2, 1, 2}))
+
+	//fmt.Println(Arr.Intersect([]int{1, 2, 2, 1}, []int{2, 2}))
+	//fmt.Println(Arr.Intersect([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
+
+	fmt.Println(Arr.PlusOne([]int{9}))
 
 }
 
