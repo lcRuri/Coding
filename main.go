@@ -1,7 +1,7 @@
 package main
 
 import (
-	"coding/DP"
+	"coding/Arr"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -170,7 +170,38 @@ func main() {
 	//fmt.Println(areAlmostEqual("acb", "aab"))
 
 	//fmt.Println(Arr.RemoveDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
-	fmt.Println(DP.MaxProfitII([]int{7, 1, 5, 3, 6, 4}))
+	//fmt.Println(DP.MaxProfitII([]int{7, 1, 5, 3, 6, 4}))
+
+	//fmt.Println(MaxChunksToSorted([]int{4, 3, 2, 1, 0}))
+	//fmt.Println(MaxChunksToSorted([]int{1, 0, 2, 3, 4}))
+	//fmt.Println(MaxChunksToSorted([]int{1, 2, 0, 3}))
+	//fmt.Println(MaxChunksToSorted([]int{2, 0, 1, 3}))
+	//fmt.Println(MaxChunksToSorted([]int{0, 4, 5, 2, 1, 3}))
+
+	//Arr.Rotate([]int{1, 2, 3, 4, 5, 6, 7}, 3)
+
+	//fmt.Println(Arr.ContainsDuplicate([]int{3, 3}))
+
+	fmt.Println(Arr.SingleNumber([]int{2, 2, 1}))
+	fmt.Println(Arr.SingleNumber([]int{4, 1, 2, 1, 2}))
+
+}
+
+//MaxChunksToSorted 769. 最多能完成排序的块 https://leetcode.cn/problems/max-chunks-to-make-sorted/
+//思路：贪心 https://leetcode.cn/problems/max-chunks-to-make-sorted/solution/zui-duo-neng-wan-cheng-pai-xu-de-kuai-by-gc4k/
+//在0-i范围内的额数全部出现，就可以划分一个chunk
+func MaxChunksToSorted(arr []int) (ans int) {
+	mx := 0
+	for i, x := range arr {
+		if x > mx {
+			mx = x
+		}
+		if mx == i {
+			ans++
+		}
+	}
+	return
+
 }
 
 //areAlmostEqual 1790. 仅执行一次字符串交换能否使两个字符串相等 https://leetcode.cn/problems/check-if-one-string-swap-can-make-strings-equal/
