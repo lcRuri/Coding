@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go/scanner"
 	"go/token"
+	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -192,6 +193,75 @@ func main() {
 	//fmt.Println(buildArray([]int{1, 2, 3}, 3))
 
 	//Arr.MoveZeroes([]int{0, 0, 1})
+	//fmt.Println(CountTime("?5:00"))
+	//fmt.Println(CountTime("0?:0?"))
+	//fmt.Println(CountTime("??:??"))
+
+	var v int64 = 15
+	formatInt := strconv.FormatInt(v, 2)
+	fmt.Println(formatInt[0] == '1')
+	fmt.Println(math.Pow(float64(10), float64(9)) + 7)
+	fmt.Println(productQueries(806335498, [][]int{{11, 11}, {1, 8}}))
+
+}
+
+//productQueries 6208. 有效时间的数目 https://leetcode.cn/contest/biweekly-contest-89/problems/number-of-valid-clock-times/
+func productQueries(n int, queries [][]int) []int {
+	powers := make([]int, 0)
+	ans := make([]int, len(queries))
+	for i := 0; i < len(ans); i++ {
+		ans[i] = 1
+	}
+	format := strconv.FormatInt(int64(n), 2)
+	for i := len(format) - 1; i >= 0; i-- {
+		if format[i] == '1' {
+			powers = append(powers, int(math.Pow(float64(2), float64(len(format)-1-i))))
+		}
+	}
+
+	for i := 0; i < len(queries); i++ {
+		for j := queries[i][0]; j <= queries[i][1]; j++ {
+			ans[i] *= powers[j]
+			ans[i] = ans[i] % int(math.Pow(float64(10), float64(9))+7)
+		}
+
+	}
+
+	return ans
+}
+
+//CountTime 6208. 有效时间的数目 https://leetcode.cn/contest/biweekly-contest-89/problems/number-of-valid-clock-times/
+func CountTime(time string) int {
+	res := 1
+	if time[4] == '?' {
+		res = 10
+	}
+	if time[3] == '?' {
+		res = res * 6
+	}
+
+	if time[0] == '?' && time[1] == '?' {
+		res = res * 24
+	}
+	if time[0] == '?' && time[1] != '?' {
+		num, _ := strconv.Atoi(string(time[1]))
+		if num <= 3 {
+			res = res * 3
+		} else {
+			res = res * 2
+		}
+	}
+
+	if time[0] != '?' && time[1] == '?' {
+		num, _ := strconv.Atoi(string(time[0]))
+		if num == 2 {
+			res = res * 4
+		} else {
+			res = res * 10
+		}
+	}
+
+	return res
 
 }
 
