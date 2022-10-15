@@ -1,7 +1,6 @@
 package main
 
 import (
-	"coding/Arr"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -188,8 +187,31 @@ func main() {
 	//fmt.Println(Arr.Intersect([]int{1, 2, 2, 1}, []int{2, 2}))
 	//fmt.Println(Arr.Intersect([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
 
-	fmt.Println(Arr.PlusOne([]int{9}))
+	//fmt.Println(Arr.PlusOne([]int{9}))
+	//fmt.Println(buildArray([]int{1, 2}, 4))
+	//fmt.Println(buildArray([]int{1, 2, 3}, 3))
 
+	//Arr.MoveZeroes([]int{0, 0, 1})
+
+}
+
+//buildArray 1441. 用栈操作构建数组 https://leetcode.cn/problems/build-an-array-with-stack-operations/
+func buildArray(target []int, n int) []string {
+	res := make([]string, 0)
+	j := 0
+	for i := 1; i <= n; i++ {
+		if i == target[j] {
+			res = append(res, "Push")
+			j++
+			if j > len(target)-1 {
+				break
+			}
+		} else {
+			res = append(res, "Push", "Pop")
+		}
+	}
+
+	return res
 }
 
 //MaxChunksToSorted 769. 最多能完成排序的块 https://leetcode.cn/problems/max-chunks-to-make-sorted/

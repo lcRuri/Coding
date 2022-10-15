@@ -1,5 +1,7 @@
 package Arr
 
+import "fmt"
+
 //RemoveDuplicates 26. 删除有序数组中的重复项 https://leetcode.cn/problems/remove-duplicates-from-sorted-array/
 //思路：双指针
 func RemoveDuplicates(nums []int) int {
@@ -146,4 +148,44 @@ func PlusOne(digits []int) []int {
 	res := make([]int, len(digits)+1)
 	res[0] = 1
 	return res
+}
+
+//MoveZeroes 移动零 https://leetcode.cn/leetbook/read/top-interview-questions-easy/x2ba4i/
+func MoveZeroes(nums []int) {
+	size := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == 0 {
+			nums = append(nums[:i], nums[i+1:]...)
+			i--
+			size++
+		}
+	}
+
+	for i := 0; i < size; i++ {
+		nums = append(nums, 0)
+	}
+
+	fmt.Println(nums)
+}
+
+//IsValidSudoku 36. 有效的数独 https://leetcode.cn/problems/valid-sudoku/
+func IsValidSudoku(board [][]byte) bool {
+	var rows, columns [9][9]int
+	var subboxes [3][3][9]int
+	for i, row := range board {
+		for j, c := range row {
+			if c == '.' {
+				continue
+			}
+			index := c - '1'
+			rows[i][index]++
+			columns[j][index]++
+			subboxes[i/3][j/3][index]++
+			if rows[i][index] > 1 || columns[j][index] > 1 || subboxes[i/3][j/3][index] > 1 {
+				return false
+			}
+		}
+	}
+	return true
+
 }
