@@ -1,6 +1,7 @@
 package main
 
 import (
+	"coding/Bs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -197,12 +198,154 @@ func main() {
 	//fmt.Println(CountTime("0?:0?"))
 	//fmt.Println(CountTime("??:??"))
 
-	var v int64 = 15
-	formatInt := strconv.FormatInt(v, 2)
-	fmt.Println(formatInt[0] == '1')
-	fmt.Println(math.Pow(float64(10), float64(9)) + 7)
-	fmt.Println(productQueries(806335498, [][]int{{11, 11}, {1, 8}}))
+	//var v int64 = 15
+	//formatInt := strconv.FormatInt(v, 2)
+	//fmt.Println(formatInt[0] == '1')
+	//fmt.Println(math.Pow(float64(10), float64(9)) + 7)
+	//fmt.Println(productQueries(806335498, [][]int{{11, 11}, {1, 8}}))
 
+	//fmt.Println(findMaxK([]int{-1, 10, 6, 7, -7, 1}))
+
+	//fmt.Println(reserve(1001002))
+
+	//fmt.Println(countDistinctIntegers([]int{1, 13, 10, 12, 31}))
+	//fmt.Println(countDistinctIntegers([]int{2, 2, 2}))
+
+	//fmt.Println(sumOfNumberAndReverse(181))
+	//fmt.Println(sumOfNumberAndReverse(0))
+
+	//fmt.Println(countSubarrays([]int{1, 3, 5, 2, 7, 5}, 1, 5))
+	//fmt.Println(countSubarrays([]int{1, 1, 1, 1}, 1, 1))
+
+	//mik := find(1, []int{1, 3, 5, 2, 7, 5})
+	//mak := find(5, []int{1, 3, 5, 2, 7, 5})
+	//
+	//fmt.Println(mik, mak)
+
+	//fmt.Println(totalFruit([]int{1, 0}))
+	//fmt.Println(totalFruit([]int{1, 2, 1}))
+	//fmt.Println(totalFruit([]int{0, 1, 2, 1}))
+	//fmt.Println(totalFruit([]int{1, 2, 3, 2, 2}))
+	//fmt.Println(totalFruit([]int{3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4}))
+
+	//fmt.Println(Bs.Search([]int{-1, 0, 3, 5, 9, 12}, 2))
+	fmt.Println(Bs.Search([]int{-1, 0, 3, 5, 9, 12}, 3))
+
+}
+
+//func totalFruit(fruits []int) (ans int) {
+//	cnt := map[int]int{}
+//	left := 0
+//	for right, x := range fruits {
+//		cnt[x]++
+//		for len(cnt) > 2 {
+//			y := fruits[left]
+//			cnt[y]--
+//			if cnt[y] == 0 {
+//				delete(cnt, y)
+//			}
+//			left++
+//		}
+//		ans = max(ans, right-left+1)
+//	}
+//	return
+//}
+
+//错误？？？？？？？？？？？？？？？？？？？？？？
+//totalFruit 904. 水果成篮 https://leetcode.cn/problems/fruit-into-baskets/
+func totalFruit(fruits []int) (ans int) {
+	left := 0
+	cnt := map[int]int{}
+	for right, x := range fruits {
+		cnt[x]++
+		if len(cnt) > 2 {
+			y := cnt[fruits[left]]
+			delete(cnt, y)
+			left = right - 1
+
+		}
+		ans = max(ans, right-left+1)
+	}
+
+	return
+}
+
+//func countSubarrays(nums []int, minK int, maxK int) int64 {
+//	//res:=make([][]int,0)
+//	//
+//	//for i:= range res {
+//	//	res[i]=make([]int,0)
+//	//}
+//
+//	var res int64
+//	arr := make([]int, 0)
+//	mik := find(minK, arr)
+//	mak := find(maxK, arr)
+//	//for i := 0; i < len(nums); i++ {
+//	//	if nums[i] >= minK && nums[i] <= maxK {
+//	//		arr = append(arr, nums[i])
+//	//
+//	//	}
+//	//}
+//
+//	return res
+//}
+
+func sumOfNumberAndReverse(num int) bool {
+
+	for i := 0; i <= num; i++ {
+		if i+reserve(i) == num {
+			fmt.Println(i, reserve(i))
+			return true
+		}
+	}
+
+	return false
+}
+
+func countDistinctIntegers(nums []int) int {
+	l := len(nums)
+	for i := 0; i < l; i++ {
+		nums = append(nums, reserve(nums[i]))
+	}
+
+	dic := make(map[int]int, 0)
+
+	for i := 0; i < len(nums); i++ {
+		dic[nums[i]]++
+	}
+
+	return len(dic)
+
+}
+
+func reserve(x int) int {
+	itoa := strconv.Itoa(x)
+	res := make([]byte, 0)
+	for i := len(itoa) - 1; i >= 0; i-- {
+		res = append(res, itoa[i])
+	}
+	atoi, _ := strconv.Atoi(string(res))
+	return atoi
+
+}
+
+func findMaxK(nums []int) int {
+
+	tmp := -1
+
+	for i := 0; i < len(nums); i++ {
+
+		for j := i; j < len(nums); j++ {
+			if nums[j]+nums[i] == 0 {
+				if int(math.Abs(float64(nums[i]))) > tmp {
+					tmp = int(math.Abs(float64(nums[i])))
+				}
+			}
+
+		}
+	}
+	return tmp
 }
 
 //productQueries 6208. 有效时间的数目 https://leetcode.cn/contest/biweekly-contest-89/problems/number-of-valid-clock-times/
