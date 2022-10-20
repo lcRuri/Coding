@@ -1,7 +1,6 @@
 package main
 
 import (
-	"coding/Bs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -229,8 +228,108 @@ func main() {
 	//fmt.Println(totalFruit([]int{3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4}))
 
 	//fmt.Println(Bs.Search([]int{-1, 0, 3, 5, 9, 12}, 2))
-	fmt.Println(Bs.Search([]int{-1, 0, 3, 5, 9, 12}, 3))
+	//fmt.Println(Bs.Search([]int{-1, 0, 3, 5, 9, 12}, 3))
 
+	//fmt.Println(atMostNGivenDigitSet([]string{"1", "4", "9"}, 1000000000))
+	//fmt.Println(atMostNGivenDigitSet([]string{"5", "7", "8"}, 59))
+
+	//fmt.Println(countStudents([]int{1, 1, 1, 0, 0, 1}, []int{1, 0, 0, 0, 1, 1}))
+	//fmt.Println(countStudents([]int{1, 1, 0, 0}, []int{0, 1, 0, 1}))
+
+	fmt.Println(kthGrammar(5, 9))
+
+}
+
+//kthGrammar 779. 第K个语法符号 https://leetcode.cn/problems/k-th-symbol-in-grammar/
+func kthGrammar(n int, k int) int {
+	if n == 1 {
+		return 0
+	}
+
+	return k&1 ^ 1 ^ kthGrammar(n-1, (k+1)/2)
+}
+
+//https://leetcode.cn/problems/k-th-symbol-in-grammar/solution/by-lcbin-2eyj/
+func kthGrammarI(n int, k int) int {
+	if n == 1 {
+		return 0
+	}
+	if k <= (1 << (n - 2)) {
+		return kthGrammar(n-1, k)
+	}
+	return kthGrammar(n-1, k-(1<<(n-2))) ^ 1
+}
+
+func countStudents(students []int, sandwiches []int) int {
+	j := 0
+	i := 0
+	flag := 0
+	for {
+
+		if students[i] != sandwiches[j] {
+			tmp := students[i]
+			students = students[i+1:]
+			students = append(students, tmp)
+			flag++
+		}
+		if students[i] == sandwiches[j] {
+			sandwiches = append(sandwiches[:j], sandwiches[j+1:]...)
+			students = append(students[:i], students[i+1:]...)
+			flag = 0
+		}
+
+		if flag >= len(students) {
+			break
+		}
+		if len(students) == 0 {
+			return 0
+		}
+	}
+
+	return len(students)
+}
+
+func atMostNGivenDigitSet(digits []string, n int) int {
+	res := 0
+
+	if n <= 10 {
+		for i := 0; i < len(digits); i++ {
+			num, _ := strconv.Atoi(digits[i])
+			if num <= n {
+				res++
+			}
+		}
+
+		return res
+	}
+
+	s := ""
+	for i := 0; i < len(strconv.Itoa(n)); i++ {
+		s = s + digits[0]
+	}
+	high, _ := strconv.Atoi(s)
+	if high > n {
+		high = len(strconv.Itoa(n)) - 1
+	} else {
+		high = len(strconv.Itoa(n))
+	}
+
+	//l := len(digits)
+	for i := 0; i < high; i++ {
+		////res += int(math.Pow(float64(l), float64(high-i)))
+		//x := 0
+		//for j := 0; j < l; j++ {
+		//	atoi, _ := strconv.Atoi(digits[j])
+		//	if atoi*int(math.Pow(float64(10), float64(high-1))) < n {
+		//		x++
+		//	}
+		//
+		//}
+		//
+		//res += int(math.Pow(float64(x), float64(high-i)))
+	}
+
+	return res
 }
 
 //func totalFruit(fruits []int) (ans int) {
