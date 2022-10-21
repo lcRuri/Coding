@@ -1,6 +1,7 @@
 package main
 
 import (
+	"coding/Bs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -236,7 +237,16 @@ func main() {
 	//fmt.Println(countStudents([]int{1, 1, 1, 0, 0, 1}, []int{1, 0, 0, 0, 1, 1}))
 	//fmt.Println(countStudents([]int{1, 1, 0, 0}, []int{0, 1, 0, 1}))
 
-	fmt.Println(kthGrammar(5, 9))
+	//fmt.Println(kthGrammar(5, 9))
+
+	//fmt.Println(Bs.SearchInsert([]int{1, 3, 5, 6}, 2))
+	//fmt.Println(Bs.SearchInsert([]int{1, 3, 5, 6}, 7))
+	//fmt.Println(Bs.SearchInsert([]int{1}, 2))
+	//fmt.Println(Bs.SearchInsert([]int{1, 3}, 0))
+
+	//fmt.Println(Bs.MySqrt(8))
+
+	fmt.Println(Bs.NextGreatestLetter([]byte{'c', 'f', 'j'}, 'c'))
 
 }
 
