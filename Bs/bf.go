@@ -161,8 +161,25 @@ func NextGreatestLetter(letters []byte, target byte) byte {
 	return letters[left%len(letters)]
 }
 
-func peakIndexInMountainArray(arr []int) int {
-	return 0
+//PeakIndexInMountainArray 山脉数组的峰顶索引 https://leetcode.cn/problems/peak-index-in-a-mountain-array/
+func PeakIndexInMountainArray(arr []int) int {
+	//res := -1
+	//for i := 1; i < len(arr)-1; i++ {
+	//	if arr[i] > arr[i-1] && arr[i] > arr[i+1] {
+	//		res = i
+	//		return res
+	//	}
+	//}
+	//return res
+
+	res := -1
+	for i := 1; i < len(arr)-1; i++ {
+		if arr[i] > arr[i+1] {
+			res = i
+			return res
+		}
+	}
+	return res
 }
 
 func isBadVersion(version int) bool {

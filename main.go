@@ -1,6 +1,7 @@
 package main
 
 import (
+	"coding/Bs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -272,6 +273,9 @@ func main() {
 	//fmt.Println(Arr.PartitionDisjoint([]int{5, 0, 3, 8, 6}))
 	//fmt.Println(Arr.PartitionDisjoint([]int{1, 1, 1, 0, 6, 12}))
 	//fmt.Println(Arr.PartitionDisjoint([]int{1, 1}))
+
+	fmt.Println(Bs.PeakIndexInMountainArray([]int{0, 1, 0}))
+	fmt.Println(Bs.PeakIndexInMountainArray([]int{0, 10, 5, 2}))
 }
 
 func shortestBridge(grid [][]int) int {
