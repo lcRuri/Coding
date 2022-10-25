@@ -1,12 +1,15 @@
 package Bs
 
-import "math"
+import (
+	"math"
+	"sort"
+)
 
 //二分法一般有left right mid
 //判断mid和要比较值的大小，如果mid>target,left=mid+1/right=mid-1,重新算出mid
 //判断mid和要比较值的大小，如果mid<target,left=mid+1/right=mid-1,重新算出mid
-//选择left=mid+1/right=mid-1要看题目的要求
-//还有边界问题
+//选择left=mid+1/right=mid-1要看题目的要求,也有可能不是这两个表达式
+//还有边界问题，思考查找的元素的边界
 
 //Search 704. 二分查找 https://leetcode.cn/problems/binary-search/
 func Search(nums []int, target int) int {
@@ -160,4 +163,62 @@ func NextGreatestLetter(letters []byte, target byte) byte {
 
 func peakIndexInMountainArray(arr []int) int {
 	return 0
+}
+
+func isBadVersion(version int) bool {
+	if version >= 2 {
+		return true
+	}
+	return false
+}
+
+//FirstBadVersion 278. 第一个错误的版本 https://leetcode.cn/problems/first-bad-version/
+//n=3 bad=2
+func FirstBadVersion(n int) int {
+	left := 1
+	right := n
+
+	for left < right {
+		mid := (right-left)/2 + left
+
+		if !isBadVersion(mid) {
+			left = mid + 1
+		} else {
+			right = mid //答案在区间 [left, mid] 中
+		}
+	}
+
+	return left
+}
+
+//SearchRange 34. 在排序数组中查找元素的第一个和最后一个位置 https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/?envType=study-plan&id=binary-search-beginner&plan=binary-search&plan_progress=42xxjpm
+func SearchRange(nums []int, target int) []int {
+	if len(nums) == 0 {
+		return []int{-1, -1}
+	}
+
+	left := 0
+	right := len(nums) - 1
+	res := []int{}
+
+	for left <= right {
+		mid := (right-left)/2 + left
+
+		if nums[mid] == target {
+			res = append(res, mid)
+			continue
+		}
+		if nums[mid] < target {
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+
+	if len(res) == 0 {
+		return []int{-1, -1}
+	}
+
+	sort.Ints(res)
+	return res
 }

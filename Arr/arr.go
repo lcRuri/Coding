@@ -2,6 +2,20 @@ package Arr
 
 import "fmt"
 
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+
 //RemoveDuplicates 26. 删除有序数组中的重复项 https://leetcode.cn/problems/remove-duplicates-from-sorted-array/
 //思路：双指针
 func RemoveDuplicates(nums []int) int {
@@ -188,4 +202,49 @@ func IsValidSudoku(board [][]byte) bool {
 	}
 	return true
 
+}
+
+//PartitionDisjoint 915. 分割数组 https://leetcode.cn/problems/partition-array-into-disjoint-intervals/
+//使得分割点的「左边的子数组的最大值」小于等于「右边的子数组的最小值」。
+func PartitionDisjoint(nums []int) int {
+	//暴力解法
+	//res := -1
+	//max := nums[0]
+	//for i := 1; i < len(nums); i++ {
+	//	flag := 0
+	//	if nums[i-1] > max {
+	//		max = nums[i-1]
+	//	}
+	//	for j := i; j < len(nums); j++ {
+	//		if nums[j] >= max {
+	//			flag++
+	//
+	//		}
+	//	}
+	//	if flag == len(nums)-i {
+	//		res = i
+	//		return res
+	//	}
+	//}
+	//
+	//return res
+	res := -1
+	n := len(nums)
+
+	mi := make([]int, n)
+	mi[n-1] = nums[n-1]
+	for i := n - 2; i >= 0; i-- {
+		mi[i] = min(nums[i], mi[i+1])
+	}
+	ma := nums[0]
+	for i := 0; i < len(nums)-1; i++ {
+
+		ma = max(nums[i], ma)
+
+		if ma <= mi[i+1] {
+			res = i + 1
+			return res
+		}
+	}
+	return res
 }

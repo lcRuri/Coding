@@ -182,3 +182,43 @@ func MinAddToMakeValid(s string) (ans int) {
 	return cnt + len(stack)
 
 }
+
+//MergeAlternately 1768. 交替合并字符串 https://leetcode.cn/problems/merge-strings-alternately/
+func MergeAlternately(word1 string, word2 string) string {
+	//res := ""
+	//
+	//if len(word1) > len(word2) {
+	//	i := 0
+	//	for ; i < len(word2); i++ {
+	//		res = res + string(word1[i]) + string(word2[i])
+	//	}
+	//
+	//	res = res + word1[i:]
+	//} else if len(word1) == len(word2) {
+	//	i := 0
+	//	for ; i < len(word2); i++ {
+	//		res = res + string(word1[i]) + string(word2[i])
+	//	}
+	//} else {
+	//	i := 0
+	//	for ; i < len(word1); i++ {
+	//		res = res + string(word1[i]) + string(word2[i])
+	//	}
+	//
+	//	res = res + word2[i:]
+	//}
+	//
+	//return res
+
+	n, m := len(word1), len(word2)
+	ans := make([]byte, 0, n+m)
+	for i := 0; i < n || i < m; i++ {
+		if i < n {
+			ans = append(ans, word1[i])
+		}
+		if i < m {
+			ans = append(ans, word2[i])
+		}
+	}
+	return string(ans)
+}

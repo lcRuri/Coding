@@ -1,7 +1,6 @@
 package main
 
 import (
-	"coding/Bs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -246,8 +245,118 @@ func main() {
 
 	//fmt.Println(Bs.MySqrt(8))
 
-	fmt.Println(Bs.NextGreatestLetter([]byte{'c', 'f', 'j'}, 'c'))
+	//fmt.Println(Bs.NextGreatestLetter([]byte{'c', 'f', 'j'}, 'c'))
 
+	//fmt.Println(Bs.FirstBadVersion(3))
+
+	//fmt.Println(Bs.SearchRange([]int{5, 7, 7, 8, 8, 10}, 8))
+	//fmt.Println(Bs.SearchRange([]int{1}, 1))
+	//fmt.Println(Bs.SearchRange([]int{2, 2}, 2))
+
+	//fmt.Println(StringCoding.MergeAlternately("abc", "pqr"))
+	//fmt.Println(StringCoding.MergeAlternately("ab", "pqrs"))
+	//fmt.Println(StringCoding.MergeAlternately("abcd", "pq"))
+	//s := "01:15"
+	//fmt.Println(strconv.Atoi(s[3:]))
+
+	//fmt.Println(HaveConflict([]string{"10:00", "11:00"}, []string{"14:00", "15:00"}))
+
+	//fmt.Println(subarrayGCD([]int{9, 3, 1, 2, 6, 3}, 3))
+
+	//fmt.Println(minCost([]int{1, 3, 5, 2}, []int{2, 3, 1, 14}))
+	//fmt.Println(minCost([]int{2, 2, 2, 2}, []int{2, 3, 1, 14}))
+
+	//arr := []int{0, 1, 2, 3, 4, 5}
+	//fmt.Println(arr[:1], arr[1:])
+
+	//fmt.Println(Arr.PartitionDisjoint([]int{5, 0, 3, 8, 6}))
+	//fmt.Println(Arr.PartitionDisjoint([]int{1, 1, 1, 0, 6, 12}))
+	//fmt.Println(Arr.PartitionDisjoint([]int{1, 1}))
+}
+
+func shortestBridge(grid [][]int) int {
+
+	return 0
+}
+
+//minCost 未完成6216. 使数组相等的最小开销 https://leetcode.cn/contest/weekly-contest-316/problems/minimum-cost-to-make-array-equal/
+func minCost(nums []int, cost []int) int64 {
+	//maxc := cost[0]
+	//loc := 0
+	//for i := 1; i < len(cost); i++ {
+	//	if cost[i] > maxc {
+	//		maxc = cost[i]
+	//		loc = i
+	//	}
+	//}
+	//
+	//toBe := nums[loc]
+	//
+	//var res int64 = 0
+	//for i := 0; i < len(nums); i++ {
+	//	abs := int(math.Abs(float64(toBe - nums[i])))
+	//	res += int64(abs * cost[i])
+	//}
+
+	var res int64 = 0
+	costs := []int64{}
+	cpy := make([]int, len(cost))
+	dic := map[int]int{}
+
+	for i, v := range cost {
+		dic[v] = i
+	}
+
+	copy(cpy, cost)
+	sort.Ints(cpy)
+	for i := 0; i < len(cpy)/2; i++ {
+		var tmp int64 = 0
+		toBe := dic[cpy[len(cpy)-i-1]]
+		for j := 0; j < len(nums); j++ {
+			abs := int(math.Abs(float64(nums[toBe] - nums[j])))
+			tmp += int64(abs * cost[j])
+		}
+		costs = append(costs, tmp)
+	}
+
+	res = costs[0]
+	for _, v := range costs {
+		if v < res {
+			res = v
+		}
+	}
+
+	return res
+}
+
+//subarrayGCD 未完成 6224. 最大公因数等于 K 的子数组数目 https://leetcode.cn/contest/weekly-contest-316/problems/number-of-subarrays-with-gcd-equal-to-k/
+func subarrayGCD(nums []int, k int) int {
+	return 0
+}
+
+//HaveConflict 6214. 判断两个事件是否存在冲突 https://leetcode.cn/contest/weekly-contest-316/problems/determine-if-two-events-have-conflict/
+func HaveConflict(event1 []string, event2 []string) bool {
+	//starth1, _ := strconv.Atoi(event1[0][:2])
+	//endh1, _ := strconv.Atoi(event1[1][:2])
+	//starth2, _ := strconv.Atoi(event2[0][:2])
+	//endh2, _ := strconv.Atoi(event2[1][:2])
+	//if endh1 == starth2 || endh2 == starth1 {
+	//	return true
+	//}
+
+	start1, _ := strconv.Atoi(event1[0][:2] + event1[0][3:])
+	end1, _ := strconv.Atoi(event1[1][:2] + event1[1][3:])
+	start2, _ := strconv.Atoi(event2[0][:2] + event2[0][3:])
+	end2, _ := strconv.Atoi(event2[1][:2] + event2[1][3:])
+
+	if (start2 >= start1 && start2 <= end1) || (end2 >= start1 && end2 <= end1) {
+		return true
+	}
+	if (start1 >= start2 && start1 <= end2) || (end1 >= start2 && end1 <= end2) {
+		return true
+	}
+
+	return false
 }
 
 //kthGrammar 779. 第K个语法符号 https://leetcode.cn/problems/k-th-symbol-in-grammar/
