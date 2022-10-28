@@ -2,7 +2,6 @@ package Bs
 
 import (
 	"math"
-	"sort"
 )
 
 //二分法一般有left right mid
@@ -208,34 +207,45 @@ func FirstBadVersion(n int) int {
 	return left
 }
 
-//SearchRange 34. 在排序数组中查找元素的第一个和最后一个位置 https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/?envType=study-plan&id=binary-search-beginner&plan=binary-search&plan_progress=42xxjpm
+//SearchRange 未解决34. 在排序数组中查找元素的第一个和最后一个位置 https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/?envType=study-plan&id=binary-search-beginner&plan=binary-search&plan_progress=42xxjpm
 func SearchRange(nums []int, target int) []int {
-	if len(nums) == 0 {
-		return []int{-1, -1}
-	}
+	return nil
+}
 
-	left := 0
-	right := len(nums) - 1
-	res := []int{}
-
-	for left <= right {
-		mid := (right-left)/2 + left
-
-		if nums[mid] == target {
-			res = append(res, mid)
-			continue
-		}
-		if nums[mid] < target {
-			left = mid + 1
+//ArrangeCoins 441. 排列硬币 https://leetcode.cn/problems/arranging-coins/?envType=study-plan&id=binary-search-beginner&plan=binary-search&plan_progress=42xxjpm
+func ArrangeCoins(n int) int {
+	//row := make([]int, 0)
+	num := 0
+	res := 0
+	for i := 1; res <= n; i++ {
+		res += i
+		if res <= n {
+			num = i
 		} else {
-			right = mid - 1
+			break
 		}
 	}
 
-	if len(res) == 0 {
-		return []int{-1, -1}
+	return num
+}
+
+//FindKthPositive 1539. 第 k 个缺失的正整数 https://leetcode.cn/problems/kth-missing-positive-number/
+//https://leetcode.cn/problems/kth-missing-positive-number/solution/di-k-ge-que-shi-de-zheng-zheng-shu-by-leetcode-sol/
+func FindKthPositive(arr []int, k int) int {
+	misCount := 0
+	current := 1
+	ptr := 0
+	res := 0
+	for misCount = 0; misCount < k; current++ {
+		if current == arr[ptr] {
+			if ptr+1 < len(arr) {
+				ptr++
+			}
+		} else {
+			misCount++
+			res = current
+		}
 	}
 
-	sort.Ints(res)
 	return res
 }

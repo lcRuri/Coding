@@ -1,7 +1,6 @@
 package main
 
 import (
-	"coding/Bs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -274,10 +273,173 @@ func main() {
 	//fmt.Println(Arr.PartitionDisjoint([]int{1, 1, 1, 0, 6, 12}))
 	//fmt.Println(Arr.PartitionDisjoint([]int{1, 1}))
 
-	fmt.Println(Bs.PeakIndexInMountainArray([]int{0, 1, 0}))
-	fmt.Println(Bs.PeakIndexInMountainArray([]int{0, 10, 5, 2}))
+	//fmt.Println(Bs.PeakIndexInMountainArray([]int{0, 1, 0}))
+	//fmt.Println(Bs.PeakIndexInMountainArray([]int{0, 10, 5, 2}))
+
+	//fmt.Println(Bs.ArrangeCoins(5))
+	//fmt.Println(Bs.ArrangeCoins(8))
+	//fmt.Println(Bs.ArrangeCoins(11))
+
+	//fmt.Println(Bs.FindKthPositive([]int{2, 3, 4, 7, 11}, 5))
+	//fmt.Println(Bs.FindKthPositive([]int{1, 2, 3, 4}, 2))
+	//fmt.Println(Bs.FindKthPositive([]int{5, 6, 7, 8, 9}, 9))
+
+	//dic := make(map[string]string, 10)
+	//dic["A"] = "1"
+	//dic["A"] = "1"
+	//dic["B"] = "1"
+	//
+	//fmt.Println(dic)
+
+	//fmt.Println(arraySign([]int{-1, -2, -3, -4, 3, 2, 1}))
+
+	//fmt.Println(twoSum([]int{2, 7, 11, 15}, 9))
+	//fmt.Println(twoSum([]int{2, 3, 4}, 6))
+	//fmt.Println(twoSum([]int{-1, 0}, -1))
+
+	fmt.Println(sumSubarrayMins([]int{3, 1, 2, 4}))
+	fmt.Println(sumSubarrayMins([]int{11, 81, 94, 43, 3}))
+	fmt.Println(sumSubarrayMins([]int{71, 55, 82, 55}))
+
 }
 
+//subArrayRanges 未完成2104. 子数组范围和 https://leetcode.cn/problems/sum-of-subarray-ranges/
+func subArrayRanges(nums []int) int64 {
+	return 0
+}
+
+//sumSubarrayMins 907. 子数组的最小值之和 https://leetcode.cn/problems/sum-of-subarray-minimums/
+func sumSubarrayMins(arr []int) (ans int) {
+
+	////num := make([]int, 0)
+	//res := 0
+	//
+	////暴力解法
+	////k := int(math.Pow(float64(10), float64(9))) + 7
+	////for i := 0; i < len(arr); i++ {
+	////	mins := arr[i]
+	////	for j := i; j < len(arr); j++ {
+	////		mins = Min(arr[j], mins)
+	////		//num = append(num, mins)
+	////		res += mins
+	////		if res >= k {
+	////			res = res % k
+	////		}
+	////
+	////	}
+	////}
+	//k := int(math.Pow(float64(10), float64(9))) + 7
+	////单调栈 求每个元素的辐射范围
+	////注意⚠️：在计算左边界或者右边界时将一侧设置为求解小于等于E的元素，目的是为了解决当一个子数组中有两个最小值元素时（比如[3,1,2,4,1]中有两个1），不重复且不遗漏地统计每一个子数组。
+	////
+	//
+	//for i := 0; i < len(arr); i++ {
+	//	left, right := i, i
+	//
+	//	tmp := arr[i]
+	//	for {
+	//		if left-1 >= 0 && arr[left-1] >= tmp {
+	//			left--
+	//		} else {
+	//			break
+	//		}
+	//
+	//	}
+	//	for {
+	//		if right+1 < len(arr) && arr[right+1] > tmp {
+	//			right++
+	//		} else {
+	//			break
+	//		}
+	//	}
+	//	res += tmp * (right - i + 1) * (i - left + 1)
+	//	if res >= k {
+	//		res = res % k
+	//	}
+	//}
+	//return res
+
+	//官方题解
+	const mod int = 1e9 + 7
+	n := len(arr)
+	left := make([]int, n)
+	right := make([]int, n)
+	monoStack := []int{}
+	for i, x := range arr {
+		for len(monoStack) > 0 && x <= arr[monoStack[len(monoStack)-1]] {
+			monoStack = monoStack[:len(monoStack)-1]
+		}
+		if len(monoStack) == 0 {
+			left[i] = i + 1
+		} else {
+			left[i] = i - monoStack[len(monoStack)-1]
+		}
+		monoStack = append(monoStack, i)
+	}
+	monoStack = []int{}
+	for i := n - 1; i >= 0; i-- {
+		for len(monoStack) > 0 && arr[i] < arr[monoStack[len(monoStack)-1]] {
+			monoStack = monoStack[:len(monoStack)-1]
+		}
+		if len(monoStack) == 0 {
+			right[i] = n - i
+		} else {
+			right[i] = monoStack[len(monoStack)-1] - i
+		}
+		monoStack = append(monoStack, i)
+	}
+	for i, x := range arr {
+		ans = (ans + left[i]*right[i]*x) % mod
+	}
+	return
+
+}
+
+//twoSum
+func twoSum(numbers []int, target int) []int {
+	left, right := 0, len(numbers)-1
+
+	for left < right {
+		if numbers[left]+numbers[right] == target {
+			return []int{left + 1, right + 1}
+		} else if numbers[left]+numbers[right] > target {
+			right--
+		} else if numbers[left]+numbers[right] < target {
+			left++
+		}
+	}
+
+	return []int{}
+}
+
+//arraySign 1822. 数组元素积的符号 https://leetcode.cn/problems/sign-of-the-product-of-an-array/
+func arraySign(nums []int) int {
+	product := 1
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] > 0 {
+			product = product * 1
+		}
+		if nums[i] < 0 {
+			product = product * (-1)
+		} else if nums[i] == 0 {
+			return 0
+		}
+	}
+
+	if product > 0 {
+		return 1
+	}
+	return -1
+}
+
+////20221026
+func shortestSubarray(nums []int, k int) int {
+
+	return -1
+}
+
+//20221025
 func shortestBridge(grid [][]int) int {
 
 	return 0
