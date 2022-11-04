@@ -21,3 +21,13 @@ func numComponents(head *ListNode, nums []int) (ans int) {
 	}
 	return
 }
+
+//reversePrint 剑指 Offer 06. 从尾到头打印链表 https://leetcode.cn/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/description/?favorite=xb9nqhhg
+func reversePrint(head *ListNode) []int {
+	if head == nil {
+		res := make([]int, 0)
+		return res
+	}
+
+	return append(reversePrint(head.Next), head.Val)
+}

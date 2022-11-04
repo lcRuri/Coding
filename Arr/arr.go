@@ -1,6 +1,9 @@
 package Arr
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func min(x, y int) int {
 	if x < y {
@@ -247,4 +250,21 @@ func PartitionDisjoint(nums []int) int {
 		}
 	}
 	return res
+}
+
+//sortedSquares 977. 有序数组的平方 https://leetcode.cn/problems/squares-of-a-sorted-array/description/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs
+func sortedSquares(nums []int) []int {
+	for i, num := range nums {
+		if num < 0 {
+			nums[i] = -nums[i]
+		}
+	}
+
+	sort.Ints(nums)
+
+	for i, num := range nums {
+		nums[i] = num * num
+	}
+
+	return nums
 }

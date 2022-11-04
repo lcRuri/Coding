@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -297,16 +298,167 @@ func main() {
 	//fmt.Println(twoSum([]int{2, 3, 4}, 6))
 	//fmt.Println(twoSum([]int{-1, 0}, -1))
 
-	fmt.Println(sumSubarrayMins([]int{3, 1, 2, 4}))
-	fmt.Println(sumSubarrayMins([]int{11, 81, 94, 43, 3}))
-	fmt.Println(sumSubarrayMins([]int{71, 55, 82, 55}))
+	//fmt.Println(sumSubarrayMins([]int{3, 1, 2, 4}))
+	//fmt.Println(sumSubarrayMins([]int{11, 81, 94, 43, 3}))
+	//fmt.Println(sumSubarrayMins([]int{71, 55, 82, 55}))
 
+	//fmt.Println(averageValue([]int{1, 3, 6, 10, 12, 15}))
+	//fmt.Println(averageValue([]int{1, 2, 4, 7, 10}))
+
+	//fmt.Println(mostPopularCreator([]string{"alice", "bob", "alice", "chris"}, []string{"one", "two", "three", "four"}, []int{5, 10, 5, 4}))
+	//fmt.Println(mostPopularCreator([]string{"alice", "alice", "alice"}, []string{"a", "b", "c"}, []int{1, 2, 2}))
+
+	//fmt.Println(magicalString(7))
+	//fmt.Println(arrayStringsAreEqual([]string{"ab", "c"}, []string{"a", "bc"}))
+
+	fmt.Println(maxRepeating("ababc", "ba"))
+	fmt.Println(maxRepeating("ababc", "ab"))
+	fmt.Println(maxRepeating("aaabaaaabaaabaaaabaaaabaaaabaaaaba", "aaaba"))
+}
+
+//reachNumber 754. 到达终点数字 https://leetcode.cn/problems/reach-a-number/
+//如果一直相加等于target，那么直接返回
+//如果相加之后sum-target的余数为偶数，那么说明反转前面一个偶数就行，放回index
+//如果余数不是偶数，一直加，知道满足是偶数返回
+func reachNumber(target int) int {
+	sum := 0
+	index := 0
+	target = int(math.Abs(float64(target)))
+
+	for sum < target {
+		index++
+		sum += index
+	}
+
+	if sum == target {
+		return index
+	}
+
+	for (sum-target)%2 != 0 {
+		index++
+		sum += index
+	}
+
+	return index
+}
+
+//maxRepeating 1668. 最大重复子字符串 https://leetcode.cn/problems/maximum-repeating-substring/
+func maxRepeating(sequence string, word string) int {
+	k := 0
+
+	for i := 0; i < len(sequence); i++ {
+		j := i
+		m := 0
+		tmp := 0
+		for j < len(sequence) && m < len(word) && sequence[j] == word[m] {
+			if sequence[j] == word[m] {
+				j++
+				m++
+			} else {
+				i = j - 1
+				break
+			}
+
+			if m == len(word) {
+				m = 0
+				tmp++
+
+			}
+		}
+		if tmp > k {
+			k = tmp
+		}
+	}
+
+	return k
+}
+
+//arrayStringsAreEqual 1662. 检查两个字符串数组是否相等 https://leetcode.cn/problems/check-if-two-string-arrays-are-equivalent/
+func arrayStringsAreEqual(word1 []string, word2 []string) bool {
+	s1, s2 := "", ""
+	for _, w1 := range word1 {
+		s1 += w1
+	}
+	for _, w2 := range word2 {
+		s2 += w2
+	}
+
+	if s1 == s2 {
+		return true
+	}
+	return false
+}
+
+//magicalString 481. 神奇字符串 https://leetcode.cn/problems/magical-string/
+//https://leetcode.cn/problems/magical-string/solution/by-endlesscheng-z8o1/
+func magicalString(n int) int {
+	b := make([]byte, 0, n+1)
+	b = append(b, 1, 2, 2)
+	tmp := []byte{2}
+	for i := 2; len(b) < n; i++ {
+		//tmp[0] = b[len(b)-1] ^ 3
+		tmp[0] ^= 3
+		b = append(b, bytes.Repeat(tmp, int(b[i]))...)
+	}
+
+	return bytes.Count(b[:n], []byte{1})
+}
+
+//317
+func mostPopularCreator(creators []string, ids []string, views []int) [][]string {
+	res := [][]string{}
+	dic := make(map[string]int, 0)
+
+	for i, creator := range creators {
+		dic[creator] += views[i]
+	}
+	maxs := 0
+	for _, v := range dic {
+		if v >= maxs {
+			maxs = v
+		}
+	}
+
+	for i, creator := range creators {
+		if dic[creator] == maxs {
+
+			k := i
+			for j := i + 1; j < len(creators); j++ {
+				if creators[j] == creator && views[j] > views[k] {
+					k = j
+				}
+			}
+
+			res = append(res, []string{creator, ids[k]})
+		}
+
+		delete(dic, creator)
+
+	}
+
+	return res
+}
+
+//317
+func averageValue(nums []int) int {
+	res := 0
+	size := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i]%2 == 0 && nums[i]%3 == 0 {
+			res += nums[i]
+			size++
+		}
+	}
+	if size == 0 {
+		return 0
+	}
+	return res / size
 }
 
 //subArrayRanges 未完成2104. 子数组范围和 https://leetcode.cn/problems/sum-of-subarray-ranges/
-func subArrayRanges(nums []int) int64 {
-	return 0
-}
+//func subArrayRanges(nums []int) int64 {
+//	return 0
+//}
 
 //sumSubarrayMins 907. 子数组的最小值之和 https://leetcode.cn/problems/sum-of-subarray-minimums/
 func sumSubarrayMins(arr []int) (ans int) {
