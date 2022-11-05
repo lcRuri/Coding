@@ -222,3 +222,42 @@ func MergeAlternately(word1 string, word2 string) string {
 	}
 	return string(ans)
 }
+
+//reverseString 344. 反转字符串 https://leetcode.cn/problems/reverse-string/description/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs
+func reverseString(s []byte) {
+	//使用了额外空间
+	//tmp := make([]byte, 0)
+	//for i := len(s) - 1; i >= 0; i-- {
+	//	tmp = append(tmp, s[i])
+	//}
+	//copy(s, tmp)
+
+	//不使用额外空间
+	for i := 0; i < len(s)/2; i++ {
+		tmp := s[len(s)-i-1]
+		s[len(s)-i-1] = s[i]
+		s[i] = tmp
+	}
+}
+
+func ReverseWords(s string) string {
+	//使用额外空间
+	res := make([]byte, 0)
+	start, end := 0, 0
+	for i, i2 := range s {
+		if string(i2) == " " {
+			end = i
+			for j := end - 1; j >= start; j-- {
+				res = append(res, s[j])
+			}
+			res = append(res, s[end])
+			start = end + 1
+		}
+	}
+
+	for i := len(s) - 1; i >= start; i-- {
+		res = append(res, s[i])
+	}
+
+	return string(res)
+}

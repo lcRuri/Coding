@@ -311,9 +311,20 @@ func main() {
 	//fmt.Println(magicalString(7))
 	//fmt.Println(arrayStringsAreEqual([]string{"ab", "c"}, []string{"a", "bc"}))
 
-	fmt.Println(maxRepeating("ababc", "ba"))
-	fmt.Println(maxRepeating("ababc", "ab"))
-	fmt.Println(maxRepeating("aaabaaaabaaabaaaabaaaabaaaabaaaaba", "aaaba"))
+	//fmt.Println(maxRepeating("ababc", "ba"))
+	//fmt.Println(maxRepeating("ababc", "ab"))
+	//fmt.Println(maxRepeating("aaabaaaabaaabaaaabaaaabaaaabaaaaba", "aaaba"))
+
+	//fmt.Println(StringCoding.ReverseWords("Let's take LeetCode contest"))
+
+	//左闭右开
+	ints := []int{0, 1, 2, 3, 4, 5, 6}
+	fmt.Println(ints[0:2])
+	fmt.Println(ints[1:2])
+	fmt.Println(ints[0:])
+	fmt.Println(ints[1:])
+	fmt.Println(ints[:3])
+
 }
 
 //reachNumber 754. 到达终点数字 https://leetcode.cn/problems/reach-a-number/
