@@ -1,6 +1,9 @@
 package DayTest
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
 // Decrypt 1652. 拆炸弹 https://leetcode.cn/problems/defuse-the-bomb/ 2022/9/24
 //思路:生成一个和code一样的切片添加到后面
@@ -96,4 +99,10 @@ func RotatedDigits(n int) int {
 
 	return number
 
+}
+
+//Interpret 1678. 设计 Goal 解析器
+func Interpret(command string) string {
+	replaceAll := strings.ReplaceAll(command, "()", "o")
+	return strings.ReplaceAll(replaceAll, "(al)", "al")
 }
