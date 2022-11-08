@@ -334,7 +334,9 @@ func main() {
 	//fmt.Println(maximumSubarraySum([]int{1, 1, 1, 1, 1, 1}, 1))
 	//fmt.Println(maximumSubarraySum([]int{5, 3, 3, 1, 1}, 3))
 
-	fmt.Println(DayTest.Interpret("G()(al)"))
+	//fmt.Println(DayTest.Interpret("G()(al)"))
+
+	fmt.Println(DayTest.CountConsistentStrings("ab", []string{"ad", "bd", "aaab", "baa", "badab"}))
 
 }
 

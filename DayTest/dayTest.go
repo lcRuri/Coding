@@ -106,3 +106,24 @@ func Interpret(command string) string {
 	replaceAll := strings.ReplaceAll(command, "()", "o")
 	return strings.ReplaceAll(replaceAll, "(al)", "al")
 }
+
+func CountConsistentStrings(allowed string, words []string) int {
+	dic := make(map[string]int, len(allowed))
+	res := 0
+	for _, v := range allowed {
+		dic[string(v)]++
+	}
+
+	for _, word := range words {
+		for _, s := range word {
+			_, ok := dic[string(s)]
+			if !ok {
+				res--
+				break
+			}
+		}
+		res++
+	}
+
+	return res
+}

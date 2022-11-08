@@ -31,3 +31,47 @@ func reversePrint(head *ListNode) []int {
 
 	return append(reversePrint(head.Next), head.Val)
 }
+
+//middleNode 876. 链表的中间结点 https://leetcode.cn/problems/middle-of-the-linked-list/description/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs&q=go&orderBy=most_relevant
+//快慢指针
+func middleNode(head *ListNode) *ListNode {
+
+	fast := head
+	slow := head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	return slow
+}
+
+//removeNthFromEnd 19. 删除链表的倒数第 N 个结点 https://leetcode.cn/problems/remove-nth-node-from-end-of-list/description/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	p := head
+	size := 1
+	for p != nil && p.Next != nil {
+		p = p.Next
+		size++
+	}
+
+	if size == 1 {
+		return nil
+	}
+
+	if n == size {
+		head = head.Next
+		return head
+	}
+
+	p = head
+	q := head
+	for i := 0; i < size-n; i++ {
+		q = p
+		p = p.Next
+
+	}
+
+	q.Next = p.Next
+
+	return head
+}
