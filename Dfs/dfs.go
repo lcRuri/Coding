@@ -191,6 +191,7 @@ func dfs(grid [][]int, x int, y int, flags [][]bool) int {
 	return area
 }
 
+//mergeTrees 617. 合并二叉树 https://leetcode.cn/problems/merge-two-binary-trees/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs
 func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
 	//if root1 == nil && root2 == nil {
 	//	return nil
