@@ -118,3 +118,107 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 	return root
 
 }
+
+//FloodFill 733. 图像渲染 https://leetcode.cn/problems/flood-fill/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zsc
+func FloodFill(image [][]int, sr int, sc int, color int) [][]int {
+	level := image[sr][sc]
+	image[sr][sc] = color
+	if sr-1 >= 0 && image[sr-1][sc] == level && image[sr-1][sc] != color {
+		FloodFill(image, sr-1, sc, color)
+	}
+	if sr+1 < len(image) && image[sr+1][sc] == level && image[sr+1][sc] != color {
+		FloodFill(image, sr+1, sc, color)
+	}
+
+	if sc-1 >= 0 && image[sr][sc-1] == level && image[sr][sc-1] != color {
+		FloodFill(image, sr, sc-1, color)
+	}
+
+	if sc+1 < len(image[0]) && image[sr][sc+1] == level && image[sr][sc+1] != color {
+		FloodFill(image, sr, sc+1, color)
+	}
+
+	return image
+
+}
+
+var (
+	dx = []int{1, 0, 0, -1}
+	dy = []int{0, 1, -1, 0}
+)
+
+//MaxAreaOfIsland 695. 岛屿的最大面积 https://leetcode.cn/problems/max-area-of-island/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs
+func MaxAreaOfIsland(grid [][]int) int {
+	m, n := len(grid), len(grid[0])
+	res := 0
+
+	flags := make([][]bool, m)
+	for i := 0; i < m; i++ {
+		flags[i] = make([]bool, n)
+	}
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			area = 0
+			if grid[i][j] == 1 && flags[i][j] != true {
+				area = dfs(grid, i, j, flags)
+
+			}
+			if area > res {
+				res = area
+			}
+
+		}
+	}
+
+	return res
+}
+
+var area int
+
+func dfs(grid [][]int, x int, y int, flags [][]bool) int {
+	if grid[x][y] == 1 && flags[x][y] != true {
+		area++
+		flags[x][y] = true
+		for i := 0; i < 4; i++ {
+			mx, my := x+dx[i], y+dy[i]
+			if mx >= 0 && mx < len(grid) && my >= 0 && my < len(grid[0]) {
+				dfs(grid, mx, my, flags)
+			}
+		}
+	}
+
+	return area
+}
+
+func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
+	if root1 == nil && root2 == nil {
+		return nil
+	}
+	root := &TreeNode{
+		Val:   0,
+		Left:  nil,
+		Right: nil,
+	}
+	if root1 == nil && root2 != nil {
+		root.Val = root2.Val
+		root.Left = mergeTrees(nil, root2.Left)
+		root.Right = mergeTrees(nil, root2.Right)
+		return root
+	}
+	if root1 != nil && root2 == nil {
+		root.Val = root1.Val
+		root.Left = mergeTrees(root1.Left, nil)
+		root.Right = mergeTrees(root1.Right, nil)
+		return root
+	}
+	if root1 != nil && root2 != nil {
+		root.Val = root1.Val + root2.Val
+	}
+
+	root.Left = mergeTrees(root1.Left, root2.Left)
+	root.Right = mergeTrees(root1.Right, root2.Right)
+
+	return root
+
+}

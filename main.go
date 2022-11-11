@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/DayTest"
+	"coding/Dfs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -336,7 +336,14 @@ func main() {
 
 	//fmt.Println(DayTest.Interpret("G()(al)"))
 
-	fmt.Println(DayTest.CountConsistentStrings("ab", []string{"ad", "bd", "aaab", "baa", "badab"}))
+	//fmt.Println(DayTest.CountConsistentStrings("ab", []string{"ad", "bd", "aaab", "baa", "badab"}))
+
+	//fmt.Println(DayTest.HalvesAreAlike("book"))
+
+	//fmt.Println(Dfs.FloodFill([][]int{{1, 1, 1}, {1, 1, 0}, {1, 0, 1}}, 1, 1, 2))
+	//fmt.Println(Dfs.FloodFill([][]int{{0, 0, 0}, {0, 0, 0}}, 0, 0, 0))
+
+	fmt.Println(Dfs.MaxAreaOfIsland([][]int{{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}}))
 
 }
 

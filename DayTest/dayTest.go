@@ -127,3 +127,45 @@ func CountConsistentStrings(allowed string, words []string) int {
 
 	return res
 }
+
+func HalvesAreAlike(s string) bool {
+	l := len(s)
+
+	dic := map[byte]int{
+		'a': 1,
+		'e': 1,
+		'i': 1,
+		'o': 1,
+		'u': 1,
+		'A': 1,
+		'E': 1,
+		'I': 1,
+		'O': 1,
+		'U': 1,
+	}
+
+	cnt1, cnt2 := 0, 0
+
+	for i := 0; i < l/2; i++ {
+		_, ok := dic[s[i]]
+
+		if ok {
+			cnt1++
+		}
+	}
+
+	for i := l / 2; i < l; i++ {
+		_, ok := dic[s[i]]
+
+		if ok {
+			cnt2++
+		}
+	}
+
+	if cnt1 != cnt2 {
+		return false
+	}
+
+	return true
+
+}
