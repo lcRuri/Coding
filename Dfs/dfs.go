@@ -192,33 +192,68 @@ func dfs(grid [][]int, x int, y int, flags [][]bool) int {
 }
 
 func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
-	if root1 == nil && root2 == nil {
+	//if root1 == nil && root2 == nil {
+	//	return nil
+	//}
+	//root := &TreeNode{
+	//	Val:   0,
+	//	Left:  nil,
+	//	Right: nil,
+	//}
+	//if root1 == nil && root2 != nil {
+	//	root.Val = root2.Val
+	//	root.Left = mergeTrees(nil, root2.Left)
+	//	root.Right = mergeTrees(nil, root2.Right)
+	//	return root
+	//}
+	//if root1 != nil && root2 == nil {
+	//	root.Val = root1.Val
+	//	root.Left = mergeTrees(root1.Left, nil)
+	//	root.Right = mergeTrees(root1.Right, nil)
+	//	return root
+	//}
+	//if root1 != nil && root2 != nil {
+	//	root.Val = root1.Val + root2.Val
+	//}
+	//
+	//root.Left = mergeTrees(root1.Left, root2.Left)
+	//root.Right = mergeTrees(root1.Right, root2.Right)
+	//
+	//return root
+	if root1 == nil {
+		return root2
+	}
+	if root2 == nil {
+		return root1
+	}
+	root1.Val += root2.Val
+	root1.Left = mergeTrees(root1.Left, root2.Left)
+	root1.Right = mergeTrees(root1.Right, root2.Right)
+
+	return root1
+}
+
+type Node struct {
+	Val   int
+	Left  *Node
+	Right *Node
+	Next  *Node
+}
+
+//connect 116. 填充每个节点的下一个右侧节点指针 https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/description/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs
+func connect(root *Node) *Node {
+	if root == nil {
 		return nil
 	}
-	root := &TreeNode{
-		Val:   0,
-		Left:  nil,
-		Right: nil,
-	}
-	if root1 == nil && root2 != nil {
-		root.Val = root2.Val
-		root.Left = mergeTrees(nil, root2.Left)
-		root.Right = mergeTrees(nil, root2.Right)
-		return root
-	}
-	if root1 != nil && root2 == nil {
-		root.Val = root1.Val
-		root.Left = mergeTrees(root1.Left, nil)
-		root.Right = mergeTrees(root1.Right, nil)
-		return root
-	}
-	if root1 != nil && root2 != nil {
-		root.Val = root1.Val + root2.Val
+	if root.Left != nil {
+		root.Left.Next = root.Right
+		if root.Next != nil {
+			root.Right.Next = root.Next.Left
+		}
 	}
 
-	root.Left = mergeTrees(root1.Left, root2.Left)
-	root.Right = mergeTrees(root1.Right, root2.Right)
+	connect(root.Left)
+	connect(root.Right)
 
 	return root
-
 }
