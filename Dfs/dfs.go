@@ -259,3 +259,72 @@ func connect(root *Node) *Node {
 
 	return root
 }
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func reverseList(head *ListNode) *ListNode {
+	// if head == nil {
+	// 	return nil
+	// }
+
+	// if head.Next==nil{
+	// 	return head
+	// }
+
+	// p:=head.Next
+	// head.Next=nil
+	// q:=head
+	// for p!=nil {
+	// 	tmp:=p.Next
+	// 	p.Next=q
+	//     if tmp==nil{
+	//         return p
+	//     }
+	// 	q=p
+	// 	p=tmp
+	// }
+
+	// return p
+
+	var prev *ListNode
+	p := head
+	for p != nil {
+		q := p.Next
+		p.Next = prev
+		prev = p
+		p = q
+	}
+	return prev
+}
+
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+	head := &ListNode{}
+	p := head
+
+	for list1 != nil && list2 != nil {
+
+		if list1.Val < list2.Val {
+
+			p.Next = list1
+			p = p.Next
+			list1 = list1.Next
+		} else {
+
+			p.Next = list2
+			p = p.Next
+			list2 = list2.Next
+		}
+
+		if list1 == nil {
+			p.Next = list2
+		}
+		if list2 == nil {
+			p.Next = list1
+		}
+	}
+
+	return head.Next
+}
