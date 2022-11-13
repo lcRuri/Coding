@@ -314,3 +314,23 @@ func climbStairs(n int) int {
 	return dp[n]
 
 }
+
+//
+func Rob1(nums []int) int {
+	dp := make([]int, len(nums))
+	dp[0] = nums[0]
+	if len(nums) > 1 {
+		dp[1] = max(dp[0], nums[1])
+	}
+	for i := 2; i < len(nums); i++ {
+		dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+	}
+	res := 0
+	for i := 0; i < len(dp); i++ {
+		if res < dp[i] {
+			res = dp[i]
+		}
+	}
+
+	return res
+}
