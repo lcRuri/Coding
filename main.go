@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/Dfs"
+	"coding/Arr"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -343,8 +343,14 @@ func main() {
 	//fmt.Println(Dfs.FloodFill([][]int{{1, 1, 1}, {1, 1, 0}, {1, 0, 1}}, 1, 1, 2))
 	//fmt.Println(Dfs.FloodFill([][]int{{0, 0, 0}, {0, 0, 0}}, 0, 0, 0))
 
-	fmt.Println(Dfs.MaxAreaOfIsland([][]int{{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}}))
+	//fmt.Println(Dfs.MaxAreaOfIsland([][]int{{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}}))
 
+	//fmt.Println(DayTest.CustomSortString("jftiugkz", "kfiukutzjg"))
+
+	//fmt.Println(Arr.Combine(4, 2))
+	//fmt.Println(Arr.Combine(1, 1))
+
+	fmt.Println(Arr.Permute([]int{1, 2, 3}))
 }
 
 //maximumSubarraySum 6230. 长度为 K 子数组中的最大和 https://leetcode.cn/contest/weekly-contest-318/problems/maximum-sum-of-distinct-subarrays-with-length-k/

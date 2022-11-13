@@ -1,6 +1,7 @@
 package DayTest
 
 import (
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -168,4 +169,42 @@ func HalvesAreAlike(s string) bool {
 
 	return true
 
+}
+
+//CustomSortString 791. 自定义字符串排序 https://leetcode.cn/problems/custom-sort-string/description/
+func CustomSortString(order string, s string) string {
+	//arr := make([]byte, len(s))
+	//for i := 0; i < len(s); i++ {
+	//	arr[i] = s[i]
+	//}
+	//
+	//sort.Slice()
+	//res := ""
+	//for i := 0; i < len(order); i++ {
+	//	for j := 0; j < len(arr); j++ {
+	//		if arr[j] == order[i] {
+	//			res += string(arr[j])
+	//			arr = append(arr[:j], arr[j+1:]...)
+	//			j = -1
+	//		}
+	//	}
+	//}
+	//
+	//res += string(arr)
+	//
+	//return res
+
+	val := map[byte]int{}
+	for i, c := range order {
+		val[byte(c)] = i + 1
+	}
+
+	t := []byte(s)
+
+	//go里面的比较器
+	sort.Slice(t, func(i, j int) bool {
+		return val[t[i]] < val[t[j]]
+	})
+
+	return string(t)
 }

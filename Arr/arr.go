@@ -268,3 +268,68 @@ func sortedSquares(nums []int) []int {
 
 	return nums
 }
+
+var res [][]int
+var path = []int{}
+
+//Combine 77. 组合 https://leetcode.cn/problems/combinations/description/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs&languageTags=golang
+func Combine(n int, k int) [][]int {
+	res = [][]int{}
+	backTracking(n, k, 1)
+	return res
+}
+
+func backTracking(n, k, start int) {
+	if len(path) == k {
+		tmp := make([]int, k)
+		copy(tmp, path)
+		res = append(res, tmp)
+		return
+	}
+
+	for i := start; i <= n; i++ {
+		path = append(path, i)
+		backTracking(n, k, i+1)
+		path = path[:len(path)-1]
+	}
+
+}
+
+//Permute 46. 全排列 https://leetcode.cn/problems/permutations/description/?envType=study-plan&id=suan-fa-ru-men&plan=algorithms&plan_progress=4s8s8zs&languageTags=golang
+func Permute(nums []int) [][]int {
+	res = [][]int{}
+	backTracking1(len(nums), nums)
+	return res
+}
+
+func backTracking1(n int, nums []int) {
+	if len(nums) == 0 {
+		tmp := make([]int, len(path))
+		copy(tmp, path)
+		res = append(res, tmp)
+		return
+	}
+
+	for i := 0; i < n; i++ {
+		cur := nums[i]
+		path = append(path, cur)
+		nums = append(nums[:i], nums[i+1:]...)
+		backTracking1(len(nums), nums)
+		nums = append(nums[:i], append([]int{cur}, nums[i:]...)...)
+		path = path[:len(path)-1]
+	}
+
+}
+
+func letterCasePermutation(s string) []string {
+	result := []string{}
+
+	for _, str := range s {
+		if str >= 'a' && str <= 'z' || str >= 'A' && str <= 'Z' {
+
+		}
+	}
+
+	return result
+
+}
