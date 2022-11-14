@@ -352,7 +352,13 @@ func main() {
 
 	//fmt.Println(Arr.Permute([]int{1, 2, 3}))
 
-	fmt.Println(DP.Rob1([]int{2, 7, 9, 3, 1}))
+	//fmt.Println(DP.Rob1([]int{2, 7, 9, 3, 1}))
+
+	//fmt.Println(Bit.IsPowerOfTwo(8))
+
+	//fmt.Println(Bit.HammingWeight(uint32(11111111111111111111111111111101)))
+
+	fmt.Println(DP.MinimumTotal1([][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}}))
 }
 
 //maximumSubarraySum 6230. 长度为 K 子数组中的最大和 https://leetcode.cn/contest/weekly-contest-318/problems/maximum-sum-of-distinct-subarrays-with-length-k/

@@ -334,3 +334,35 @@ func Rob1(nums []int) int {
 
 	return res
 }
+
+func MinimumTotal1(triangle [][]int) int {
+	dp := make([][]int, len(triangle))
+
+	for i, _ := range dp {
+		dp[i] = make([]int, len(triangle))
+	}
+	dp[0][0] = triangle[0][0]
+	for i := 1; i < len(triangle); i++ {
+
+		for j := 0; j < len(triangle[i]); j++ {
+			if j == 0 {
+				dp[i][j] = dp[i-1][j] + triangle[i][0]
+				continue
+			}
+			if j == len(triangle[i])-1 {
+				dp[i][j] = dp[i-1][j-1] + triangle[i][j]
+				continue
+			}
+
+			dp[i][j] = min(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j]
+		}
+
+	}
+
+	res := dp[len(triangle)-1][0]
+	for i := 1; i < len(triangle[len(triangle)-1]); i++ {
+		res = min(res, dp[len(triangle)-1][i])
+	}
+
+	return res
+}
