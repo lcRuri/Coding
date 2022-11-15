@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/DP"
+	"coding/Bfs"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -358,7 +358,11 @@ func main() {
 
 	//fmt.Println(Bit.HammingWeight(uint32(11111111111111111111111111111101)))
 
-	fmt.Println(DP.MinimumTotal1([][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}}))
+	//fmt.Println(DP.MinimumTotal1([][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}}))
+
+	//fmt.Println(Bfs.UpdateMatrix([][]int{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}}))
+
+	fmt.Println(Bfs.OrangesRotting([][]int{{2, 1, 1}, {1, 1, 0}, {0, 1, 1}}))
 }
 
 //maximumSubarraySum 6230. 长度为 K 子数组中的最大和 https://leetcode.cn/contest/weekly-contest-318/problems/maximum-sum-of-distinct-subarrays-with-length-k/
