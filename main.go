@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/Bfs"
+	"coding/DayTest"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -362,7 +362,9 @@ func main() {
 
 	//fmt.Println(Bfs.UpdateMatrix([][]int{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}}))
 
-	fmt.Println(Bfs.OrangesRotting([][]int{{2, 1, 1}, {1, 1, 0}, {0, 1, 1}}))
+	//fmt.Println(Bfs.OrangesRotting([][]int{{2, 1, 1}, {1, 1, 0}, {0, 1, 1}}))
+
+	fmt.Println(DayTest.IsIdealPermutation([]int{1, 2, 0}))
 }
 
 //maximumSubarraySum 6230. 长度为 K 子数组中的最大和 https://leetcode.cn/contest/weekly-contest-318/problems/maximum-sum-of-distinct-subarrays-with-length-k/

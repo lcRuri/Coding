@@ -208,3 +208,60 @@ func CustomSortString(order string, s string) string {
 
 	return string(t)
 }
+
+//IsIdealPermutation 775. 全局倒置与局部倒置 https://leetcode.cn/problems/global-and-local-inversions/
+func IsIdealPermutation(nums []int) bool {
+	//m1 := 0
+	//m2 := 0
+	//
+	//// for i := 0; i < len(nums)-1; i++ {
+	//// 	if nums[i] > nums[i+1] {
+	//// 		m2++
+	//// 	}
+	//// }
+	//
+	//for i := 0; i < len(nums)-1; i++ {
+	//	if nums[i] > nums[i+1] {
+	//		m1++
+	//		m2++
+	//	}
+	//	for j := i + 2; j < len(nums); j++ {
+	//		if nums[i] > nums[j] {
+	//			m1++
+	//			if m1>m2{
+	//				return false
+	//			}
+	//		}
+	//	}
+	//}
+	//
+	//
+	//
+	//if m1 != m2 {
+	//	return false
+	//}
+	//
+	//return true
+
+	//只要有一个局部倒置就会有一个全局倒置，所有只要全局倒置存在一个不相邻的，则两者数量不相等，返回false
+	n := len(nums)
+	mins := nums[n-1]
+	for i := n - 2; i > 0; i-- {
+		if nums[i-1] > mins {
+			return false
+		}
+
+		mins = min(mins, nums[i])
+	}
+
+	return true
+
+}
+
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+
+	return y
+}
