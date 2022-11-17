@@ -2,6 +2,7 @@ package Bs
 
 import (
 	"math"
+	"sort"
 )
 
 //二分法一般有left right mid
@@ -207,11 +208,6 @@ func FirstBadVersion(n int) int {
 	return left
 }
 
-//SearchRange 未解决34. 在排序数组中查找元素的第一个和最后一个位置 https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/?envType=study-plan&id=binary-search-beginner&plan=binary-search&plan_progress=42xxjpm
-func SearchRange(nums []int, target int) []int {
-	return nil
-}
-
 //ArrangeCoins 441. 排列硬币 https://leetcode.cn/problems/arranging-coins/?envType=study-plan&id=binary-search-beginner&plan=binary-search&plan_progress=42xxjpm
 func ArrangeCoins(n int) int {
 	//row := make([]int, 0)
@@ -248,4 +244,49 @@ func FindKthPositive(arr []int, k int) int {
 	}
 
 	return res
+}
+
+//SearchRange 未解决34. 在排序数组中查找元素的第一个和最后一个位置 https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/?envType=study-plan&id=binary-search-beginner&plan=binary-search&plan_progress=42xxjpm
+//https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/solutions/1204360/zai-pai-xu-shu-zu-zhong-cha-zhao-yuan-su-w1h4/?languageTags=golang
+func SearchRange(nums []int, target int) []int {
+	//res := []int{-1, -1}
+	//left, right := 0, len(nums)-1
+	//if len(nums) == 1 && nums[0] == target {
+	//	return []int{0, 0}
+	//}
+	//for left <= right {
+	//	mid := (right-left)/2 + left
+	//
+	//	if nums[mid] == target {
+	//		res = []int{}
+	//		res = append(res, mid)
+	//		if nums[left] == target && left != mid {
+	//			res = append(res, left)
+	//			left = mid + 1
+	//		} else if nums[right] == target && right != mid {
+	//			res = append(res, right)
+	//			right = mid - 1
+	//		}
+	//	} else if nums[mid] > target {
+	//		right = mid - 1
+	//	} else {
+	//		left = mid + 1
+	//	}
+	//}
+	//
+	//sort.Ints(res)
+	//if len(res) == 1 {
+	//	res = append(res, res[0])
+	//}
+	//
+	//return res
+	left := sort.SearchInts(nums, target)
+
+	if left == len(nums) || nums[left] != target {
+		return []int{-1, -1}
+	}
+
+	right := sort.SearchInts(nums, target+1) - 1
+
+	return []int{left, right}
 }
