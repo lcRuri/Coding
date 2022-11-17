@@ -370,7 +370,9 @@ func main() {
 
 	//fmt.Println(Bs.SearchRange([]int{5, 7, 7, 8}, 8))
 	//fmt.Println(Bs.SearchRange([]int{1}, 1))
-	fmt.Println(Bs.SearchRange([]int{}, 0))
+	//fmt.Println(Bs.SearchRange([]int{}, 0))
+
+	fmt.Println(Bs.Search([]int{4, 5, 6, 7, 0, 1, 2}, 0))
 }
 
 //maximumSubarraySum 6230. 长度为 K 子数组中的最大和 https://leetcode.cn/contest/weekly-contest-318/problems/maximum-sum-of-distinct-subarrays-with-length-k/
