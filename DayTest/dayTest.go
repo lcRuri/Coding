@@ -265,3 +265,50 @@ func min(x, y int) int {
 
 	return y
 }
+
+//NumMatchingSubseq 792. 匹配子序列的单词数 https://leetcode.cn/problems/number-of-matching-subsequences/
+func NumMatchingSubseq(s string, words []string) int {
+	//res := 0
+	//
+	//for i := 0; i < len(words); i++ {
+	//	m := 0
+	//	flag := 0
+	//	for j := 0; j < len(words[i]); {
+	//		if words[i][j] == s[m] {
+	//			m++
+	//			flag++
+	//			j++
+	//		} else {
+	//			m++
+	//		}
+	//
+	//		if m == len(s) {
+	//			break
+	//		}
+	//	}
+	//	if flag == len(words[i]) {
+	//		res++
+	//	}
+	//}
+	//
+	//return res
+
+	ans := 0
+	d := [26][]string{}
+	for _, w := range words {
+		d[w[0]-'a'] = append(d[w[0]-'a'], w)
+	}
+	for _, c := range s {
+		q := d[c-'a']
+		d[c-'a'] = nil
+		for _, t := range q {
+			if len(t) == 1 {
+				ans++
+			} else {
+				d[t[1]-'a'] = append(d[t[1]-'a'], t[1:])
+			}
+		}
+	}
+	return ans
+
+}
