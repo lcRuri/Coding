@@ -363,3 +363,34 @@ func FindMin(nums []int) int {
 
 	return nums[left]
 }
+
+//FindPeakElement 162. 寻找峰值 https://leetcode.cn/problems/find-peak-element/?envType=study-plan&id=suan-fa-ji-chu&plan=algorithms&plan_progress=1ah3sii
+func FindPeakElement(nums []int) int {
+	left, right := 0, len(nums)-1
+
+	for left < right {
+		mid := (right-left)/2 + left
+
+		if mid == len(nums)-1 {
+			if nums[mid] > nums[mid-1] {
+				return mid
+			} else {
+				right = mid - 1
+			}
+		} else if mid == 0 {
+			if nums[mid] > nums[mid+1] {
+				return mid
+			} else {
+				left = mid + 1
+			}
+		} else if nums[mid] > nums[mid+1] && nums[mid] > nums[mid-1] {
+			return mid
+		} else if nums[mid-1] < nums[mid+1] {
+			left = mid + 1
+		} else {
+			right = mid - 1
+		}
+	}
+
+	return left
+}
