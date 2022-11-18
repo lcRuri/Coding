@@ -322,3 +322,44 @@ func Search(nums []int, target int) int {
 
 	return -1
 }
+
+//SearchMatrix 74. 搜索二维矩阵 https://leetcode.cn/problems/search-a-2d-matrix/description/?envType=study-plan&id=suan-fa-ji-chu&plan=algorithms&plan_progress=1ah3sii
+func SearchMatrix(matrix [][]int, target int) bool {
+	m, n := len(matrix), len(matrix[0])
+
+	for i, j := 0, 0; i < m && j < n; {
+		if matrix[i][j] == target {
+			//fmt.Println(i, j)
+			return true
+		}
+		if i+1 < m && matrix[i+1][j] <= target {
+			i++
+		} else if j+1 < n && matrix[i][j+1] <= target {
+			j++
+		} else {
+			i++
+			j++
+		}
+	}
+
+	return false
+}
+
+//FindMin 153. 寻找旋转排序数组中的最小值 https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/?envType=study-plan&id=suan-fa-ji-chu&plan=algorithms&plan_progress=1ah3sii
+func FindMin(nums []int) int {
+	//sort.Ints(nums)
+	//return nums[0]
+	left, right := 0, len(nums)-1
+
+	for left < right {
+		mid := (right-left)/2 + left
+
+		if nums[mid] < nums[right] {
+			right = mid
+		} else {
+			left = mid + 1
+		}
+	}
+
+	return nums[left]
+}

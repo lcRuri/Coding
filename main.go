@@ -372,7 +372,14 @@ func main() {
 	//fmt.Println(Bs.SearchRange([]int{1}, 1))
 	//fmt.Println(Bs.SearchRange([]int{}, 0))
 
-	fmt.Println(Bs.Search([]int{4, 5, 6, 7, 0, 1, 2}, 0))
+	//fmt.Println(Bs.Search([]int{4, 5, 6, 7, 0, 1, 2}, 0))
+
+	//fmt.Println(Bs.SearchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 3))
+	//fmt.Println(Bs.SearchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 13))
+
+	fmt.Println(Bs.FindMin([]int{4, 5, 6, 7, 0, 1, 2}))
+	fmt.Println(Bs.FindMin([]int{3, 1, 2}))
+
 }
 
 //maximumSubarraySum 6230. 长度为 K 子数组中的最大和 https://leetcode.cn/contest/weekly-contest-318/problems/maximum-sum-of-distinct-subarrays-with-length-k/
