@@ -312,3 +312,23 @@ func NumMatchingSubseq(s string, words []string) int {
 	return ans
 
 }
+
+func largestAltitude(gain []int) int {
+	high := 0
+	res := 0
+	for _, h := range gain {
+		high = high + h
+		if high > res {
+			res = high
+		}
+	}
+	return res
+}
+
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+
+	return y
+}

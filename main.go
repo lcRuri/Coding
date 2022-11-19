@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/Bs"
+	"coding/List"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -377,8 +377,15 @@ func main() {
 	//fmt.Println(Bs.SearchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 3))
 	//fmt.Println(Bs.SearchMatrix([][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}, 13))
 
-	fmt.Println(Bs.FindMin([]int{4, 5, 6, 7, 0, 1, 2}))
-	fmt.Println(Bs.FindMin([]int{3, 1, 2}))
+	//fmt.Println(Bs.FindMin([]int{4, 5, 6, 7, 0, 1, 2}))
+	//fmt.Println(Bs.FindMin([]int{3, 1, 2}))
+
+	list := List.MakeList([]int{1, 2, 3, 3, 4, 4, 5})
+	duplicates := List.DeleteDuplicates(list)
+	for duplicates != nil {
+		fmt.Println(duplicates.Val)
+		duplicates = duplicates.Next
+	}
 
 }
 

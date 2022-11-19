@@ -5,6 +5,17 @@ type ListNode struct {
 	Next *ListNode
 }
 
+var i = 0
+
+func MakeList(nums []int) *ListNode {
+	if len(nums) == 0 {
+		return nil
+	}
+	p := &ListNode{Val: nums[0], Next: nil}
+	p.Next = MakeList(nums[i+1:])
+	return p
+}
+
 //numComponents 817. 链表组件 https://leetcode.cn/problems/linked-list-components/
 func numComponents(head *ListNode, nums []int) (ans int) {
 	set := make(map[int]struct{}, len(nums))
@@ -74,4 +85,33 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	q.Next = p.Next
 
 	return head
+}
+
+func DeleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+	if head != nil && head.Next != nil {
+		return head
+	}
+	p := &ListNode{}
+	t := p
+	q := head
+	for q != nil && q.Next != nil {
+		flag := 0
+		for q.Next.Val == q.Val {
+			q = q.Next
+			flag++
+		}
+		if flag == 0 {
+			p.Next = q
+			p = q
+			q = q.Next
+		} else {
+			q = q.Next
+			p.Next = q
+		}
+	}
+
+	return t.Next
 }
