@@ -87,11 +87,13 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	return head
 }
 
+//DeleteDuplicates 82. 删除排序链表中的重复元素 II https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/description/?envType=study-plan&id=suan-fa-ji-chu&plan=algorithms&plan_progress=1ah3sii
+//思路：使用flag记录
 func DeleteDuplicates(head *ListNode) *ListNode {
 	if head == nil {
 		return nil
 	}
-	if head != nil && head.Next != nil {
+	if head != nil && head.Next == nil {
 		return head
 	}
 	p := &ListNode{}
@@ -99,7 +101,7 @@ func DeleteDuplicates(head *ListNode) *ListNode {
 	q := head
 	for q != nil && q.Next != nil {
 		flag := 0
-		for q.Next.Val == q.Val {
+		for q.Next != nil && q.Next.Val == q.Val {
 			q = q.Next
 			flag++
 		}
