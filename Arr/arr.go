@@ -337,3 +337,85 @@ func letterCasePermutation(s string) []string {
 func ThreeSum(nums []int) [][]int {
 	return nil
 }
+
+//numSubarrayProductLessThanK 713. 乘积小于 K 的子数组 https://leetcode.cn/problems/subarray-product-less-than-k/description/?envType=study-plan&id=suan-fa-ji-chu&plan=algorithms&plan_progress=1ah3sii
+func numSubarrayProductLessThanK(nums []int, k int) int {
+	res := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] < k {
+			res++
+		} else {
+			continue
+		}
+
+		j := i + 1
+		tmp := nums[i]
+		for j < len(nums) && tmp*nums[j] < k {
+			res++
+			tmp = tmp * nums[j]
+			j++
+		}
+
+	}
+
+	return res
+}
+
+//MinSubArrayLen 209. 长度最小的子数组 https://leetcode.cn/problems/minimum-size-subarray-sum/description/
+func MinSubArrayLen(target int, nums []int) int {
+	res := len(nums) + 1
+	tmp := 0
+	for i := 0; i < len(nums); i++ {
+		tmp += nums[i]
+		nums[i] = tmp
+	}
+	//
+	//if nums[len(nums)-1] >= target {
+	//	res = len(nums)
+	//}
+	//tmp = 0
+	//for i := 0; i < len(nums); i++ {
+	//	if nums[i] >= target {
+	//		if tmp == 0 {
+	//			tmp = i + 1
+	//		} else {
+	//			tmp = min(tmp, i+1)
+	//		}
+	//		if tmp < res {
+	//			res = tmp
+	//		}
+	//	}
+	//	for j := i + 1; j < len(nums); j++ {
+	//		if nums[j]-nums[i] >= target {
+	//			if tmp == 0 {
+	//				tmp = j - i
+	//			} else {
+	//				tmp = min(tmp, j-i)
+	//			}
+	//			if tmp < res {
+	//				res = tmp
+	//			}
+	//		}
+	//	}
+	//
+	//}
+	//
+	//return res
+	tmp = 0
+	k := len(nums) + 1
+	for i := len(nums) - 1; i >= 0; i-- {
+		if nums[i] >= target {
+			tmp = i + 1
+		}
+		j := 0
+
+		for nums[i]-nums[j] >= target && j < i {
+			k = min(i-j, tmp)
+			j++
+		}
+
+		res = min(min(k, tmp), res)
+	}
+
+	return res
+}

@@ -264,58 +264,6 @@ func ReverseWords(s string) string {
 	return string(res)
 }
 
-//checkInclusion 567. 字符串的排列 https://leetcode.cn/problems/permutation-in-string/
-func checkInclusion(s1 string, s2 string) bool {
-
-	// dic:=make(map[byte]bool,len(s1))
-
-	// flag:=0
-
-	// for i:=0;i<len(s1);i++{
-	//     dic[s1[i]]=true
-	// }
-
-	// for i:=0;i<len(s2);i++{
-	//     if dic[s2[i]]{
-	//         flag++
-	//         if flag==len(s1){
-	//             return true
-	//         }
-	//     }else{
-	//         flag=0
-	//     }
-	// }
-
-	// return false
-
-	m, n := len(s1), len(s2)
-	if m > n {
-		return false
-	}
-
-	var cnt1, cnt2 [26]int
-
-	for i, ch := range s1 {
-		cnt1[ch-'a']++
-		cnt2[s2[i]-'a']++
-	}
-
-	if cnt1 == cnt2 {
-		return true
-	}
-
-	for i := m; i < n; i++ {
-		cnt2[s2[i]-'a']++
-		cnt2[s2[i-m]-'a']--
-		if cnt2 == cnt1 {
-			return true
-		}
-	}
-
-	return false
-
-}
-
 func BackspaceCompare(s string, t string) bool {
 	s1 := stackCode(s)
 	t1 := stackCode(t)
@@ -391,4 +339,54 @@ func FindAnagrams(s string, p string) []int {
 	}
 
 	return ans
+}
+
+//checkInclusion 567. 字符串的排列 https://leetcode.cn/problems/permutation-in-string/
+func checkInclusion(s1 string, s2 string) bool {
+
+	// dic:=make(map[byte]bool,len(s1))
+	// flag:=0
+	// for i:=0;i<len(s1);i++{
+	//     dic[s1[i]]=true
+	// }
+
+	// for i:=0;i<len(s2);i++{
+	//     if dic[s2[i]]{
+	//         flag++
+	//         if flag==len(s1){
+	//             return true
+	//         }
+	//     }else{
+	//         flag=0
+	//     }
+	// }
+
+	// return false
+
+	m, n := len(s1), len(s2)
+	if m > n {
+		return false
+	}
+
+	var cnt1, cnt2 [26]int
+
+	for i, ch := range s1 {
+		cnt1[ch-'a']++
+		cnt2[s2[i]-'a']++
+	}
+
+	if cnt1 == cnt2 {
+		return true
+	}
+
+	for i := m; i < n; i++ {
+		cnt2[s2[i]-'a']++
+		cnt2[s2[i-m]-'a']--
+		if cnt2 == cnt1 {
+			return true
+		}
+	}
+
+	return false
+
 }

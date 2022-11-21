@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/StringCoding"
+	"coding/Arr"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -391,7 +391,12 @@ func main() {
 
 	//fmt.Println(StringCoding.BackspaceCompare("ab##", "c#d#"))
 
-	fmt.Println(StringCoding.FindAnagrams("cbaebabacd", "abc"))
+	//fmt.Println(StringCoding.FindAnagrams("cbaebabacd", "abc"))
+
+	fmt.Println(Arr.MinSubArrayLen(5, []int{2, 3, 1, 1, 1, 1, 1}))
+	fmt.Println(Arr.MinSubArrayLen(6, []int{10, 2, 3}))
+	fmt.Println(Arr.MinSubArrayLen(15, []int{1, 2, 3, 4, 5}))
+	fmt.Println(Arr.MinSubArrayLen(7, []int{2, 3, 1, 2, 4, 3}))
 }
 
 func maxArea(height []int) int {
