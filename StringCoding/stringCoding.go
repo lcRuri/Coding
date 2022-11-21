@@ -1,6 +1,8 @@
 package StringCoding
 
-import "strings"
+import (
+	"strings"
+)
 
 //LongestPalindrome 5. 最长回文子串 https://leetcode.cn/problems/longest-palindromic-substring/
 //思路：中心扩散
@@ -312,4 +314,81 @@ func checkInclusion(s1 string, s2 string) bool {
 
 	return false
 
+}
+
+func BackspaceCompare(s string, t string) bool {
+	s1 := stackCode(s)
+	t1 := stackCode(t)
+
+	return s1 == t1
+}
+
+func stackCode(s string) string {
+	stack := make([]byte, 0)
+	for i := 0; i < len(s); i++ {
+		if s[i] == '#' {
+			if len(stack) != 0 {
+				stack = stack[:len(stack)-1]
+			} else {
+				continue
+			}
+		} else {
+			stack = append(stack, s[i])
+		}
+	}
+
+	return string(stack)
+}
+
+//FindAnagrams 438. 找到字符串中所有字母异位词 https://leetcode.cn/problems/find-all-anagrams-in-a-string/description/
+func FindAnagrams(s string, p string) []int {
+	ans := []int{}
+	//dic := make(map[byte]int, len(p))
+	//
+	//for i := 0; i < len(p); i++ {
+	//	dic[p[i]] = 1
+	//}
+	//
+	//comp := []byte(p)
+	//sort.Slice(comp, func(i, j int) bool {
+	//	return comp[i] < comp[j]
+	//})
+	//for i := 0; i < len(s)-len(p)+1; i++ {
+	//	_, ok := dic[s[i]]
+	//	if ok && i+len(p) <= len(s) {
+	//		tmp := []byte(s[i : i+len(p)])
+	//		sort.Slice(tmp, func(i, j int) bool {
+	//			return tmp[i] < tmp[j]
+	//		})
+	//
+	//		if string(tmp) == string(comp) {
+	//			res = append(res, i)
+	//		}
+	//
+	//	}
+	//}
+
+	sLen, pLen := len(s), len(p)
+	if sLen < pLen {
+		return ans
+	}
+
+	var sCount, pCount [26]int
+	for i, ch := range p {
+		sCount[s[i]-'a']++
+		pCount[ch-'a']++
+	}
+	if sCount == pCount {
+		ans = append(ans, 0)
+	}
+
+	for i, ch := range s[:sLen-pLen] {
+		sCount[ch-'a']--
+		sCount[s[i+pLen]-'a']++
+		if sCount == pCount {
+			ans = append(ans, i+1)
+		}
+	}
+
+	return ans
 }

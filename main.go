@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/List"
+	"coding/StringCoding"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -380,14 +380,36 @@ func main() {
 	//fmt.Println(Bs.FindMin([]int{4, 5, 6, 7, 0, 1, 2}))
 	//fmt.Println(Bs.FindMin([]int{3, 1, 2}))
 
-	list := List.MakeList([]int{1, 1})
-	duplicates := List.DeleteDuplicates(list)
-	for duplicates != nil {
-		fmt.Println(duplicates.Val)
-		duplicates = duplicates.Next
-	}
+	//list := List.MakeList([]int{1, 1})
+	//duplicates := List.DeleteDuplicates(list)
+	//for duplicates != nil {
+	//	fmt.Println(duplicates.Val)
+	//	duplicates = duplicates.Next
+	//}
 
 	//fmt.Println(Arr.ThreeSum([]int{-1, 0, 1, 2, -1, -4}))
+
+	//fmt.Println(StringCoding.BackspaceCompare("ab##", "c#d#"))
+
+	fmt.Println(StringCoding.FindAnagrams("cbaebabacd", "abc"))
+}
+
+func maxArea(height []int) int {
+	l, r := 0, len(height)-1
+	res := 0
+	for l < r {
+		tmp := Min(height[l], height[r]) * (r - l)
+		if tmp > res {
+			res = tmp
+		}
+		if height[l] < height[r] {
+			l++
+		} else {
+			r--
+		}
+	}
+
+	return res
 }
 
 //maximumSubarraySum 6230. 长度为 K 子数组中的最大和 https://leetcode.cn/contest/weekly-contest-318/problems/maximum-sum-of-distinct-subarrays-with-length-k/
