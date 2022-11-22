@@ -334,6 +334,7 @@ func max(x, y int) int {
 	return y
 }
 
+//1122
 func nthMagicalNumber(n int, a int, b int) int {
 	num := 0
 	for i := 2; ; i++ {
@@ -346,4 +347,18 @@ func nthMagicalNumber(n int, a int, b int) int {
 	}
 
 	return 0
+}
+
+//countBalls 1742. 盒子中小球的最大数量 https://leetcode.cn/problems/maximum-number-of-balls-in-a-box/
+func countBalls(lowLimit, highLimit int) (ans int) {
+	count := map[int]int{}
+	for i := lowLimit; i <= highLimit; i++ {
+		sum := 0
+		for x := i; x > 0; x /= 10 {
+			sum += x % 10
+		}
+		count[sum]++
+		ans = max(ans, count[sum])
+	}
+	return
 }
