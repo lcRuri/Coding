@@ -1,6 +1,7 @@
 package DayTest
 
 import (
+	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -331,4 +332,18 @@ func max(x, y int) int {
 	}
 
 	return y
+}
+
+func nthMagicalNumber(n int, a int, b int) int {
+	num := 0
+	for i := 2; ; i++ {
+		if i%a == 0 || i%b == 0 {
+			num++
+		}
+		if num == n {
+			return i % (int(math.Pow(float64(10), float64(9))) + 7)
+		}
+	}
+
+	return 0
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"coding/Arr"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -393,10 +392,18 @@ func main() {
 
 	//fmt.Println(StringCoding.FindAnagrams("cbaebabacd", "abc"))
 
-	fmt.Println(Arr.MinSubArrayLen(5, []int{2, 3, 1, 1, 1, 1, 1}))
-	fmt.Println(Arr.MinSubArrayLen(6, []int{10, 2, 3}))
-	fmt.Println(Arr.MinSubArrayLen(15, []int{1, 2, 3, 4, 5}))
-	fmt.Println(Arr.MinSubArrayLen(7, []int{2, 3, 1, 2, 4, 3}))
+	//fmt.Println(Arr.MinSubArrayLen(5, []int{2, 3, 1, 1, 1, 1, 1}))
+	//fmt.Println(Arr.MinSubArrayLen(6, []int{10, 2, 3}))
+	//fmt.Println(Arr.MinSubArrayLen(15, []int{1, 2, 3, 4, 5}))
+	//fmt.Println(Arr.MinSubArrayLen(7, []int{2, 3, 1, 2, 4, 3}))
+
+	//fmt.Println(Bfs.NumIslands([][]byte{{'1', '1', '1', '1', '0'}, {'1', '1', '0', '1', '0'}, {'1', '1', '0', '0', '0'}, {'0', '0', '0', '0', '0'}}))
+
+	//fmt.Println(Bfs.FindCircleNum([][]int{{1, 0, 0, 1}, {0, 1, 1, 0}, {0, 1, 1, 1}, {1, 0, 1, 1}}))
+	//fmt.Println(Bfs.FindCircleNum([][]int{{1, 1, 0}, {1, 1, 0}, {0, 0, 1}}))
+	//fmt.Println(Bfs.FindCircleNum([][]int{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}))
+	//fmt.Println(Bfs.FindCircleNum([][]int{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}))
+
 }
 
 func maxArea(height []int) int {
