@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"coding/DayTest"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -404,6 +405,7 @@ func main() {
 	//fmt.Println(Bfs.FindCircleNum([][]int{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}))
 	//fmt.Println(Bfs.FindCircleNum([][]int{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}))
 
+	fmt.Println(DayTest.NumSubarrayBoundedMax([]int{2, 1, 4, 3}, 2, 3))
 }
 
 func maxArea(height []int) int {

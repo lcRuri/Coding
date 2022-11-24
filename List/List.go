@@ -4,6 +4,11 @@ type ListNode struct {
 	Val  int
 	Next *ListNode
 }
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
 
 var i = 0
 
@@ -116,4 +121,29 @@ func DeleteDuplicates(head *ListNode) *ListNode {
 	}
 
 	return t.Next
+}
+
+//isSubtree 572. 另一棵树的子树 https://leetcode.cn/problems/subtree-of-another-tree/?envType=study-plan&id=suan-fa-ji-chu&plan=algorithms&plan_progress=1ah3sii
+func isSubtree(root *TreeNode, subRoot *TreeNode) bool {
+	if root == nil {
+		return false
+	}
+
+	return check(root, subRoot) || isSubtree(root.Left, subRoot) || isSubtree(root.Right, subRoot)
+}
+
+func check(a, b *TreeNode) bool {
+	if a == nil && b == nil {
+		return true
+	}
+
+	if a == nil || b == nil {
+		return false
+	}
+
+	if a.Val == b.Val {
+		return check(a.Left, b.Left) && check(a.Right, b.Right)
+	}
+
+	return false
 }

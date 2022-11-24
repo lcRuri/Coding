@@ -362,3 +362,26 @@ func countBalls(lowLimit, highLimit int) (ans int) {
 	}
 	return
 }
+
+//NumSubarrayBoundedMax 795. 区间子数组个数 https://leetcode.cn/problems/number-of-subarrays-with-bounded-maximum/description/
+func NumSubarrayBoundedMax(nums []int, left int, right int) int {
+
+	res := 0
+	l1, l2 := -1, -1
+
+	for i, num := range nums {
+		if num >= left && num <= right {
+			l1 = i
+		}
+		if num > right {
+			l2 = i
+			l1 = -1
+		}
+
+		if l1 != -1 {
+			res += l1 - l2
+		}
+	}
+
+	return res
+}
