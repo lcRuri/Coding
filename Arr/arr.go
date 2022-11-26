@@ -419,3 +419,14 @@ func MinSubArrayLen(target int, nums []int) int {
 
 	return res
 }
+
+//intervalIntersection 986. 区间列表的交集 https://leetcode.cn/problems/interval-list-intersections/?envType=study-plan&id=suan-fa-ji-chu&plan=algorithms&plan_progress=1ah3sii
+//func intervalIntersection(firstList [][]int, secondList [][]int) [][]int {
+//	if len(firstList) == 0 || len(secondList) == 0 {
+//		return [][]int{}
+//	}
+//	i, j := 0, 0
+//	for {
+//
+//	}
+//}
