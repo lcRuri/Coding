@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/Trunk"
+	"coding/DayTest"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -407,7 +407,10 @@ func main() {
 
 	//fmt.Println(DayTest.NumSubarrayBoundedMax([]int{2, 1, 4, 3}, 2, 3))
 
-	fmt.Println(Trunk.Subsets([]int{1, 2, 3}))
+	//fmt.Println(Trunk.Subsets([]int{1, 2, 3}))
+	fmt.Println(DayTest.Check([]int{3, 4, 5, 1, 2}))
+	fmt.Println(DayTest.Check([]int{6, 10, 6}))
+	fmt.Println(DayTest.Check([]int{7, 9, 1, 1, 1, 3}))
 }
 
 func maxArea(height []int) int {

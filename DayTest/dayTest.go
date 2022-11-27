@@ -385,3 +385,32 @@ func NumSubarrayBoundedMax(nums []int, left int, right int) int {
 
 	return res
 }
+
+//Check 1752. 检查数组是否经排序和轮转得到 https://leetcode.cn/problems/check-if-array-is-sorted-and-rotated/
+func Check(nums []int) bool {
+	mins := nums[0]
+	flag := 0
+	n := len(nums)
+	tmp := make([]int, n)
+	for i := 1; i < len(nums); i++ {
+		if nums[i] <= mins && nums[i] != nums[i-1] {
+			flag = i
+			mins = nums[i]
+		}
+	}
+
+	x := n - flag
+
+	for i := 0; i < len(nums); i++ {
+		loc := (i + x) % n
+		tmp[loc] = nums[i]
+	}
+
+	for i := 1; i < len(tmp); i++ {
+		if tmp[i] < tmp[i-1] {
+			return false
+		}
+	}
+
+	return true
+}
