@@ -414,3 +414,80 @@ func Check(nums []int) bool {
 
 	return true
 }
+
+//LargestSumOfAverages 813. 最大平均值和的分组 https://leetcode.cn/problems/largest-sum-of-averages/
+func LargestSumOfAverages(nums []int, k int) float64 {
+	sort.Ints(nums)
+	res := 0
+
+	if k == 1 {
+		for _, num := range nums {
+			res += num
+		}
+		return float64(res / len(nums))
+	}
+
+	for i := 0; i < k-1; i++ {
+		res += nums[len(nums)-1-i]
+	}
+	var tmp float64
+	for i := 0; i < len(nums)-k+1; i++ {
+		tmp += float64(nums[i])
+	}
+
+	t := tmp / float64(len(nums)-k+1)
+	return float64(res) + t
+
+}
+
+//NearestValidPoint 1779. 找到最近的有相同 X 或 Y 坐标的点 https://leetcode.cn/problems/find-nearest-point-that-has-the-same-x-or-y-coordinate/description/
+func NearestValidPoint(x int, y int, points [][]int) int {
+	res := -1
+	distance := 32767
+	tmp := distance + 1
+	for i := 0; i < len(points); i++ {
+
+		if points[i][0] == x || points[i][1] == y {
+			tmp = int(math.Abs(float64(x-points[i][0])) + math.Abs(float64(y-points[i][1])))
+		}
+		if tmp < distance {
+			distance = tmp
+			res = i
+		} else if tmp == distance {
+			if i < res {
+				res = i
+			}
+		}
+
+	}
+
+	return res
+}
+
+//SecondHighest 1796. 字符串中第二大的数字 https://leetcode.cn/problems/second-largest-digit-in-a-string/description/
+func SecondHighest(s string) int {
+	res := -1
+	min := '0'
+	for _, v := range s {
+		if v >= '0' && v <= '9' {
+			if v > min {
+				min = v
+			}
+		}
+	}
+
+	tmp := '!'
+	for _, v := range s {
+		if v >= '0' && v <= min-1 {
+			if v > tmp {
+				tmp = v
+			}
+		}
+	}
+	if tmp == '!' {
+		return -1
+	}
+
+	res, _ = strconv.Atoi(string(tmp))
+	return res
+}

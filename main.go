@@ -408,9 +408,17 @@ func main() {
 	//fmt.Println(DayTest.NumSubarrayBoundedMax([]int{2, 1, 4, 3}, 2, 3))
 
 	//fmt.Println(Trunk.Subsets([]int{1, 2, 3}))
-	fmt.Println(DayTest.Check([]int{3, 4, 5, 1, 2}))
-	fmt.Println(DayTest.Check([]int{6, 10, 6}))
-	fmt.Println(DayTest.Check([]int{7, 9, 1, 1, 1, 3}))
+	//fmt.Println(DayTest.Check([]int{3, 4, 5, 1, 2}))
+	//fmt.Println(DayTest.Check([]int{6, 10, 6}))
+	//fmt.Println(DayTest.Check([]int{7, 9, 1, 1, 1, 3}))
+
+	//fmt.Println(DayTest.LargestSumOfAverages([]int{9, 1, 2, 3, 9}, 3))
+	//fmt.Println(DayTest.LargestSumOfAverages([]int{1, 2, 3, 4, 5, 6, 7}, 4))
+
+	//fmt.Println(DayTest.NearestValidPoint(3, 4, [][]int{{1, 2}, {3, 1}, {2, 4}, {2, 3}, {4, 4}}))
+
+	fmt.Println(DayTest.SecondHighest("ck077"))
+
 }
 
 func maxArea(height []int) int {
