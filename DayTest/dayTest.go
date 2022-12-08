@@ -5,6 +5,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // Decrypt 1652. 拆炸弹 https://leetcode.cn/problems/defuse-the-bomb/ 2022/9/24
@@ -490,4 +491,86 @@ func SecondHighest(s string) int {
 
 	res, _ = strconv.Atoi(string(tmp))
 	return res
+}
+
+//NumDifferentIntegers 1805. 字符串中不同整数的数目 https://leetcode.cn/problems/number-of-different-integers-in-a-string/
+func NumDifferentIntegers(word string) int {
+	res := 0
+	words := []byte(word)
+	dic := make(map[string]int, 0)
+	for i := 0; i < len(words); i++ {
+		if words[i] >= 'a' && words[i] <= 'z' {
+			words[i] = ' '
+		}
+	}
+
+	for i := 0; i < len(words); i++ {
+		s := ""
+		flag := 0
+
+		for i < len(words) && words[i] != ' ' {
+			if words[i] == '0' && flag == 0 {
+				i++
+				continue
+			}
+			s += string(words[i])
+			flag = 1
+			i++
+		}
+		if flag == 1 {
+			//num, _ := strconv.Atoi(s)
+			//itoa := strconv.Itoa(num)
+			_, ok := dic[s]
+			if !ok {
+				res++
+				dic[s]++
+			}
+		}
+
+	}
+
+	return res
+}
+
+func NumDifferentIntegers1(word string) int {
+	set := map[string]struct{}{}
+	for _, s := range strings.FieldsFunc(word, unicode.IsLower) {
+		for len(s) > 1 && s[0] == '0' {
+			s = s[1:]
+		}
+		set[s] = struct{}{}
+	}
+	return len(set)
+}
+
+//SquareIsWhite 1812. 判断国际象棋棋盘中一个格子的颜色 https://leetcode.cn/problems/determine-color-of-a-chessboard-square/
+func SquareIsWhite(coordinates string) bool {
+	if (coordinates[0]-'a')%2 == 0 {
+		if coordinates[1] == '1' || coordinates[1] == '3' || coordinates[1] == '5' || coordinates[1] == '7' {
+			return false
+		} else {
+			return true
+		}
+	} else {
+		if coordinates[1] == '1' || coordinates[1] == '3' || coordinates[1] == '5' || coordinates[1] == '7' {
+			return true
+		} else {
+			return false
+		}
+	}
+}
+
+//CheckPowersOfThree 1780. 判断一个数字是否可以表示成三的幂的和 https://leetcode.cn/problems/check-if-number-is-a-sum-of-powers-of-three/description/
+func CheckPowersOfThree(n int) bool {
+	num := n
+	left := 0
+	for num != 0 {
+		left = num % 3
+		num = num / 3
+		if left > 1 {
+			return false
+		}
+	}
+
+	return true
 }

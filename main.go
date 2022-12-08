@@ -417,7 +417,17 @@ func main() {
 
 	//fmt.Println(DayTest.NearestValidPoint(3, 4, [][]int{{1, 2}, {3, 1}, {2, 4}, {2, 3}, {4, 4}}))
 
-	fmt.Println(DayTest.SecondHighest("ck077"))
+	//fmt.Println(DayTest.SecondHighest("ck077"))
+	//fmt.Println(Trunk.Arrange([]int{1, 2, 3, 4}))
+
+	//fmt.Println(DayTest.NumDifferentIntegers1("a1b01c001"))
+
+	//fmt.Println(DayTest.SquareIsWhite("a1"))
+	//fmt.Println(DayTest.SquareIsWhite("h3"))
+
+	fmt.Println(DayTest.CheckPowersOfThree(11))
+	fmt.Println(DayTest.CheckPowersOfThree(21))
+	fmt.Println(DayTest.CheckPowersOfThree(91))
 
 }
 
