@@ -574,3 +574,42 @@ func CheckPowersOfThree(n int) bool {
 
 	return true
 }
+
+//BeautySum 1781. 所有子字符串美丽值之和 https://leetcode.cn/problems/sum-of-beauty-of-all-substrings/description/
+func BeautySum(s string) int {
+	left, right := 0, 1
+	res := 0
+	for left < len(s)-2 {
+		res += count(s[left : right+1])
+		right++
+		if right == len(s) {
+			left++
+			right = left + 1
+		}
+	}
+
+	return res
+}
+
+//计算一个字符串的美丽值
+func count(s string) int {
+	cou := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		cou[s[i]-'a']++
+	}
+	maxs, mins := 0, 1000
+	for _, v := range cou {
+		if v > 0 {
+			if v > maxs {
+				maxs = v
+			}
+			if v < mins {
+				mins = v
+			}
+		}
+
+	}
+
+	return maxs - mins
+}

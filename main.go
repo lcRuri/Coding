@@ -425,9 +425,15 @@ func main() {
 	//fmt.Println(DayTest.SquareIsWhite("a1"))
 	//fmt.Println(DayTest.SquareIsWhite("h3"))
 
-	fmt.Println(DayTest.CheckPowersOfThree(11))
-	fmt.Println(DayTest.CheckPowersOfThree(21))
-	fmt.Println(DayTest.CheckPowersOfThree(91))
+	//fmt.Println(DayTest.CheckPowersOfThree(11))
+	//fmt.Println(DayTest.CheckPowersOfThree(21))
+	//fmt.Println(DayTest.CheckPowersOfThree(91))
+
+	fmt.Println(DayTest.BeautySum("aabcb"))
+	fmt.Println(DayTest.BeautySum("aabcbaa"))
+
+	//s := "aabcb"
+	//fmt.Println(s[0:5])
 
 }
 
