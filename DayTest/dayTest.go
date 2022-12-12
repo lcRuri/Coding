@@ -613,3 +613,20 @@ func count(s string) int {
 
 	return maxs - mins
 }
+
+//checkIfPangram 1832. 判断句子是否为全字母句 https://leetcode.cn/problems/check-if-the-sentence-is-pangram/description/
+func checkIfPangram(sentence string) bool {
+	cnt := [26]int{}
+
+	for i := 0; i < len(sentence); i++ {
+		cnt[sentence[i]-'a']++
+	}
+
+	for i := 0; i < len(cnt); i++ {
+		if cnt[i] == 0 {
+			return false
+		}
+	}
+
+	return true
+}
