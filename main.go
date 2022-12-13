@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/DayTest"
+	"coding/Offer"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -429,11 +429,19 @@ func main() {
 	//fmt.Println(DayTest.CheckPowersOfThree(21))
 	//fmt.Println(DayTest.CheckPowersOfThree(91))
 
-	fmt.Println(DayTest.BeautySum("aabcb"))
-	fmt.Println(DayTest.BeautySum("aabcbaa"))
+	//fmt.Println(DayTest.BeautySum("aabcb"))
+	//fmt.Println(DayTest.BeautySum("aabcbaa"))
 
 	//s := "aabcb"
 	//fmt.Println(s[0:5])
+
+	//fmt.Println(Offer.NumWays(44))
+
+	//fmt.Println(Offer.Fib(5))
+
+	fmt.Println(Offer.Exist([][]byte{{'A', 'B', 'C', 'E'}, {'S', 'F', 'E', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCESEEEFS"))
+	fmt.Println(Offer.Exist([][]byte{{'C', 'A', 'A'}, {'A', 'A', 'A'}, {'B', 'C', 'D'}}, "AAB"))
+	fmt.Println(Offer.Exist([][]byte{{'a', 'a'}}, "aaa"))
 
 }
 
