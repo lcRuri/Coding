@@ -109,3 +109,53 @@ func applyOperations(nums []int) []int {
 
 	return res
 }
+
+func SimilarPairs(words []string) int {
+	res := 0
+
+	cnt := make([][]int, len(words))
+	for i := 0; i < len(cnt); i++ {
+		cnt[i] = make([]int, 26)
+	}
+	for i := 0; i < len(words); i++ {
+		for j := 0; j < len(words[i]); j++ {
+			if cnt[i][words[i][j]-'a'] > 0 {
+				continue
+			} else {
+				cnt[i][words[i][j]-'a']++
+			}
+
+		}
+	}
+
+	for i := 0; i < len(cnt); i++ {
+
+		for j := i + 1; j < len(cnt); j++ {
+			flag := 1
+			for k := 0; k < 26; k++ {
+				if cnt[i][k] != cnt[j][k] {
+					flag = 0
+				}
+			}
+			if flag == 1 {
+				res++
+			}
+
+		}
+	}
+
+	return res
+}
+
+func smallestValue(n int) int {
+	flag := 0
+	for i := 2; i <= n; i++ {
+		if n%i == 0 {
+			flag = 1
+		}
+	}
+	if flag == 0 {
+		return n
+	}
+	return 0
+}

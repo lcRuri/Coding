@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/Offer"
+	"coding/Week"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -439,9 +439,34 @@ func main() {
 
 	//fmt.Println(Offer.Fib(5))
 
-	fmt.Println(Offer.Exist([][]byte{{'A', 'B', 'C', 'E'}, {'S', 'F', 'E', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCESEEEFS"))
-	fmt.Println(Offer.Exist([][]byte{{'C', 'A', 'A'}, {'A', 'A', 'A'}, {'B', 'C', 'D'}}, "AAB"))
-	fmt.Println(Offer.Exist([][]byte{{'a', 'a'}}, "aaa"))
+	//fmt.Println(Offer.Exist([][]byte{{'A', 'B', 'C', 'E'}, {'S', 'F', 'E', 'S'}, {'A', 'D', 'E', 'E'}}, "ABCESEEEFS"))
+	//fmt.Println(Offer.Exist([][]byte{{'C', 'A', 'A'}, {'A', 'A', 'A'}, {'B', 'C', 'D'}}, "AAB"))
+	//fmt.Println(Offer.Exist([][]byte{{'a', 'a'}}, "aaa"))
+
+	//fmt.Println(DayTest.DistanceLimitedPathsExist(3, [][]int{{0, 1, 2}, {1, 2, 4}, {2, 0, 8}, {1, 0, 16}}, [][]int{{0, 1, 2}, {0, 2, 5}}))
+	//fmt.Println(DayTest.DistanceLimitedPathsExist(5, [][]int{{0, 1, 10}, {1, 2, 5}, {2, 3, 9}, {3, 4, 13}}, [][]int{{0, 4, 14}, {1, 4, 13}}))
+	//fmt.Println(DayTest.DistanceLimitedPathsExist(13, [][]int{{9, 7, 26}, {1, 2, 5}, {2, 3, 9}, {3, 4, 13}}, [][]int{{0, 4, 14}, {1, 4, 13}}))
+
+	//fmt.Println(Offer.CuttingRope(120))
+
+	//fmt.Println(DayTest.GetLucky("leetcode", 2))
+
+	//fmt.Println(DayTest.CanChoose([][]int{{1, -1, -1}, {3, -2, 0}}, []int{1, -1, 0, 1, -1, -1, 3, -2, 0}))
+	//fmt.Println(DayTest.CanChoose([][]int{{21, 22, 21, 22, 21, 30}}, []int{21, 22, 21, 22, 21, 22, 21, 30}))
+	//fmt.Println(DayTest.CanChoose([][]int{{1, 2, 3}, {3, 4}}, []int{7, 7, 1, 2, 3, 4, 7, 7}))
+
+	//m := make(map[int]int, 10)
+	//m[1] = 1
+	//m[2] = 2
+	//fmt.Println(len(m))
+	//delete(m, 1)
+	//fmt.Println(len(m))
+	//delete(m, 2)
+	//fmt.Println(len(m))
+
+	fmt.Println(Week.SimilarPairs([]string{"aba", "aabb", "abcd", "bac", "aabc"}))
+	fmt.Println(Week.SimilarPairs([]string{"aabb", "ab", "ba"}))
+	fmt.Println(Week.SimilarPairs([]string{"nba", "cba", "dba"}))
 
 }
 

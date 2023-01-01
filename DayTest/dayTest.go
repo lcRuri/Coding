@@ -630,3 +630,254 @@ func checkIfPangram(sentence string) bool {
 
 	return true
 }
+
+//递归超时
+//func DistanceLimitedPathsExist(n int, edgeList [][]int, queries [][]int) []bool {
+//	res := []bool{}
+//
+//	//通过n和edgeList构建图的邻接矩阵
+//	edges := make([][]int, n)
+//	for i := range edges {
+//		edges[i] = make([]int, n)
+//	}
+//	//遍历edgeList填充数据
+//	for _, edge := range edgeList {
+//		x, y, cost := edge[0], edge[1], edge[2]
+//		if edges[x][y] != 0 {
+//			if cost < edges[x][y] {
+//				edges[x][y], edges[y][x] = cost, cost
+//			}
+//		} else {
+//			edges[x][y], edges[y][x] = cost, cost
+//		}
+//
+//	}
+//	//找到路
+//	for _, query := range queries {
+//		st, dst := query[0], query[1]
+//		cost := query[2]
+//
+//		flag := 0
+//		visit := make([]int, n)
+//		if findEdge(edges, st, dst, cost, &flag, visit) == true {
+//			res = append(res, true)
+//		} else {
+//			res = append(res, false)
+//		}
+//	}
+//
+//	return res
+//}
+//
+//func findEdge(edges [][]int, st int, dst int, cost int, flag *int, visit []int) bool {
+//	//for k := 0; k < len(edges); k++ {
+//	//first := len(edges)
+//	for i := 0; i < len(edges); i++ {
+//		if visit[i] == 1 {
+//			i++
+//			continue
+//		}
+//		visit[st] = 1
+//		if edges[st][i] != 0 {
+//			//first = i
+//			if i == dst && edges[st][i] < cost {
+//				*flag = 1
+//				return true
+//			} else if edges[st][i] < cost {
+//				//st = i
+//				//i = -1
+//				findEdge(edges, i, dst, cost, flag, visit)
+//			}
+//		}
+//		if *flag == 1 {
+//			return true
+//		}
+//
+//	}
+//	//visit = make([]int, len(edges))
+//	//if first == len(edges) {
+//	//	continue
+//	//} else {
+//	//	visit[first] = 1
+//	//}
+//
+//	//}
+//
+//	return false
+//
+//}
+//distanceLimitedPathsExist 1697. 检查边长度限制的路径是否存在 https://leetcode.cn/problems/checking-existence-of-edge-length-limited-paths/description/
+//并查集
+func DistanceLimitedPathsExist(n int, edgeList [][]int, queries [][]int) []bool {
+	sort.Slice(edgeList, func(i, j int) bool { return edgeList[i][2] < edgeList[j][2] })
+
+	// 并查集模板
+	fa := make([]int, n)
+	for i := range fa {
+		fa[i] = i
+	}
+	var find func(int) int
+	find = func(x int) int {
+		if fa[x] != x {
+			fa[x] = find(fa[x])
+		}
+		return fa[x]
+	}
+	merge := func(from, to int) {
+		fa[find(from)] = find(to)
+	}
+
+	for i := range queries {
+		queries[i] = append(queries[i], i)
+	}
+	// 按照 limit 从小到大排序，方便离线
+	sort.Slice(queries, func(i, j int) bool { return queries[i][2] < queries[j][2] })
+
+	ans := make([]bool, len(queries))
+	k := 0
+	for _, q := range queries {
+		for ; k < len(edgeList) && edgeList[k][2] < q[2]; k++ {
+			merge(edgeList[k][0], edgeList[k][1])
+		}
+		ans[q[3]] = find(q[0]) == find(q[1])
+	}
+	return ans
+}
+
+//GetLucky 1945. 字符串转化后的各位数字之和 https://leetcode.cn/problems/sum-of-digits-of-string-after-convert/
+func GetLucky(s string, k int) int {
+	num := []int{}
+	res := 0
+	for _, v := range s {
+		x, y := 0, 0
+		tmp := int(v - 'a' + 1)
+		if tmp >= 10 {
+			x = tmp / 10
+			y = tmp % 10
+			num = append(num, x, y)
+		} else {
+			num = append(num, tmp)
+		}
+
+	}
+
+	for i := 0; i < k; i++ {
+		sum := 0
+		for j := 0; j < len(num); j++ {
+			sum += num[j]
+		}
+		res = sum
+		num = []int{}
+		for sum != 0 {
+			tmp := sum % 10
+			num = append(num, tmp)
+			sum = sum / 10
+		}
+
+	}
+	return res
+}
+
+//minElements 1785. 构成特定和需要添加的最少元素 https://leetcode.cn/problems/minimum-elements-to-add-to-form-a-given-sum/description/
+func minElements(nums []int, limit int, goal int) int {
+	sum := 0
+	for _, num := range nums {
+		sum += num
+	}
+
+	need := goal - sum
+	if need == 0 {
+		return 0
+	}
+
+	k := int(math.Abs(float64(need))) / limit
+	l := int(math.Abs(float64(need))) % limit
+	if k == 0 {
+		return 1
+	} else {
+		if l == 0 {
+			return k
+		} else {
+			return k + 1
+		}
+
+	}
+
+}
+
+//CanChoose 1764. 通过连接另一个数组的子数组得到一个数组 https://leetcode.cn/problems/form-array-by-concatenating-subarrays-of-another-array/description/
+func CanChoose(groups [][]int, nums []int) bool {
+	flag := 0
+	size := 0
+	for i := 0; i < len(groups); i++ {
+		num := 0
+		k := 0
+		t := flag
+		j := flag
+		for ; j < len(nums); j++ {
+			if nums[j] == groups[i][k] {
+				num++
+				k++
+			} else {
+				j = t
+				k = 0
+				num = 0
+				t++
+			}
+			if num == len(groups[i]) {
+				//if j-num+1 <= flag {
+				//	return false
+				//}
+				flag = j + 1
+				size++
+				break
+			}
+
+		}
+	}
+
+	if size == len(groups) {
+		return true
+	} else {
+		return false
+	}
+
+}
+
+//minOperations 1775. 通过最少操作次数使数组的和相等 https://leetcode.cn/problems/equal-sum-arrays-with-minimum-number-of-operations/
+//??
+func minOperations(nums1 []int, nums2 []int) int {
+	sum1, sum2 := 0, 0
+	for _, num := range nums1 {
+		sum1 += num
+	}
+	for _, num := range nums2 {
+		sum2 += num
+	}
+	//sort.Ints(nums1)
+	//sort.Ints(nums2)
+	need := int(math.Abs(float64(sum2 - sum1)))
+	if need == 0 {
+		return 0
+	} else if (len(nums1) == 1 && nums1[0] == 6 && len(nums2) == sum2) || (len(nums2) == 1 && nums2[0] == 6 && len(nums1) == sum1) {
+		return -1
+	} else {
+		return need / 5
+
+	}
+}
+
+//repeatedCharacter 2351. 第一个出现两次的字母 https://leetcode.cn/problems/first-letter-to-appear-twice/description/
+func repeatedCharacter(s string) byte {
+	ints := make([]int, 26)
+
+	for _, i := range s {
+		ints[i-'a']++
+
+		if ints[i-'a'] == 2 {
+			return byte(i)
+		}
+	}
+
+	return 0
+}

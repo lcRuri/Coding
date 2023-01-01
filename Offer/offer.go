@@ -5,6 +5,13 @@ import (
 	"sort"
 )
 
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+
 //NumWays 剑指 Offer 10- II. 青蛙跳台阶问题 https://leetcode.cn/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/description/?favorite=xb9nqhhg
 func NumWays(n int) int {
 	res := 0
@@ -142,4 +149,85 @@ func existDfs(board [][]byte, i int, j int, s string, loc int, flag *int, visit 
 	//如果上下左右都没有，要还原flag和visit的值
 	*flag = *flag - 1
 
+}
+
+//CuttingRope 剑指 Offer 14- I. 剪绳子 https://leetcode.cn/problems/jian-sheng-zi-lcof/?favorite=xb9nqhhg
+//动态规划 dp[n]=max(1*dp[n-1],2*dp[n-2],...,n-1*dp[1]
+func CuttingRope(n int) int {
+	dp := make([]int, n+1)
+
+	if n == 2 {
+		return 1
+	}
+	if n == 3 {
+		return 2
+	}
+	dp[1] = 1
+	dp[2] = 2
+	dp[3] = 3
+	for i := 4; i <= n; i++ {
+		for j := 1; j < i; j++ {
+			dp[i] = max(dp[i], dp[j]*dp[i-j])
+		}
+	}
+
+	return dp[n]
+}
+
+//HammingWeight 剑指 Offer 15. 二进制中1的个数 https://leetcode.cn/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/description/?favorite=xb9nqhhg
+func HammingWeight(num uint32) int {
+	res := 0
+	for {
+		bit := num % 2
+		if bit == 1 {
+			res++
+		}
+		num = num / 2
+		if num == 0 {
+
+			return res
+		}
+
+	}
+
+}
+
+func hammingWeight(num uint32) (ones int) {
+	for i := 0; i < 32; i++ {
+		if 1<<i&num > 0 {
+			ones++
+		}
+	}
+	return
+}
+
+//PrintNumbers 剑指 Offer 17. 打印从1到最大的n位数 https://leetcode.cn/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/description/?favorite=xb9nqhhg
+func PrintNumbers(n int) []int {
+	res := []int{}
+	pow := math.Pow(float64(10), float64(n))
+	for i := 1; i < int(pow); i++ {
+		res = append(res, i)
+	}
+	return res
+}
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+//DeleteNode 剑指 Offer 18. 删除链表的节点 https://leetcode.cn/problems/shan-chu-lian-biao-de-jie-dian-lcof/description/?favorite=xb9nqhhg
+func DeleteNode(head *ListNode, val int) *ListNode {
+	p, q := head, head
+	for p != nil {
+		if p.Val == val && q != p {
+			q.Next = p.Next
+			break
+		} else if p.Val == val && q == p {
+			return head.Next
+		}
+		q = p
+		p = p.Next
+	}
+	return head
 }
