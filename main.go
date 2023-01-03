@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/Week"
+	"coding/DayTest"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -464,9 +464,11 @@ func main() {
 	//delete(m, 2)
 	//fmt.Println(len(m))
 
-	fmt.Println(Week.SimilarPairs([]string{"aba", "aabb", "abcd", "bac", "aabc"}))
-	fmt.Println(Week.SimilarPairs([]string{"aabb", "ab", "ba"}))
-	fmt.Println(Week.SimilarPairs([]string{"nba", "cba", "dba"}))
+	//fmt.Println(Week.SimilarPairs([]string{"aba", "aabb", "abcd", "bac", "aabc"}))
+	//fmt.Println(Week.SimilarPairs([]string{"aabb", "ab", "ba"}))
+	//fmt.Println(Week.SimilarPairs([]string{"nba", "cba", "dba"}))
+
+	fmt.Println(DayTest.AreNumbersAscending("1 box has 3 blue 4 red 6 green and 12 yellow marbles"))
 
 }
 
