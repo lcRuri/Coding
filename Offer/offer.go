@@ -231,3 +231,213 @@ func DeleteNode(head *ListNode, val int) *ListNode {
 	}
 	return head
 }
+
+//exchange 剑指 Offer 21. 调整数组顺序使奇数位于偶数前面 https://leetcode.cn/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/description/?favorite=xb9nqhhg
+func exchange(nums []int) []int {
+	//l,r:=-1,-1//l指向偶数位置，r指向奇数位置
+	res := make([]int, 0, len(nums))
+	for i := 0; i < len(nums); i++ {
+		if nums[i]%2 != 0 {
+			res = append(res, nums[i])
+			//nums = append(nums[:i], nums[i+1:]...)
+			//i--
+		}
+
+	}
+
+	for _, num := range nums {
+		if num%2 == 0 {
+			res = append(res, num)
+		}
+
+	}
+
+	return res
+}
+
+//getKthFromEnd 剑指 Offer 22. 链表中倒数第k个节点 https://leetcode.cn/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/description/?favorite=xb9nqhhg
+func getKthFromEnd(head *ListNode, k int) *ListNode {
+	num := 0
+	p := head
+	for p != nil {
+		num++
+		p = p.Next
+	}
+
+	step := num - k
+
+	for i := 0; i < step; i++ {
+		head = head.Next
+	}
+
+	return head
+}
+
+//reverseList 剑指 Offer 24. 反转链表 https://leetcode.cn/problems/fan-zhuan-lian-biao-lcof/description/?favorite=xb9nqhhg
+func reverseList(head *ListNode) *ListNode {
+	if head == nil {
+		return head
+	}
+	p := head.Next
+	q := head
+	k := head
+	for p != nil {
+		q = p
+		p = q.Next
+		q.Next = k
+		k = q
+
+	}
+
+	head.Next = nil
+
+	return q
+}
+func reverseListI(head *ListNode) *ListNode {
+	var prev *ListNode
+	curr := head
+	for curr != nil {
+		next := curr.Next
+		curr.Next = prev
+		prev = curr
+		curr = next
+	}
+	return prev
+}
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+//var flag = 0
+
+func isSubStructure1(A *TreeNode, B *TreeNode) bool {
+	//if A == nil && B == nil {
+	//	return true
+	//}
+	//
+	//if A == nil || B == nil {
+	//	if flag == 0 {
+	//		return false
+	//	} else {
+	//		return true
+	//	}
+	//}
+	//
+	//if A.Val != B.Val {
+	//	flag = 0
+	//	if A.Left == nil && A.Right == nil {
+	//		return false
+	//	}
+	//	isSubStructure(A.Left, B)
+	//	isSubStructure(A.Right, B)
+	//	return false
+	//}
+	//
+	//if A.Val == B.Val {
+	//	flag = 1
+	//	isSubStructure(A.Left, B.Left)
+	//	isSubStructure(A.Right, B.Right)
+	//}
+	//if flag == 1 {
+	//	return true
+	//}
+	//return false
+	if A == nil || B == nil {
+		return false
+	}
+	flag := 0
+	node1 := []int{}
+	node2 := []int{}
+	node1 = appendNode(A, &node1)
+	node2 = appendNode(B, &node2)
+	j := 0
+	for i := 0; i < len(node1); i++ {
+		if flag == len(node2) {
+			return true
+		}
+
+		if node1[i] == node2[j] {
+			flag++
+			j++
+		} else {
+			flag = 0
+		}
+	}
+
+	return false
+}
+
+//先序遍历不行，有bug，需要用层次遍历
+//层次遍历写法，利用队列，先进先出
+func appendNode(node *TreeNode, t *[]int) []int {
+	queue, root := []*TreeNode{node}, node
+
+	for len(queue) > 0 {
+		*t = append(*t, root.Val)
+		root = queue[0]
+		queue = queue[1:]
+		if root.Left != nil {
+			queue = append(queue, root.Left)
+		}
+		if root.Right != nil {
+			queue = append(queue, root.Right)
+		}
+
+	}
+
+	//appendNode(node.Left, t)
+	//appendNode(node.Right, t)
+	return *t
+}
+
+//isSubStructure 剑指 Offer 26. 树的子结构 https://leetcode.cn/problems/shu-de-zi-jie-gou-lcof/?favorite=xb9nqhhg
+func isSubStructure(A *TreeNode, B *TreeNode) bool {
+
+	// 根据题目判断条件，初始有空节点返回false
+	if A == nil || B == nil {
+		return false
+	}
+
+	queue, root := []*TreeNode{A}, A
+
+	for len(queue) > 0 {
+
+		root = queue[0]
+		queue = queue[1:]
+
+		if root.Val == B.Val && helper(root, B) {
+			return true
+		}
+
+		// 还没遍历完，而且没有找到匹配的子树，继续遍历A子树
+		if root.Left != nil {
+			queue = append(queue, root.Left)
+		}
+		if root.Right != nil {
+			queue = append(queue, root.Right)
+		}
+	}
+
+	return false
+
+}
+
+func helper(A *TreeNode, B *TreeNode) bool {
+
+	if B == nil {
+		return true
+	}
+
+	if B == nil || A == nil {
+		return false
+	}
+
+	if A.Val == B.Val {
+		return helper(A.Left, B.Left) && helper(A.Right, B.Right) //递归
+	} else {
+		return false
+	}
+}
