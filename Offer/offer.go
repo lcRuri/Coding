@@ -441,3 +441,285 @@ func helper(A *TreeNode, B *TreeNode) bool {
 		return false
 	}
 }
+
+//mirrorTree 剑指 Offer 27. 二叉树的镜像 https://leetcode.cn/problems/er-cha-shu-de-jing-xiang-lcof/description/?favorite=xb9nqhhg
+func mirrorTree(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+
+	tmp := root.Left
+	root.Left = root.Right
+	root.Right = tmp
+	mirrorTree(root.Left)
+	mirrorTree(root.Right)
+
+	return root
+}
+
+//isSymmetric 剑指 Offer 28. 对称的二叉树 https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/description/
+func isSymmetric(root *TreeNode) bool {
+	if root == nil {
+		return false
+	}
+
+	return Symmetric(root.Left, root.Right)
+}
+
+func Symmetric(left *TreeNode, right *TreeNode) bool {
+	if left == nil && right == nil {
+		return true
+	}
+	if (left == nil && right != nil) || (left != nil && right == nil) {
+		return false
+	}
+	if left.Val == right.Val {
+		return Symmetric(left.Left, right.Right) && Symmetric(left.Right, right.Left)
+	} else {
+		return false
+	}
+}
+
+//spiralOrder 剑指 Offer 29. 顺时针打印矩阵 https://leetcode.cn/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/description/?favorite=xb9nqhhg
+func spiralOrder(matrix [][]int) []int {
+	//如果为空，直接返回空
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
+		return []int{}
+	}
+	//求矩阵的行和列
+	rows, columns := len(matrix), len(matrix[0])
+	//初始化visited数组
+	visited := make([][]bool, rows)
+	for i := 0; i < rows; i++ {
+		visited[i] = make([]bool, columns)
+	}
+
+	var (
+		//返回结果的数量
+		total = rows * columns
+		//返回值
+		order = make([]int, total)
+		//当前的打印位置
+		row, column    = 0, 0
+		directions     = [][]int{[]int{0, 1}, []int{1, 0}, []int{0, -1}, []int{-1, 0}}
+		directionIndex = 0
+	)
+
+	for i := 0; i < total; i++ {
+		order[i] = matrix[row][column]
+		visited[row][column] = true
+		//先判断下一个位置是否正确
+		nextRow, nextColumn := row+directions[directionIndex][0], column+directions[directionIndex][1]
+		//如果到了边界或者已经访问过
+		if nextRow < 0 || nextRow >= rows || nextColumn < 0 || nextColumn >= columns || visited[nextRow][nextColumn] {
+			//进行转弯，按照右、下、左、上的顺序
+			directionIndex = (directionIndex + 1) % 4
+		}
+		//确认出下一个位置
+		row += directions[directionIndex][0]
+		column += directions[directionIndex][1]
+
+	}
+
+	return order
+
+}
+
+//MinStack 剑指 Offer 30. 包含min函数的栈 https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/?favorite=xb9nqhhg
+//使用了额外空间min []int 来保存每次添加数据，如果添加的数比现在最小的数小，那么就添加，否则继续添加当前最小的数
+//进阶 不使用额外空间？？？
+type MinStack struct {
+	Stack  []int
+	Length int
+	min    []int
+}
+
+/** initialize your data structure here. */
+func Constructor() MinStack {
+	return MinStack{
+		Stack:  make([]int, 0),
+		Length: 0,
+		min:    []int{},
+	}
+}
+
+func (this *MinStack) Push(x int) {
+	this.Stack = append(this.Stack, x)
+	if len(this.min) == 0 {
+		this.min = append(this.min, x)
+	} else {
+		this.min = append(this.min, min(x, this.min[len(this.min)-1]))
+	}
+
+	sort.Ints(this.min)
+	this.Length++
+}
+
+func (this *MinStack) Pop() {
+	this.Stack = this.Stack[:this.Length-1]
+	this.min = this.min[:len(this.min)-1]
+	this.Length--
+}
+
+func (this *MinStack) Top() int {
+	return this.Stack[this.Length-1]
+}
+
+//数组复制要用copy
+func (this *MinStack) Min() int {
+	//tmp := make([]int, this.Length)
+	//copy(tmp, this.Stack)
+	//sort.Ints(tmp)
+	//return tmp[0]
+
+	return this.min[len(this.min)-1]
+}
+
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+
+	return y
+}
+
+//func validateStackSequences(pushed []int, popped []int) bool {
+//
+//}
+
+//levelOrder 剑指 Offer 32 - I. 从上到下打印二叉树 https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/description/?favorite=xb9nqhhg
+//二叉树的层次遍历
+func levelOrder(root *TreeNode) []int {
+	res := []int{}
+	if root == nil {
+		return res
+	}
+	queue := []*TreeNode{root}
+	node := root
+	for len(queue) > 0 {
+		node = queue[0]
+		queue = queue[1:]
+		res = append(res, node.Val)
+		if node.Left != nil {
+			queue = append(queue, node.Left)
+		}
+		if node.Right != nil {
+			queue = append(queue, node.Right)
+		}
+	}
+
+	return res
+
+}
+
+//levelOrder1 剑指 Offer 32 - II. 从上到下打印二叉树 II https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/description/
+//分层添加到二维数组
+func levelOrder1(root *TreeNode) [][]int {
+	res := [][]int{}
+	if root == nil {
+		return res
+	}
+	queue := []*TreeNode{root}
+
+	for len(queue) > 0 {
+		//将当前的所有添加到tmp中
+		tmp := []int{}
+		for i := 0; i < len(queue); i++ {
+			tmp = append(tmp, queue[i].Val)
+		}
+
+		res = append(res, tmp)
+		//清空原来的，添加接下来的
+		l := len(queue)
+		for i := 0; i < l; i++ {
+			if queue[i].Left != nil {
+				queue = append(queue, queue[i].Left)
+			}
+			if queue[i].Right != nil {
+				queue = append(queue, queue[i].Right)
+			}
+		}
+		queue = queue[l:]
+
+	}
+
+	return res
+}
+
+//levelOrder2 剑指 Offer 32 - III. 从上到下打印二叉树 III https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/description/
+//负负得正
+func levelOrder2(root *TreeNode) [][]int {
+	res := [][]int{}
+	if root == nil {
+		return res
+	}
+	queue := []*TreeNode{root}
+	col := 0
+	for len(queue) > 0 {
+		//将当前的所有添加到tmp中
+		tmp := []int{}
+		for i := 0; i < len(queue); i++ {
+			tmp = append(tmp, queue[i].Val)
+		}
+
+		res = append(res, tmp)
+		//清空原来的，添加接下来的
+		l := len(queue)
+		if col%2 != 0 {
+			for i := l - 1; i >= 0; i-- {
+				if queue[i].Left != nil {
+					queue = append(queue, queue[i].Left)
+				}
+				if queue[i].Right != nil {
+					queue = append(queue, queue[i].Right)
+				}
+			}
+		} else if col%2 == 0 {
+			for i := l - 1; i >= 0; i-- {
+				if queue[i].Right != nil {
+					queue = append(queue, queue[i].Right)
+				}
+				if queue[i].Left != nil {
+					queue = append(queue, queue[i].Left)
+				}
+			}
+		}
+
+		queue = queue[l:]
+		col++
+	}
+
+	return res
+}
+
+//verifyPostorder 剑指 Offer 33. 二叉搜索树的后序遍历序列 https://leetcode.cn/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/?favorite=xb9nqhhg
+func verifyPostorder(postorder []int) bool {
+	return true
+}
+
+//pathSum 剑指 Offer 34. 二叉树中和为某一值的路径 https://leetcode.cn/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/description/
+//匿名函数+递归（深度搜索）
+func pathSum(root *TreeNode, target int) (res [][]int) {
+	tmp := []int{}
+	var dfs func(root *TreeNode, target int)
+	dfs = func(root *TreeNode, target int) {
+		if root == nil {
+			return
+		}
+
+		tmp = append(tmp, root.Val)
+		defer func() { tmp = tmp[:len(tmp)-1] }()
+
+		if target-root.Val == 0 && root.Left == nil && root.Right == nil {
+			cur := make([]int, len(tmp))
+			copy(cur, tmp)
+			res = append(res, cur)
+			return
+		}
+		dfs(root.Left, target-root.Val)
+		dfs(root.Right, target-root.Val)
+	}
+
+	dfs(root, target)
+	return res
+}

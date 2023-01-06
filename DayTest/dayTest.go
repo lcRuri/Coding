@@ -978,3 +978,24 @@ func maxValue(n, index, maxSum int) int {
 		return mid+f(mid, left)+f(mid, right) >= maxSum
 	})
 }
+
+//CountEven 2180. 统计各位数字之和为偶数的整数个数 https://leetcode.cn/problems/count-integers-with-even-digit-sum/
+func CountEven(num int) int {
+	res := 0
+	for i := 2; i <= num; i++ {
+		l := 0
+		cur := i
+		for cur != 0 {
+			tmp := cur % 10
+			if tmp%2 != 0 {
+				l++
+			}
+			cur = cur / 10
+		}
+		if l%2 == 0 {
+			res++
+		}
+	}
+
+	return res
+}
