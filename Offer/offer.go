@@ -886,3 +886,31 @@ func MaxValue(grid [][]int) int {
 
 	return dp[len(dp)-1]
 }
+
+//LengthOfLongestSubstring 剑指 Offer 48. 最长不含重复字符的子字符串 https://leetcode.cn/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/?favorite=xb9nqhhg
+//还是之前的思路 第一个for循环的i作为最终位置 j从0开始到i 当在这个过程中 出现了重复 j的位置重置为重复出现的位置+1 通过额外的变量记录这个位置赋值给j
+func LengthOfLongestSubstring(s string) int {
+	if len(s) == 0 {
+		return 0
+	}
+	ans := 1
+	start := 0
+	for i := 0; i < len(s); i++ {
+		j := start
+		tmp := 1
+		for ; j < i; j++ {
+
+			if s[j] != s[i] {
+				tmp++
+			} else {
+				start = j + 1
+			}
+
+		}
+		if tmp > ans {
+			ans = tmp
+		}
+	}
+
+	return ans
+}

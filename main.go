@@ -482,9 +482,14 @@ func main() {
 	//fmt.Println(Offer.TranslateNum(12))
 	//fmt.Println(Offer.TranslateNum(12258))
 
-	fmt.Println(Offer.MaxValue([][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}))
-	fmt.Println(Offer.MaxValue([][]int{{0, 1}, {1, 0}}))
-	fmt.Println(Offer.MaxValue([][]int{{1, 2, 5}, {3, 2, 1}}))
+	//fmt.Println(Offer.MaxValue([][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}))
+	//fmt.Println(Offer.MaxValue([][]int{{0, 1}, {1, 0}}))
+	//fmt.Println(Offer.MaxValue([][]int{{1, 2, 5}, {3, 2, 1}}))
+
+	fmt.Println(Offer.LengthOfLongestSubstring("abcabcbb"))
+	fmt.Println(Offer.LengthOfLongestSubstring("bbbbb"))
+	fmt.Println(Offer.LengthOfLongestSubstring("pwwkew"))
+	fmt.Println(Offer.LengthOfLongestSubstring("dvdf"))
 
 }
 
