@@ -999,3 +999,114 @@ func CountEven(num int) int {
 
 	return res
 }
+
+//minOperations1 1658. 将 x 减到 0 的最小操作数 https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/description/
+//双指针肯定可以 但是写出来有问题
+//看了题解 换种思路 求中间连续子数组的最大值
+//https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/solutions/2047253/jiang-x-jian-dao-0-de-zui-xiao-cao-zuo-s-hl7u/?languageTags=golang
+func minOperations1(nums []int, x int) int {
+	//if nums[0] > x && nums[len(nums)-1] > x {
+	//	return -1
+	//}
+	//res := 0
+	//l, r := 0, len(nums)-1
+	//left := x
+	//for l < r {
+	//
+	//	if nums[l] >= nums[r] && nums[l] <= x {
+	//		left = x - nums[l]
+	//		l++
+	//		res++
+	//	} else if nums[r] > nums[l] && nums[r] <= x {
+	//		left = x - nums[r]
+	//		r--
+	//		res++
+	//	}
+	//
+	//	if left == 0 {
+	//		return res
+	//	}
+	//
+	//}
+	//
+	//return res
+
+	//超时
+	//t:=[]int{}
+	//sum,res:=0,0
+	//for _, num := range nums {
+	//	sum+=num
+	//}
+	//
+	//if sum<x{
+	//	return -1
+	//}
+	//
+	//for i := 0; i <len(nums) ; i++ {
+	//	tmp:=0
+	//	for j := i; sum-tmp>x&&j<len(nums); j++ {
+	//		tmp+=nums[j]
+	//		res++
+	//	}
+	//	if sum-tmp==x{
+	//		t=append(t,len(nums)-res)
+	//	}
+	//	res=0
+	//
+	//}
+	//if len(t)==0{
+	//	return -1
+	//}
+	//mins:=math.MaxInt64
+	//for i := 0; i < len(t); i++ {
+	//	if t[i]<mins{
+	//		mins=t[i]
+	//	}
+	//}
+	//
+	//return mins
+
+	n := len(nums)
+	sum := 0
+	for _, num := range nums {
+		sum += num
+	}
+	if sum < x {
+		return -1
+	}
+
+	right := 0
+	lsum := 0
+	rsum := sum
+	ans := n + 1
+
+	for left := -1; left < n; left++ {
+		if left != -1 {
+			lsum += nums[left]
+		}
+		for right < n && lsum+rsum > x {
+			rsum -= nums[right]
+			right++
+		}
+		if lsum+rsum == x {
+			ans = min(ans, (left+1)+(n-right))
+		}
+	}
+	if ans > n {
+		return -1
+	}
+	return ans
+
+}
+
+//prefixCount 2185. 统计包含给定前缀的字符串 https://leetcode.cn/problems/counting-words-with-a-given-prefix/description/
+func prefixCount(words []string, pref string) int {
+	res := 0
+	for i := 0; i < len(words); i++ {
+		if prefix := strings.HasPrefix(words[i], pref); prefix {
+			res++
+		}
+	}
+
+	return res
+}

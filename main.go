@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/DayTest"
+	"coding/Offer"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -469,7 +469,22 @@ func main() {
 	//fmt.Println(Week.SimilarPairs([]string{"nba", "cba", "dba"}))
 
 	//fmt.Println(DayTest.AreNumbersAscending("1 box has 3 blue 4 red 6 green and 12 yellow marbles"))
-	fmt.Println(DayTest.CountEven(30))
+	//fmt.Println(DayTest.CountEven(30))
+
+	//fmt.Println(Offer.Permutation("abc"))
+	//fmt.Println(Offer.Permutation("aab"))
+
+	//fmt.Println(Trunk.PermuteUnique([]int{1, 1, 2}))
+
+	//fmt.Println(Offer.GetLeastNumbers([]int{3, 2, 1}, 2))
+	//fmt.Println(Offer.GetLeastNumbers([]int{0, 1, 1, 2}, 1))
+
+	//fmt.Println(Offer.TranslateNum(12))
+	//fmt.Println(Offer.TranslateNum(12258))
+
+	fmt.Println(Offer.MaxValue([][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}))
+	fmt.Println(Offer.MaxValue([][]int{{0, 1}, {1, 0}}))
+	fmt.Println(Offer.MaxValue([][]int{{1, 2, 5}, {3, 2, 1}}))
 
 }
 

@@ -3,6 +3,7 @@ package Offer
 import (
 	"math"
 	"sort"
+	"strconv"
 )
 
 func max(x, y int) int {
@@ -722,4 +723,166 @@ func pathSum(root *TreeNode, target int) (res [][]int) {
 
 	dfs(root, target)
 	return res
+}
+
+type Node struct {
+	Val    int
+	Next   *Node
+	Random *Node
+}
+
+var cachedNode map[*Node]*Node
+
+func deepCopy(node *Node) *Node {
+	if node == nil {
+		return nil
+	}
+	if n, has := cachedNode[node]; has {
+		return n
+	}
+	newNode := &Node{Val: node.Val}
+	cachedNode[node] = newNode
+	newNode.Next = deepCopy(node.Next)
+	newNode.Random = deepCopy(node.Random)
+	return newNode
+}
+
+//copyRandomList 剑指 Offer 35. 复杂链表的复制 https://leetcode.cn/problems/fu-za-lian-biao-de-fu-zhi-lcof/description/?favorite=xb9nqhhg
+//递归进行拷贝 哈希表用来防止重复拷贝
+func copyRandomList(head *Node) *Node {
+	cachedNode = map[*Node]*Node{}
+	return deepCopy(head)
+}
+
+//Permutation 剑指 Offer 38. 字符串的排列 https://leetcode.cn/problems/zi-fu-chuan-de-pai-lie-lcof/?favorite=xb9nqhhg
+//组合问题
+//从左往右第一个未被填入的字符
+func Permutation(s string) []string {
+	str := []byte(s)
+	res := []string{}
+
+	//sort.Slice(str, func(i, j int) bool { return str[i] < str[j] })
+
+	var backtrack func()
+
+	length := len(str)
+
+	tmp := make([]byte, 0, length)
+	visited := make([]bool, length)
+
+	backtrack = func() {
+		if len(tmp) == length {
+
+			res = append(res, string(tmp))
+			return
+		}
+
+		for j := 0; j < len(visited); j++ {
+			if visited[j] == true || j > 0 && visited[j-1] == false && str[j] == str[j-1] {
+				continue
+			}
+			tmp = append(tmp, str[j])
+			visited[j] = true
+			backtrack()
+			tmp = tmp[:len(tmp)-1]
+			visited[j] = false
+		}
+
+	}
+
+	backtrack()
+
+	return res
+
+}
+
+//majorityElement 剑指 Offer 39. 数组中出现次数超过一半的数字 https://leetcode.cn/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/?favorite=xb9nqhhg
+func majorityElement(nums []int) int {
+	length := len(nums)
+	dic := map[int]int{}
+
+	for i := 0; i < len(nums); i++ {
+		dic[nums[i]]++
+	}
+
+	for i := 0; i < len(nums); i++ {
+		if dic[nums[i]] > length/2 {
+			return nums[i]
+		}
+	}
+
+	return 0
+}
+
+//GetLeastNumbers 剑指 Offer 40. 最小的k个数 https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/description/?favorite=xb9nqhhg
+//考的排序
+func GetLeastNumbers(arr []int, k int) []int {
+	sort.Ints(arr)
+	return arr[:k]
+}
+
+//maxSubArray 剑指 Offer 42. 连续子数组的最大和 https://leetcode.cn/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/?favorite=xb9nqhhg
+//思路：如果你能让我更好，那我们在一起，否则舍弃，直到走完，看看一路走来哪个过程最好
+func maxSubArray(nums []int) int {
+	dp := make([]int, len(nums))
+	dp[0] = nums[0]
+	for i := 1; i < len(nums); i++ {
+		if dp[i-1] <= 0 {
+			dp[i] = nums[i]
+		} else if dp[i-1] > 0 {
+			dp[i] = dp[i-1] + nums[i]
+		}
+	}
+
+	ans := math.MinInt32
+
+	for _, d := range dp {
+		if d > ans {
+			ans = d
+		}
+	}
+
+	return ans
+}
+
+//TranslateNum 剑指 Offer 46. 把数字翻译成字符串 https://leetcode.cn/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof/description/?favorite=xb9nqhhg
+//动态规划
+//有条件的青蛙跳格子(斐波那契数列) 只有当数字匹配的满足>=10 <=25时，才能跳两格，即dp[i]=dp[i-1]+dp[i-2],否则dp[i]=dp[i-1]
+func TranslateNum(num int) int {
+
+	strs := strconv.Itoa(num)
+	dp := make([]int, len(strs)+1)
+	dp[0] = 1
+	dp[1] = 1
+	for i := 2; i <= len(strs); i++ {
+		if strs[i-2:i] >= "10" && strs[i-2:i] <= "25" {
+			dp[i] = dp[i-1] + dp[i-2]
+		} else {
+			dp[i] = dp[i-1]
+		}
+
+	}
+
+	return dp[len(dp)-1]
+}
+
+//MaxValue 剑指 Offer 47. 礼物的最大价值 https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/description/?favorite=xb9nqhhg
+//同leetcode62题 62. 不同路径 https://leetcode.cn/problems/unique-paths/
+func MaxValue(grid [][]int) int {
+
+	row, col := len(grid), len(grid[0])
+	dp := make([]int, col)
+	dp[0] = grid[0][0]
+	for i := 1; i < col; i++ {
+		dp[i] = dp[i-1] + grid[0][i]
+	}
+
+	for i := 1; i < row; i++ {
+		dp[0] = dp[0] + grid[i][0]
+		for j := 1; j < col; j++ {
+			dp[j] = max(dp[j-1], dp[j]) + grid[i][j]
+		}
+	}
+
+	return dp[len(dp)-1]
 }
