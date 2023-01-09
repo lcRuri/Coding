@@ -486,10 +486,17 @@ func main() {
 	//fmt.Println(Offer.MaxValue([][]int{{0, 1}, {1, 0}}))
 	//fmt.Println(Offer.MaxValue([][]int{{1, 2, 5}, {3, 2, 1}}))
 
-	fmt.Println(Offer.LengthOfLongestSubstring("abcabcbb"))
-	fmt.Println(Offer.LengthOfLongestSubstring("bbbbb"))
-	fmt.Println(Offer.LengthOfLongestSubstring("pwwkew"))
-	fmt.Println(Offer.LengthOfLongestSubstring("dvdf"))
+	//fmt.Println(Offer.LengthOfLongestSubstring("abcabcbb"))
+	//fmt.Println(Offer.LengthOfLongestSubstring("bbbbb"))
+	//fmt.Println(Offer.LengthOfLongestSubstring("pwwkew"))
+	//fmt.Println(Offer.LengthOfLongestSubstring("dvdf"))
+
+	//fmt.Println(DayTest.ReinitializePermutation(6))
+
+	//fmt.Println(Offer.FirstUniqChar("leetcode"))
+	//fmt.Println(string(99))
+
+	fmt.Println(Offer.ReversePairs([]int{7, 5, 6, 4}))
 
 }
 

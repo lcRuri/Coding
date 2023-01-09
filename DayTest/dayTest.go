@@ -1110,3 +1110,44 @@ func prefixCount(words []string, pref string) int {
 
 	return res
 }
+
+//ReinitializePermutation 1806. 还原排列的最少操作步数 https://leetcode.cn/problems/minimum-number-of-operations-to-reinitialize-a-permutation/description/
+func ReinitializePermutation(n int) int {
+	res := 0
+	com := make([]int, n)
+	arr := make([]int, n)
+
+	for i := 0; i < n; i++ {
+		com[i] = i
+		arr[i] = i
+	}
+	prem := make([]int, n)
+	for {
+
+		copy(prem, arr)
+		for i := 0; i < n; i++ {
+			if i%2 == 0 {
+				arr[i] = prem[i/2]
+			}
+			if i%2 == 1 {
+				arr[i] = prem[n/2+(i-1)/2]
+			}
+
+		}
+
+		res++
+		flag := 1
+		for j := 0; j < n; j++ {
+			if arr[j] != com[j] {
+				flag = 0
+				break
+			}
+		}
+		if flag == 1 {
+			return res
+		}
+	}
+
+	return res
+
+}

@@ -914,3 +914,137 @@ func LengthOfLongestSubstring(s string) int {
 
 	return ans
 }
+
+//nthUglyNumber 剑指 Offer 49. 丑数 https://leetcode.cn/problems/chou-shu-lcof/?favorite=xb9nqhhg
+//动态规划 新的丑数都是由之前的得到的
+func nthUglyNumber(n int) int {
+	dp := make([]int, n+1)
+	dp[1] = 1
+	x, y, z := 1, 1, 1
+	for i := 2; i <= n; i++ {
+		t1 := dp[x] * 2
+		t2 := dp[y] * 3
+		t3 := dp[z] * 5
+
+		mi := min(min(t1, t2), t3)
+
+		if mi == t1 {
+			x++
+		}
+		if mi == t2 {
+			y++
+		}
+		if mi == t3 {
+			z++
+		}
+
+		dp[i] = mi
+	}
+
+	return dp[n]
+}
+
+//FirstUniqChar 剑指 Offer 50. 第一个只出现一次的字符 https://leetcode.cn/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/description/?favorite=xb9nqhhg
+//使用长度为26位的数组 两次遍历s
+func FirstUniqChar(s string) byte {
+
+	words := make([]int, 26)
+	for _, i := range s {
+		words[i-'a']++
+	}
+
+	for _, w := range s {
+		if words[w-'a'] == 1 {
+			return byte(w)
+		}
+	}
+
+	return byte(' ')
+}
+
+//ReversePairs 剑指 Offer 51. 数组中的逆序对 https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/description/?favorite=xb9nqhhg
+//归并排序(分治的思想)
+func ReversePairs(nums []int) int {
+	//暴力解法 无法通过
+	//res := 0
+	//for i := 0; i < len(nums)-1; i++ {
+	//	for j := i + 1; j < len(nums); j++ {
+	//		if nums[j] < nums[i] {
+	//			res++
+	//		}
+	//	}
+	//}
+	//
+	//return res
+	return 0
+}
+
+//search 剑指 Offer 53 - I. 在排序数组中查找数字 I https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/description/?favorite=xb9nqhhg
+//可以直接找 二分更好
+func search(nums []int, target int) int {
+	res := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == target {
+			res++
+		}
+	}
+
+	return res
+}
+
+//missingNumber 剑指 Offer 53 - II. 0～n-1中缺失的数字 https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/description/?favorite=xb9nqhhg
+func missingNumber(nums []int) int {
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != i {
+			return i
+		}
+	}
+
+	return nums[len(nums)-1] + 1
+}
+
+//kthLargest 剑指 Offer 54. 二叉搜索树的第k大节点 https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/description/?favorite=xb9nqhhg
+func kthLargest(root *TreeNode, k int) int {
+	nums := []int{}
+	var preOrder func(node *TreeNode)
+
+	preOrder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		preOrder(node.Left)
+		nums = append(nums, node.Val)
+		preOrder(node.Right)
+	}
+
+	preOrder(root)
+
+	//sort.Slice(nums, func(i, j int) bool {
+	//	return nums[i] > nums[j]
+	//})
+
+	return nums[len(nums)-k]
+}
+
+//maxDepth 剑指 Offer 55 - I. 二叉树的深度 https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/?favorite=xb9nqhhg
+func maxDepth(root *TreeNode) int {
+	deep := 0
+	var preOrder func(node *TreeNode)
+	res := 0
+	preOrder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		deep++
+		if deep > res {
+			res = deep
+		}
+		preOrder(node.Left)
+		preOrder(node.Right)
+		deep--
+	}
+
+	preOrder(root)
+
+	return res
+}
