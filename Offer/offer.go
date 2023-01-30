@@ -1048,3 +1048,20 @@ func maxDepth(root *TreeNode) int {
 
 	return res
 }
+
+//isBalanced 剑指 Offer 55 - II. 平衡二叉树 https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/description/?favorite=xb9nqhhg
+//max(height(root.Left), height(root.Right)) + 1 递归
+func isBalanced(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+
+	return int(math.Abs(float64(height(root.Left)-height(root.Right)))) <= 1 && isBalanced(root.Left) && isBalanced(root.Right)
+}
+
+func height(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	return max(height(root.Left), height(root.Right)) + 1
+}

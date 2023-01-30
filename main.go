@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"coding/Offer"
+	"coding/DayTest"
 	"fmt"
 	"go/scanner"
 	"go/token"
@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 var m sync.Mutex
@@ -496,10 +497,60 @@ func main() {
 	//fmt.Println(Offer.FirstUniqChar("leetcode"))
 	//fmt.Println(string(99))
 
-	fmt.Println(Offer.ReversePairs([]int{7, 5, 6, 4}))
+	//fmt.Println(Offer.ReversePairs([]int{7, 5, 6, 4}))
 
+	//s := "(name)is(age)yearsold"
+	//replace := strings.Replace(s, "(name)", "sb", 1)
+	//fmt.Println(replace)
+	//fmt.Println(DayTest.Evaluate(s, [][]string{{"name", "bob"}, {"age", "two"}}))
+
+	//for i := 0; i < 3; i++ {
+	//	if i == 2 {
+	//		continue
+	//	}
+	//	wg.Add(1) // 启动一个goroutine就登记+1
+	//	go hello(i)
+	//}
+	//wg.Wait() // 等待所有登记的goroutine都结束
+
+	//fmt.Println(DayTest.FindingUsersActiveMinutes([][]int{{1, 1}, {2, 2}, {2, 3}}, 4))
+	//fmt.Println(DayTest.FindingUsersActiveMinutes([][]int{{0, 5}, {1, 2}, {0, 2}, {0, 5}, {1, 3}}, 5))
+
+	//fmt.Println(DayTest.MinSideJumps([]int{0, 1, 2, 3, 0}))
+	//fmt.Println(DayTest.MinSideJumps([]int{0, 2, 1, 0, 3, 0}))
+	//fmt.Println(DayTest.MinSideJumps([]int{0, 2, 2, 1, 0, 3, 0, 3, 0, 1, 0}))
+
+	//fmt.Println(1 ^ 2)
+	//fmt.Println(2 ^ 3)
+	//fmt.Println(3 ^ 1)
+	//
+	//fmt.Println(1 ^ 1)
+
+	//fmt.Println(DayTest.CalculateTax([][]int{{1, 0}, {4, 25}, {5, 50}}, 2))
+
+	//fmt.Println(DayTest.GetSmallestString(5, 73))
+
+	fmt.Println(DayTest.GreatestLetter("lEeTcOdE"))
 }
 
+var wg sync.WaitGroup
+
+func hello(i int) {
+	defer wg.Done() // goroutine结束就登记-1
+	fmt.Println("hello", i)
+}
+
+func testgo() {
+	for i := 0; i < 10; i++ {
+		if i == 9 {
+			continue
+		}
+		go func() {
+			fmt.Println(i)
+		}()
+	}
+	time.Sleep(1 * time.Second)
+}
 func maxArea(height []int) int {
 	l, r := 0, len(height)-1
 	res := 0

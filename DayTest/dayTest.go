@@ -1151,3 +1151,266 @@ func ReinitializePermutation(n int) int {
 	return res
 
 }
+
+//Evaluate 1807. 替换字符串中的括号内容 https://leetcode.cn/problems/evaluate-the-bracket-pairs-of-a-string/description/
+//使用额外空间 如果没有括号 直接加入 如果有 替换后加入 返回哪个空间里面的数据即可
+func Evaluate(s string, knowledge [][]string) string {
+	//dic := map[string]string{}
+	//for i := 0; i < len(knowledge); i++ {
+	//	dic[knowledge[i][0]] = knowledge[i][1]
+	//}
+	//start, end := 0, 0
+	//for i := 0; i < len(s); i++ {
+	//
+	//}
+	//for i := 0; i < len(s); i++ {
+	//	w := s[i]
+	//	if w == '(' {
+	//		start = i
+	//	}
+	//	if w == ')' {
+	//		end = i
+	//		rep := s[start+1 : end]
+	//		v, ok := dic[rep]
+	//		if ok {
+	//			old := "(" + rep + ")"
+	//			s = strings.Replace(s, old, v, 1)
+	//			i = i - int(math.Abs(float64(len(v)-len(old))))
+	//			start = 0
+	//			end = 0
+	//		} else {
+	//			old := "(" + rep + ")"
+	//			s = strings.Replace(s, old, "?", 1)
+	//			i = i - int(math.Abs(float64(1-len(old))))
+	//			start = 0
+	//			end = 0
+	//		}
+	//
+	//	}
+	//}
+	//
+	//return s
+	dict := map[string]string{}
+	for _, kd := range knowledge {
+		dict[kd[0]] = kd[1]
+	}
+	ans := &strings.Builder{}
+	start := -1
+	for i, c := range s {
+		if c == '(' {
+			start = i
+		} else if c == ')' {
+			if t, ok := dict[s[start+1:i]]; ok {
+				ans.WriteString(t)
+			} else {
+				ans.WriteByte('?')
+			}
+			start = -1
+		} else if start < 0 {
+			ans.WriteRune(c)
+		}
+	}
+	return ans.String()
+
+}
+
+//findingUsersActiveMinutes 1817. 查找用户活跃分钟数 https://leetcode.cn/problems/finding-the-users-active-minutes/description/?languageTags=golang
+//??????????????????
+func findingUsersActiveMinutes(logs [][]int, k int) (ans []int) {
+	ans = make([]int, k)
+	sort.Slice(logs, func(i, j int) bool {
+		if logs[i][0] == logs[j][0] {
+			return logs[i][1] < logs[j][1]
+		}
+		return logs[i][0] < logs[j][0]
+	})
+	id := logs[0][0]
+	time := logs[0][1]
+	cnt := 1
+	for i := 1; i < len(logs); i++ {
+		if id != logs[i][0] {
+			ans[cnt-1]++
+			id = logs[i][0]
+			time = logs[i][1]
+			cnt = 1
+		} else if time != logs[i][1] {
+			time = logs[i][1]
+			cnt++
+		}
+	}
+	ans[cnt-1]++
+	return
+}
+
+//MinSideJumps 1824. 最少侧跳次数 https://leetcode.cn/problems/minimum-sideway-jumps/
+//贪心 尽量选择没有障碍的
+func MinSideJumps(obstacles []int) (ans int) {
+
+	path := 2
+	t1, t2 := 0, 0
+	for i := 1; i < len(obstacles); i++ {
+		//当前路上没有障碍
+		if obstacles[i] != path {
+			continue
+		}
+
+		//当前路上存在障碍
+		ans++
+		//去判断当前列上的另外两条路
+		//怎么找到除了path的
+
+		if path == 1 {
+			t1 = 2
+			t2 = 3
+		} else if path == 2 {
+			t1 = 1
+			t2 = 3
+		} else if path == 3 {
+			t1 = 1
+			t2 = 2
+		}
+		if obstacles[i-1] == t1 {
+			path = t2
+			continue
+		} else if obstacles[i-1] == t2 {
+			path = t1
+			continue
+		}
+		flag := 0
+		for j := i + 1; j < len(obstacles); j++ {
+			//除去目前所在道路，另外两条都没有障碍
+			//谁先遇到障碍，去另外一条路
+			if obstacles[j] == t1 {
+				path = t2
+				flag = 1
+				break
+			} else if obstacles[j] == t2 {
+				path = t1
+				flag = 1
+				break
+			}
+
+		}
+
+		if flag == 0 {
+			path = t1
+		}
+	}
+
+	return
+}
+
+func CalculateTax(brackets [][]int, income int) (ans float64) {
+	if income == 0 {
+		return 0
+	}
+	for i := 0; i < len(brackets); i++ {
+		if i == 0 {
+			upper := brackets[i][0]
+			percent := brackets[i][1]
+			if income < upper {
+				ans += float64(income * percent)
+			} else {
+				ans += float64(upper * percent)
+			}
+
+		} else {
+			if income < brackets[i][0] && income < brackets[i-1][0] {
+				return ans / 100
+			}
+			if income <= brackets[i][0] {
+				upper := income - brackets[i-1][0]
+				percent := brackets[i][1]
+				ans += float64(upper * percent)
+				return ans / 100
+			} else {
+				upper := brackets[i][0] - brackets[i-1][0]
+				percent := brackets[i][1]
+				ans += float64(upper * percent)
+			}
+		}
+	}
+
+	return ans / 100
+}
+
+//GetSmallestString 1663. 具有给定数值的最小字符串 https://leetcode.cn/problems/smallest-string-with-a-given-numeric-value/description/
+//先全部初始化为a，然后从后往前用z替换，知道到某一个位置上数值小于等于26，结束，直接用那个数字替换
+func GetSmallestString(n int, k int) string {
+	ans := make([]byte, n)
+	for i := range ans {
+		ans[i] = 'a'
+	}
+	i, d := n-1, k-n
+	for ; d > 25; i, d = i-1, d-25 {
+		ans[i] = 'z'
+	}
+	ans[i] += byte(d)
+	return string(ans)
+}
+
+//GreatestLetter 2309. 兼具大小写的最好英文字母 https://leetcode.cn/problems/greatest-english-letter-in-upper-and-lower-case/description/
+func GreatestLetter(s string) string {
+	word1 := make([]int, 26)
+	word2 := make([]int, 26)
+
+	for _, i := range s {
+		if i >= 97 {
+			word1[i-'a']++
+		} else {
+			word2[i+32-'a']++
+		}
+	}
+
+	for i := 25; i >= 0; i-- {
+		if word1[i] >= 1 && word2[i] >= 1 {
+			return string(i + 'A')
+		}
+	}
+
+	return ""
+}
+
+//func waysToMakeFair(nums []int) int {
+//
+//}
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+//mergeInBetween 1669. 合并两个链表 https://leetcode.cn/problems/merge-in-between-linked-lists/
+func mergeInBetween(list1 *ListNode, a int, b int, list2 *ListNode) *ListNode {
+	p := list1
+	q := list1
+	path := 0
+	//先找到第一个
+	for p != nil {
+		if path == a {
+			q.Next = list2
+			break
+		}
+		q = p
+		p = p.Next
+		path++
+	}
+
+	//找到第二个
+	for p != nil {
+		if path == b {
+			p = p.Next
+			break
+		}
+		p = p.Next
+		path++
+	}
+
+	for list2.Next != nil {
+		list2 = list2.Next
+	}
+
+	list2.Next = p
+
+	return list1
+
+}
