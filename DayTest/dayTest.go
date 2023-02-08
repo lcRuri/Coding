@@ -1414,3 +1414,85 @@ func mergeInBetween(list1 *ListNode, a int, b int, list2 *ListNode) *ListNode {
 	return list1
 
 }
+
+func getMaximumConsecutive(coins []int) int {
+	m := 0 // 一开始只能构造出 0
+	sort.Ints(coins)
+	for _, c := range coins {
+		if c > m+1 { // coins 已排序，后面没有比 c 更小的数了
+			break // 无法构造出 m+1，继续循环没有意义
+		}
+		m += c // 可以构造出区间 [0,m+c] 中的所有整数
+	}
+	return m + 1 // [0,m] 中一共有 m+1 个整数
+}
+
+//alertNames 1604. 警告一小时内使用相同员工卡大于等于三次的人 https://leetcode.cn/problems/alert-using-same-key-card-three-or-more-times-in-a-one-hour-period/description/
+func alertNames(keyName, keyTime []string) (ans []string) {
+	timeMap := map[string][]int{}
+	for i, name := range keyName {
+		t := keyTime[i]
+		hour := int(t[0]-'0')*10 + int(t[1]-'0')
+		minute := int(t[3]-'0')*10 + int(t[4]-'0')
+		timeMap[name] = append(timeMap[name], hour*60+minute)
+	}
+	for name, times := range timeMap {
+		sort.Ints(times)
+		for i, t := range times[2:] {
+			if t-times[i] <= 60 {
+				ans = append(ans, name)
+				break
+			}
+		}
+	}
+	sort.Strings(ans)
+	return
+}
+
+//RemoveSubfolders 1233. 删除子文件夹 https://leetcode.cn/problems/remove-sub-folders-from-the-filesystem/
+//25min 超出时间限制
+func RemoveSubfolders(folder []string) (ans []string) {
+	sort.Slice(folder, func(i, j int) bool {
+		return folder[i] < folder[j]
+	})
+
+	prefix := folder[0]
+	p := []string{}
+	p = append(p, prefix)
+	ans = append(ans, prefix)
+	for i := 1; i < len(folder); i++ {
+		c := 0
+		for j := 0; j < len(p); j++ {
+			if strings.HasPrefix(folder[i], p[j]) {
+				if len(folder[i]) > len(prefix) && folder[i][len(p[j])] != '/' {
+					c++
+				}
+			} else {
+				c++
+			}
+		}
+
+		if c == len(p) {
+			ans = append(ans, folder[i])
+		}
+
+		p = append(p, folder[i])
+
+	}
+
+	return
+}
+
+//removeSubfolders 排序 第一个肯定没有 加入结果 然后从下一个开始 和已知的结果里面最后一个进行比较 如果满足条件 则可以加入
+//为什么和最后一个比较就行了呢 因为排完序之后小的字典序肯定在前面 前面的都不是它前面的 那么后面的如果不和它重复 那么肯定也不会和更前面的重复
+func removeSubfolders(folder []string) (ans []string) {
+	sort.Strings(folder)
+	ans = append(ans, folder[0])
+	for _, f := range folder[1:] {
+		last := ans[len(ans)-1]
+		if !strings.HasPrefix(f, last) || f[len(last)] != '/' {
+			ans = append(ans, f)
+		}
+	}
+	return
+}

@@ -530,7 +530,14 @@ func main() {
 
 	//fmt.Println(DayTest.GetSmallestString(5, 73))
 
-	fmt.Println(DayTest.GreatestLetter("lEeTcOdE"))
+	//fmt.Println(DayTest.GreatestLetter("lEeTcOdE"))
+
+	//fmt.Println(DayTest.AlertNames([]string{"a", "a", "a", "a", "b", "b", "b", "b"}, []string{"23:03", "23:40", "23:34", "17:58", "15:23", "01:45", "06:37", "17:33"}))
+
+	fmt.Println(DayTest.RemoveSubfolders([]string{"/a", "/a/b", "/c/d", "/c/d/e", "/c/f"}))
+	fmt.Println(DayTest.RemoveSubfolders([]string{"/a/b/c", "/a/b/ca", "/a/b/d"}))
+	fmt.Println(DayTest.RemoveSubfolders([]string{"/ah/al/am", "/ah/al"}))
+
 }
 
 var wg sync.WaitGroup
