@@ -1496,3 +1496,133 @@ func removeSubfolders(folder []string) (ans []string) {
 	}
 	return
 }
+
+func BalancedString(s string) int {
+	cnt, m := ['X']int{}, len(s)/4 // 也可以用哈希表，不过数组更快一些
+	for _, c := range s {
+		cnt[c]++
+	}
+	if cnt['Q'] == m && cnt['W'] == m && cnt['E'] == m && cnt['R'] == m {
+		return 0 // 已经符合要求啦
+	}
+	ans, left := len(s), 0
+	for right, c := range s { // 枚举子串右端点
+		cnt[c]--
+		for cnt['Q'] <= m && cnt['W'] <= m && cnt['E'] <= m && cnt['R'] <= m {
+			ans = min(ans, right-left+1)
+			cnt[s[left]]++
+			left++ // 缩小子串
+		}
+	}
+	return ans
+}
+
+//LongestWPI 1124. 表现良好的最长时间段 https://leetcode.cn/problems/longest-well-performing-interval/description/
+func longestWPI(hours []int) int {
+	days := 0
+	hard, easy := 0, 0
+	left := 0
+	for i := 0; i < len(hours); i++ {
+		tmp := 0
+		for j := i; j >= left; j-- {
+
+			if hours[j] > 8 {
+				hard += 1
+			}
+			if hours[j] <= 8 {
+				easy += 1
+			}
+
+			if hard > easy {
+				tmp = i - j + 1
+			}
+			if tmp > days {
+				days = tmp
+			}
+		}
+
+		hard, easy = 0, 0
+	}
+
+	return days
+}
+
+func LongestWPI(hours []int) (ans int) {
+	n := len(hours)
+	s := make([]int, n+1) // 前缀和
+	st := []int{0}        // s[0]
+	for j, h := range hours {
+		j++
+		s[j] = s[j-1]
+		if h > 8 {
+			s[j]++
+		} else {
+			s[j]--
+		}
+		if s[j] < s[st[len(st)-1]] {
+			st = append(st, j) // 感兴趣的 j
+		}
+	}
+	for i := n; i > 0; i-- {
+		for len(st) > 0 && s[i] > s[st[len(st)-1]] {
+			ans = max(ans, i-st[len(st)-1]) // [栈顶,i) 可能是最长子数组
+			st = st[:len(st)-1]
+		}
+	}
+	return
+}
+
+//nextGreaterElement 496. 下一个更大元素  https://leetcode.cn/problems/next-greater-element-i/description/
+//暴力解法
+func nextGreaterElement(nums1 []int, nums2 []int) []int {
+	ans := []int{}
+
+	for i := 0; i < len(nums1); i++ {
+		flag := 0
+		for j := 0; j < len(nums2); j++ {
+			if nums2[j] == nums1[i] {
+				for k := j + 1; k < len(nums2); k++ {
+					if nums2[k] > nums1[i] {
+						ans = append(ans, nums2[k])
+						flag = 1
+						break
+					}
+				}
+				break
+			}
+		}
+		if flag == 0 {
+			ans = append(ans, -1)
+		}
+	}
+
+	return ans
+}
+
+//单调栈
+func NextGreaterElement(nums1 []int, nums2 []int) []int {
+	ans := []int{}
+	dic := make(map[int]int)
+	stack := make([]int, 0)
+	for i := len(nums2) - 1; i >= 0; i-- {
+
+		for len(stack) > 0 && nums2[i] > stack[len(stack)-1] {
+			stack = stack[:len(stack)-1]
+		}
+
+		if len(stack) == 0 {
+			dic[nums2[i]] = -1
+		}
+		if len(stack) > 0 && nums2[i] < stack[len(stack)-1] {
+			dic[nums2[i]] = stack[len(stack)-1]
+		}
+
+		stack = append(stack, nums2[i])
+	}
+
+	for _, num := range nums1 {
+		ans = append(ans, dic[num])
+	}
+
+	return ans
+}

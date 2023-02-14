@@ -1065,3 +1065,85 @@ func height(root *TreeNode) int {
 	}
 	return max(height(root.Left), height(root.Right)) + 1
 }
+
+//SingleNumbers 剑指 Offer 56 - I. 数组中数字出现的次数 剑指 Offer 56 - I. 数组中数字出现的次数 https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/description/?favorite=xb9nqhhg&languageTags=golang
+//https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/solutions/222307/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-by-leetcode/
+//异或 取出第一个不为0的位
+func SingleNumbers(nums []int) []int {
+	ret := 0
+	for _, num := range nums {
+		ret = ret ^ num
+	}
+
+	f := 1
+
+	for f&ret == 0 {
+		f <<= 1
+	}
+
+	var res1, res2 int
+	for _, num := range nums {
+		if f&num == 0 {
+			res1 ^= num
+		} else {
+			res2 ^= num
+		}
+	}
+
+	return []int{res1, res2}
+}
+
+//上一次投色子的结果对当前数字接下来6个位置产生自己原来的影响
+//动态规划
+func DicesProbability(n int) []float64 {
+	dp := make([]float64, 6)
+
+	for i := 0; i < 6; i++ {
+		dp[i] = 1.0 / 6.0
+	}
+
+	for i := 2; i <= n; i++ {
+		tmp := make([]float64, 5*i+1)
+		for j := 0; j < len(dp); j++ {
+			for k := 0; k < 6; k++ {
+				//tmp[j]是全部位置上已经有的结果
+				tmp[j+k] = tmp[j+k] + dp[j]/6
+			}
+		}
+		dp = tmp
+	}
+
+	return dp
+
+}
+
+func MaxProfit(prices []int) int {
+	if len(prices) == 0 {
+		return 0
+	}
+
+	a := prices[0]
+	l := 0
+	for i := 1; i < len(prices); i++ {
+		if prices[i] < a {
+			a = prices[i]
+			l = i
+		}
+
+	}
+
+	res := 0
+	for i := 1; i < len(prices); i++ {
+		tmp := 0
+		if prices[i]-a > 0 && i > l {
+			tmp = prices[i] - a
+		}
+
+		if tmp > res {
+			res = tmp
+		}
+	}
+
+	return res
+
+}

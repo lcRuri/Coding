@@ -534,10 +534,23 @@ func main() {
 
 	//fmt.Println(DayTest.AlertNames([]string{"a", "a", "a", "a", "b", "b", "b", "b"}, []string{"23:03", "23:40", "23:34", "17:58", "15:23", "01:45", "06:37", "17:33"}))
 
-	fmt.Println(DayTest.RemoveSubfolders([]string{"/a", "/a/b", "/c/d", "/c/d/e", "/c/f"}))
-	fmt.Println(DayTest.RemoveSubfolders([]string{"/a/b/c", "/a/b/ca", "/a/b/d"}))
-	fmt.Println(DayTest.RemoveSubfolders([]string{"/ah/al/am", "/ah/al"}))
+	//fmt.Println(DayTest.RemoveSubfolders([]string{"/a", "/a/b", "/c/d", "/c/d/e", "/c/f"}))
+	//fmt.Println(DayTest.RemoveSubfolders([]string{"/a/b/c", "/a/b/ca", "/a/b/d"}))
+	//fmt.Println(DayTest.RemoveSubfolders([]string{"/ah/al/am", "/ah/al"}))
 
+	//fmt.Println(DayTest.BalancedString("WWEQERQWQWWRWWERQWEQ"))
+
+	//fmt.Println(Offer.SingleNumbers([]int{4, 1, 4, 6}))
+
+	//fmt.Println(Offer.DicesProbability(3))
+
+	//fmt.Println(Offer.MaxProfit([]int{7, 1, 5, 3, 6, 4}))
+	//fmt.Println(Offer.MaxProfit([]int{1, 2}))
+	//fmt.Println(Offer.MaxProfit([]int{2, 4, 1}))
+
+	//fmt.Println(DayTest.LongestWPI([]int{9, 9, 6, 0, 6, 6, 9}))
+
+	fmt.Println(DayTest.NextGreaterElement([]int{4, 1, 2}, []int{1, 3, 4, 2}))
 }
 
 var wg sync.WaitGroup
