@@ -1,6 +1,7 @@
 package Offer
 
 import (
+	"fmt"
 	"math"
 	"sort"
 	"strconv"
@@ -1093,6 +1094,7 @@ func SingleNumbers(nums []int) []int {
 	return []int{res1, res2}
 }
 
+//剑指 Offer 60. n个骰子的点数
 //上一次投色子的结果对当前数字接下来6个位置产生自己原来的影响
 //动态规划
 func DicesProbability(n int) []float64 {
@@ -1117,33 +1119,193 @@ func DicesProbability(n int) []float64 {
 
 }
 
-func MaxProfit(prices []int) int {
-	if len(prices) == 0 {
-		return 0
+//剑指 Offer 63. 股票的最大利润 https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/description/?favorite=xb9nqhhg
+func maxProfit(prices []int) int {
+	cost, profit := math.MaxInt32, 0
+
+	for i := 0; i < len(prices); i++ {
+		cost = min(cost, prices[i])
+		profit = max(profit, prices[i]-cost)
 	}
 
-	a := prices[0]
-	l := 0
-	for i := 1; i < len(prices); i++ {
-		if prices[i] < a {
-			a = prices[i]
-			l = i
-		}
+	return profit
+}
 
+//LastRemaining 能否通过最后一行推导得出上面行中该数字的下标
+//offer62
+func LastRemaining(n int, m int) int {
+	//ints := make([]int, n)
+	//for i := 0; i < n; i++ {
+	//	ints[i] = i
+	//}
+	//
+	//left := n
+	//i := 0
+	//times := 0
+	//for left > 1 {
+	//	if i == n {
+	//		i = 0
+	//	}
+	//	if ints[i] == -1 {
+	//		i++
+	//		continue
+	//	}
+	//
+	//	times += 1
+	//	if times == m {
+	//		ints[i] = -1
+	//		left -= 1
+	//		times = 0
+	//	}
+	//
+	//	i++
+	//}
+	//
+	//for _, in := range ints {
+	//	if in != -1 {
+	//		return in
+	//	}
+	//}
+	//
+	//return -1
+	idx := 0
+	for i := 2; i <= n; i++ {
+		idx = (idx + m) % i
 	}
 
-	res := 0
-	for i := 1; i < len(prices); i++ {
-		tmp := 0
-		if prices[i]-a > 0 && i > l {
-			tmp = prices[i] - a
+	return idx
+}
+
+func sumNums(n int) int {
+	if n == 1 {
+		return 1
+	}
+
+	return n + sumNums(n-1)
+}
+
+//Add 剑指 Offer 65. 不用加减乘除做加法
+func Add(a, b int) int {
+	for b != 0 {
+		carry := uint(a&b) << 1
+		a ^= b
+		b = int(carry)
+	}
+	return a
+}
+
+//constructArr 剑指 Offer 66. 构建乘积数组
+func constructArr(a []int) []int {
+	if len(a) <= 1 {
+		return a
+	}
+	left, right := make([]int, len(a)), make([]int, len(a))
+	left[0] = 1
+	right[len(a)-1] = 1
+	for i := 1; i < len(a); i++ {
+		left[i] = left[i-1] * a[i-1]
+	}
+
+	for i := len(a) - 2; i >= 0; i-- {
+		right[i] = right[i+1] * a[i+1]
+	}
+
+	for i := 0; i < len(a); i++ {
+		left[i] = left[i] * right[i]
+	}
+
+	return left
+}
+
+//递归判断一个子树的左右子树是否包含p，q
+//lowestCommonAncestor 剑指 Offer 68 - II. 二叉树的最近公共祖先
+func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+
+	if root.Val == p.Val || root.Val == q.Val {
+		return root
+	}
+
+	left := lowestCommonAncestor(root.Left, p, q)
+	right := lowestCommonAncestor(root.Right, p, q)
+
+	if left != nil && right != nil {
+		return root
+	}
+
+	if left == nil {
+		return right
+	}
+
+	return left
+}
+
+//MovingCount 面试题13. 机器人的运动范围
+//dfs
+func MovingCount(m int, n int, k int) int {
+	d, ex := make([][]int, m), make([][]int, m)
+	for i := 0; i < m; i++ {
+		d[i] = make([]int, n)
+		ex[i] = make([]int, n)
+	}
+	ans := 0
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			tmp := i/100 + i/10 + i%10 + j/100 + j/10 + j%10
+			d[i][j] = tmp
+		}
+	}
+
+	var dfs func(i, j, m, n int)
+
+	dfs = func(i, j, m, n int) {
+		if d[i][j] <= k && ex[i][j] != 1 {
+			ans += 1
+			ex[i][j] = 1
+		} else {
+			return
 		}
 
-		if tmp > res {
-			res = tmp
+		if i+1 < m {
+			dfs(i+1, j, m, n)
 		}
+		if j+1 < n {
+			dfs(i, j+1, m, n)
+		}
+
+		if i-1 >= 0 {
+			dfs(i-1, j, m, n)
+		}
+
+		if j-1 >= 0 {
+			dfs(i, j-1, m, n)
+		}
+
+		return
+	}
+
+	dfs(0, 0, m, n)
+	return ans
+}
+
+//minNumber 面试题45. 把数组排成最小的数
+//若拼接字符串 x + y > y + x ，则 x 大于 y ；
+//反之，若 x + y < y + x ，则 x 小于 y
+func minNumber(nums []int) string {
+	sort.Slice(nums, func(i, j int) bool {
+		x := fmt.Sprintf("%d%d", nums[i], nums[j])
+		y := fmt.Sprintf("%d%d", nums[j], nums[i])
+
+		return x < y
+	})
+
+	res := ""
+
+	for i := 0; i < len(nums); i++ {
+		res += fmt.Sprintf("%d", nums[i])
 	}
 
 	return res
-
 }

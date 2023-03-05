@@ -550,7 +550,43 @@ func main() {
 
 	//fmt.Println(DayTest.LongestWPI([]int{9, 9, 6, 0, 6, 6, 9}))
 
-	fmt.Println(DayTest.NextGreaterElement([]int{4, 1, 2}, []int{1, 3, 4, 2}))
+	//fmt.Println(DayTest.NextGreaterElement([]int{4, 1, 2}, []int{1, 3, 4, 2}))
+
+	//ch := make(chan int)
+	//
+	//ch <- 1
+	//a := -1
+	//
+	//go func() {
+	//	a = <-ch
+	//}()
+	//time.Sleep(1 * time.Second)
+	//fmt.Println(a)
+
+	//fmt.Println(Offer.LastRemaining(70866, 116922))
+
+	//fmt.Println(DayTest.MaxAverageRatio([][]int{{2, 4}, {3, 9}, {4, 5}, {2, 10}}, 4))
+
+	//fmt.Println(DayTest.StoneGameII([]int{2, 7, 9, 4, 4}))
+
+	//fmt.Println(DayTest.MinimumSwap("xx", "yy"))
+
+	//fmt.Println(DayTest.MovesToMakeZigzag([]int{2, 7, 10, 9, 8, 9}))
+	//fmt.Println(DayTest.MergeSimilarItems([][]int{{1, 1}, {4, 5}, {3, 8}}, [][]int{{3, 1}, {1, 5}}))
+
+	//fmt.Println(Offer.Add(32, -22))
+
+	//fmt.Println(Offer.MovingCount(2, 3, 1))
+
+	//fmt.Println(DayTest.LargestLocal([][]int{{9, 9, 8, 1}, {5, 6, 2, 6}, {8, 2, 6, 4}, {6, 2, 2, 2}}))
+
+	//fmt.Println(DayTest.WordBreak("catsanddog", []string{"cat", "cats", "and", "sand", "dog"}))
+
+	//fmt.Println(DayTest.GetFolderNames([]string{"gta", "gta(1)", "gta", "avalon"}))
+
+	//fmt.Println(-4 << 8)
+
+	fmt.Println(DayTest.CanJump([]int{2, 3, 1, 1, 4}))
 }
 
 var wg sync.WaitGroup

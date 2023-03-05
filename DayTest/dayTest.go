@@ -1626,3 +1626,473 @@ func NextGreaterElement(nums1 []int, nums2 []int) []int {
 
 	return ans
 }
+
+//numberOfPairs 2341. 数组能形成多少数对 https://leetcode.cn/problems/maximum-number-of-pairs-in-array/description/
+func numberOfPairs(nums []int) []int {
+	if len(nums) == 1 {
+		return []int{0, 1}
+	}
+
+	n, left := 0, len(nums)
+
+	m := make(map[int]int)
+
+	for _, num := range nums {
+		m[num]++
+	}
+
+	for _, i2 := range m {
+		tmp := i2 / 2
+		n += tmp
+		left = left - tmp*2
+	}
+
+	return []int{n, left}
+}
+
+func largest1BorderedSquare(grid [][]int) int {
+	res := 0
+	m := len(grid)
+	n := len(grid[0])
+
+	short := min(m, n)
+
+	for i := 0; i < short; i++ {
+		for j := 0; j < short; j++ {
+			if grid[i][j] == 1 && grid[j][1] == 1 {
+				res += (i + 1) * (i + 1)
+			}
+		}
+	}
+
+	return 0
+}
+
+//findSolution 1237. 找出给定方程的正整数解 https://leetcode.cn/problems/find-positive-integer-solution-for-a-given-equation/description/
+//二分法
+func findSolution(customFunction func(int, int) int, z int) [][]int {
+
+	ans := [][]int{}
+	//for i := 1; i <= 1000; i++ {
+	//	for j := 1; j <= 1000; j++ {
+	//		function := customFunction(i, j)
+	//		if function == z {
+	//			ans = append(ans, []int{i, j})
+	//		}
+	//	}
+	//}
+
+	for x := 1; x <= 1000; x++ {
+		y := sort.Search(999, func(y int) bool {
+			return customFunction(x, y+1) >= 1000
+		})
+
+		if customFunction(x, y) == z {
+			ans = append(ans, []int{x, y})
+		}
+	}
+
+	return ans
+}
+
+//func MaxAverageRatio(classes [][]int, extraStudents int) float64 {
+//	pass := make([]float64, len(classes))
+//	pre := make([]float64, len(classes))
+//	var ans float64
+//
+//	for i := 0; i < len(classes); i++ {
+//		pre[i] = float64(classes[i][0]) / float64(classes[i][1])
+//		pass[i] = float64(classes[i][0]+extraStudents) / float64(classes[i][1]+extraStudents)
+//	}
+//
+//	idx := -1
+//	newPas := 0.0
+//	diff := 0.0
+//	for i, pa := range pass {
+//		if pa > newPas && pa != 1 && pa-pre[i] > diff {
+//			newPas = pa
+//			idx = i
+//			diff = pa - pre[i]
+//		}
+//	}
+//
+//	for i, pr := range pre {
+//		if i != idx {
+//			ans += pr
+//		} else {
+//			ans += newPas
+//		}
+//	}
+//
+//	return ans / float64(len(classes))
+//}
+
+type tuple struct {
+	x float64
+	a int
+	b int
+}
+
+func MaxAverageRatio(classes [][]int, extraStudents int) float64 {
+	pd := hp{}
+
+	//增加1个学生的增量谁最大
+	for _, e := range classes {
+		a, b := e[0], e[1]
+		x := float64(a+1)/float64(b+1) - float64(a)/float64(b)
+		heap.Push(&pd, tuple{x, a, b})
+	}
+
+	for i := 0; i < extraStudents; i++ {
+		e := heap.Pop(&pd).(tuple)
+		a, b := e.a+1, e.b+1
+		x := float64(a+1)/float64(b+1) - float64(a)/float64(b)
+		heap.Push(&pd, tuple{x, a, b})
+	}
+
+	var ans float64
+	for len(pd) > 0 {
+		e := heap.Pop(&pd).(tuple)
+		ans += float64(e.a) / float64(e.b)
+	}
+
+	return ans / float64(len(classes))
+}
+
+// 尚未优化，会超时
+func StoneGameII(s []int) int {
+	n := len(s)
+	for i := n - 2; i >= 0; i-- {
+		s[i] += s[i+1] // 后缀和
+	}
+	var dfs func(int, int) int
+	dfs = func(i, m int) int {
+		if i+m*2 >= n {
+			return s[i]
+		}
+		mn := math.MaxInt
+		for x := 1; x <= m*2; x++ {
+			mn = min(mn, dfs(i+x, max(m, x)))
+		}
+		return s[i] - mn
+	}
+	return dfs(0, 1)
+}
+
+func circularPermutation(n int, start int) (ans []int) {
+	l := 2 ^ n - 1
+	nums := make([]int, l)
+	for i := 0; i < l; i++ {
+		nums[i] = i
+	}
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == start {
+			ans = append(ans, start)
+			nums = append(nums[:i], nums[i+1:]...)
+			break
+		}
+	}
+
+	//var dfs func(n int)
+	//dfs = func(n int) {
+	//
+	//}
+	//
+	return nil
+}
+
+//MinimumSwap https://leetcode.cn/problems/minimum-swaps-to-make-strings-equal/
+//贪心
+func MinimumSwap(s1 string, s2 string) int {
+	xy, yx := 0, 0
+	n := len(s1)
+	for i := 0; i < n; i++ {
+		a, b := s1[i], s2[i]
+		if a == 'x' && b == 'y' {
+			xy++
+		}
+		if a == 'y' && b == 'x' {
+			yx++
+		}
+	}
+	if (xy+yx)%2 == 1 {
+		return -1
+	}
+	return xy/2 + yx/2 + xy%2 + yx%2
+
+}
+
+//MovesToMakeZigzag 1144. 递减元素使数组呈锯齿状 https://leetcode.cn/problems/decrease-elements-to-make-array-zigzag/description/
+//无脑模拟
+func MovesToMakeZigzag(nums []int) int {
+	ans1, ans2 := 0, 0
+	if len(nums) == 1 {
+		return ans1
+	}
+
+	for i := 1; i < len(nums); i = i + 2 {
+
+		com := nums[i-1]
+		if i+1 < len(nums) {
+			com = min(com, nums[i+1])
+		}
+
+		if nums[i] >= com {
+			ans1 += nums[i] - com + 1
+		}
+	}
+
+	for i := 0; i < len(nums); i = i + 2 {
+		if i+1 > len(nums) {
+			break
+		}
+		com := nums[i+1]
+		if i-1 >= 0 {
+			com = min(com, nums[i-1])
+		}
+
+		if nums[i] >= com {
+			ans2 += nums[i] - com + 1
+		}
+	}
+
+	return min(ans1, ans2)
+}
+
+func MergeSimilarItems(items1 [][]int, items2 [][]int) (ans [][]int) {
+	items1 = append(items1, items2...)
+	sort.Slice(items1, func(i, j int) bool {
+		return items1[i][0] < items1[j][0]
+	})
+
+	s := 0
+	for i := 0; i < len(items1); i++ {
+		if i > 0 && items1[i-1][0] == items1[i][0] {
+			ans[i-1-s][1] += items1[i][1]
+			s += 1
+		} else {
+			ans = append(ans, []int{items1[i][0], items1[i][1]})
+		}
+
+	}
+
+	return
+
+}
+
+//LargestLocal 2373. 矩阵中的局部最大值 https://leetcode.cn/problems/largest-local-values-in-a-matrix/description/
+func LargestLocal(grid [][]int) [][]int {
+	l := len(grid)
+	ans := make([][]int, l-2)
+	for i := 0; i < l-2; i++ {
+		ans[i] = make([]int, l-2)
+	}
+	for i := 1; i < l-1; i++ {
+		for j := 1; j < l-1; j++ {
+			tmp := max(max(max(max(grid[i][j], grid[i-1][j]), max(grid[i+1][j], grid[i][j-1])), max(max(grid[i][j+1], grid[i-1][j-1]), max(grid[i-1][j+1], grid[i+1][j-1]))), grid[i+1][j+1])
+			ans[i-1][j-1] = tmp
+		}
+	}
+
+	return ans
+}
+
+func printBin(num float64) string {
+	bin := &strings.Builder{}
+	bin.WriteString("0.")
+	for i := 0; i < 6; i++ { // 至多循环 6 次
+		num *= 2
+		if num < 1 {
+			bin.WriteByte('0')
+		} else {
+			bin.WriteByte('1')
+			num--
+			if num == 0 {
+				return bin.String()
+			}
+		}
+	}
+	return "ERROR"
+}
+
+//WordBreak 139. 单词拆分 https://leetcode.cn/problems/word-break/
+func wordBreak(s string, wordDict []string) bool {
+	m := make(map[string]bool)
+
+	for _, w := range wordDict {
+		m[w] = true
+	}
+
+	dp := make([]bool, len(s)+1)
+	dp[0] = true
+	for i := 1; i <= len(s); i++ {
+		for j := 0; j < i; j++ {
+			if dp[j] && m[s[j:i]] {
+				dp[i] = true
+				break
+			}
+		}
+	}
+
+	return dp[len(s)]
+}
+
+//WordBreak 140. 单词拆分 II https://leetcode.cn/problems/word-break-ii/description/
+//todo
+func WordBreak(s string, wordDict []string) (ans []string) {
+	m := make(map[string]bool)
+
+	for _, w := range wordDict {
+		m[w] = true
+	}
+
+	dp := make([]bool, len(s)+1)
+	dp[0] = true
+	for i := 1; i <= len(s); i++ {
+		for j := 0; j < i; j++ {
+			if dp[j] && m[s[j:i]] {
+				dp[i] = true
+			}
+		}
+	}
+
+	for i := 0; i < len(s); i++ {
+		tmp := ""
+		start := 0
+		for j := 1; j <= len(s); j++ {
+			if dp[j] && m[s[start:j]] {
+				tmp += s[start:j]
+				if j != len(dp)-1 {
+
+					tmp += " "
+				}
+				start = j
+
+			}
+		}
+		if tmp != "" {
+			ans = append(ans, tmp)
+		}
+	}
+
+	return
+
+}
+
+//convert 6. N 字形变换 https://leetcode.cn/problems/zigzag-conversion/description/
+//假设numRows为4，那就是那s每一位的行数就是：1234321234321
+func convert(s string, numRows int) string {
+	if numRows == 1 {
+		return s
+	}
+	str := make([]byte, 0)
+	cp := make([]int, len(s))
+
+	num := 1
+	flag := 1
+	for i := 0; i < len(s); i++ {
+		cp[i] = num
+
+		if flag == 1 {
+			num += 1
+			if num > numRows {
+				flag = 0
+				num = num - 2
+			}
+		} else if flag == 0 {
+			num -= 1
+			if num < 1 {
+				flag = 1
+				num = num + 2
+			}
+		}
+	}
+
+	for i := 1; i <= numRows; i++ {
+		for j := 0; j < len(s); j++ {
+			if cp[j] == i {
+				str = append(str, s[j])
+			}
+		}
+	}
+
+	return string(str)
+}
+
+func GetFolderNames(names []string) (ans []string) {
+	m := make(map[string]bool)
+
+	for i := 0; i < len(names); i++ {
+		_, ok := m[names[i]]
+		if !ok {
+			m[names[i]] = true
+			ans = append(ans, names[i])
+		} else {
+			tmp := names[i]
+			k := 1
+			for m[tmp+"("+strconv.Itoa(k)+")"] {
+				k++
+			}
+			name := tmp + "(" + strconv.Itoa(k) + ")"
+			m[name] = true
+			ans = append(ans, name)
+		}
+	}
+
+	return
+}
+
+//rotate 48. 旋转图像 https://leetcode.cn/problems/rotate-image/description/
+func rotate(matrix [][]int) {
+	n := len(matrix)
+	tmp := make([][]int, 0)
+	for i := 0; i < n; i++ {
+		tp := []int{}
+		for j := n - 1; j >= 0; j-- {
+			tp = append(tp, matrix[j][i])
+		}
+		tmp = append(tmp, tp)
+	}
+
+	copy(matrix, tmp)
+}
+
+//groupAnagrams 49. 字母异位词分组 https://leetcode.cn/problems/group-anagrams/description/
+func groupAnagrams(strs []string) (ans [][]string) {
+	dic := map[string]int{}
+
+	for _, str := range strs {
+		tmp := str
+		k := []byte(tmp)
+		sort.Slice(k, func(i, j int) bool {
+			return k[i] < k[j]
+		})
+		tmp = string(k)
+		if loc, exist := dic[tmp]; exist {
+			ans[loc] = append(ans[loc], str)
+		} else {
+			l := len(ans)
+			dic[tmp] = l
+			ans = append(ans, []string{str})
+		}
+	}
+
+	return
+
+}
+
+//CanJump 55. 跳跃游戏 https://leetcode.cn/problems/jump-game/description/
+func CanJump(nums []int) bool {
+	dp := make([]bool, len(nums))
+	dp[0] = true
+	for i := 0; i < len(nums)-1 && dp[i] == true; i++ {
+		path := min((nums[i] + i), len(nums)-1)
+		for j := i; j <= path; j++ {
+			dp[j] = true
+		}
+	}
+
+	return dp[len(nums)-1]
+
+}
