@@ -2096,3 +2096,40 @@ func CanJump(nums []int) bool {
 	return dp[len(nums)-1]
 
 }
+
+func canJump(nums []int) bool {
+	k := 0
+	for i := 0; i < len(nums); i++ {
+		if i > k {
+			return false
+		}
+
+		k = max(k, i+nums[i])
+	}
+
+	return true
+}
+
+//minimumDeletions 1653. 使字符串平衡的最少删除次数 https://leetcode.cn/problems/minimum-deletions-to-make-string-balanced/description/?languageTags=golang
+func minimumDeletions(s string) int {
+
+	suma := 0
+
+	for i := 0; i < len(s); i++ {
+		if s[i] == 'a' {
+			suma += 1
+		}
+	}
+	ans := suma
+	for i := 1; i <= len(s); i++ {
+		if s[i-1] == 'a' {
+			suma -= 1
+		} else {
+			suma += 1
+		}
+
+		ans = min(ans, suma)
+	}
+
+	return ans
+}
